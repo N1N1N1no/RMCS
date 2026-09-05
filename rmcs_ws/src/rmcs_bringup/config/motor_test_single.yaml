@@ -22,7 +22,7 @@ motor_test_single_controller:
 velocity_pid_controller:
   ros__parameters:
     setpoint: /test/motor/target_velocity      # 来自 motor_test_single_controller 的目标速度
-    measurement: /test/motor/measured_velocity  # 来自 motor_test_single_controller 的滤波后速度
+    measurement: /test/motor/velocity  # 来自 motor_test_single_controller 的滤波后速度
     feedforward: 0.0
     control: /test/motor/control_torque         # 速度环输出：力矩，供硬件读取
     kp: 0.3               # 速度环 P
@@ -42,3 +42,4 @@ value_broadcaster:
       - /test/motor/velocity_error
       - /test/motor/control_torque
       - /test/motor/torque
+      

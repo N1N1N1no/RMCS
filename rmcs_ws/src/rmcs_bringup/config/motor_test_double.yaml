@@ -10,41 +10,43 @@ rmcs_executor:
 
 motor_test_double:
   ros__parameters:
-    board_serial: ""          # C 板 USB 串口序列号过滤（留空自动匹配）
+    board_serial: ""          
 
 motor_test_double_controller:
   ros__parameters:
-    square_wave_enabled: true   # 启用方波目标角度（调试）
-    target_angle_amplitude: 0.5 # 方波幅值(rad)：目标在 -0.5 和 +0.5 之间切换
-    square_wave_period: 2.0     # 方波半周期(秒)：约每 2 秒切换一次
+    square_wave_enabled: true  # 启用方波目标角度（调试）
+    target_angle_amplitude: 3.0 # 方波幅值(rad)
+    square_wave_period: 3.0     # 方波半周期(秒)
     target_angle: 0.0           # 方波关闭(square_wave_enabled=false)时的固定目标位置(rad)
-    angle_filter_cutoff: 0.0    # 角度反馈低通滤波截止频率(Hz)，<=0 关闭
-    velocity_filter_cutoff: 100.0  # 速度反馈低通滤波截止频率(Hz)，<=0 关闭
-    filter_sampling_frequency: 1000.0  # 滤波采样频率，应与 update_rate 一致
+    angle_filter_cutoff: 0.0    
+    velocity_filter_cutoff: 100.0  
+    filter_sampling_frequency: 1000.0  
 
 angle_pid_controller:
   ros__parameters:
-    setpoint: /test/motor/target_angle      # 来自 motor_test_double_controller 的目标角度
-    measurement: /test/motor/measured_angle # 来自 motor_test_double_controller 的滤波后角度
+    setpoint: /test/motor/target_angle      
+    measurement: /test/motor/angle 
     feedforward: 0.0
     control: /test/motor/control_velocity   # 角度环输出：目标速度(rad/s)，供速度环 setpoint
-    kp: 15.0               # 角度环(位置环) P
-    ki: 0.003               # 角度环 I
-    kd: 0.0               # 角度环 D
-    output_min: -50.0      # 角度环输出的最大目标速度下限(rad/s)
-    output_max: 50.0       # 角度环输出的最大目标速度上限(rad/s)
+    kp: 3.88             # 角度环(位置环) P
+    ki: 0.015               # 角度环 I
+    kd: 0.0085              # 角度环 D
+    output_min: -30.0      # 角度环输出的最大目标速度下限(rad/s)
+    output_max: 30.0       # 角度环输出的最大目标速度上限(rad/s)
+    integral_min: -6.0    
+    integral_max: 6.0     
 
 velocity_pid_controller:
   ros__parameters:
-    setpoint: /test/motor/control_velocity      # 来自 angle_pid_controller 的目标速度
-    measurement: /test/motor/measured_velocity  # 来自 motor_test_double_controller 的滤波后速度
+    setpoint: /test/motor/control_velocity      # 目标速度
+    measurement: /test/motor/velocity  # 滤波后速度
     feedforward: 0.0
-    control: /test/motor/control_torque         # 速度环输出：力矩，供硬件读取
-    kp: 0.3              # 速度环 P
-    ki: 0.005               # 速度环 I
-    kd: 0.0               # 速度环 D
-    integral_min: -10.0    # 速度环积分限幅下限
-    integral_max: 10.0     # 速度环积分限幅上限
+    control: /test/motor/control_torque        
+    kp: 0.035            
+    ki: 0.0015               
+    kd: 0.0              
+    integral_min: -18.0    # 速度环积分限幅下限
+    integral_max: 18.0     # 速度环积分限幅上限
 
 value_broadcaster:
   ros__parameters:

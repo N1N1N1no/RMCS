@@ -1,6 +1,5 @@
+#include "hardware/device/can_packet.hpp"
 #include "hardware/device/dji_motor.hpp"
-// #include "hardware/device/dr16.hpp"           // [未启用 DR16] 注释保留，需要时取消注释
-// #include "hardware/device/remote_control.hpp"  // [未启用 DR16] 注释保留，需要时取消注释
 #include "librmcs/board/c_board.hpp"
 #include <rclcpp/logger.hpp>
 #include <rclcpp/node.hpp>
@@ -59,9 +58,8 @@ private:
             , motor_(motor_test, motor_test_command, "/test/motor") {
 
             motor_.configure(
-                device::DjiMotor::Config{device::DjiMotor::Type::kM3508, 3}
-                    .enable_multi_turn_angle()
-                    .set_reduction_ratio(13.0));
+                device::DjiMotor::Config{device::DjiMotor::Type::kGM6020, 1}
+                    .enable_multi_turn_angle());
 
             board_ = std::make_unique<librmcs::board::CBoard>(*this, board_serial);
         }
@@ -77,12 +75,12 @@ private:
             builder.can_transmit(
                 Spec::kCans.kCan1,
                 {
-                    .can_id = 0x200,
+                    .can_id = motor_.send_id(),
                     .can_data =
                         device::CanPacket8{
-                            device::CanPacket8::PaddingQuarter{},
-                            device::CanPacket8::PaddingQuarter{},
                             motor_.generate_command(),
+                            device::CanPacket8::PaddingQuarter{},
+                            device::CanPacket8::PaddingQuarter{},
                             device::CanPacket8::PaddingQuarter{},
                         }
                             .as_bytes(),
@@ -96,17 +94,12 @@ private:
             auto can_id = data.can_id;
 
             if (can == Spec::kCans.kCan1) {
-                if (can_id == 0x203) {
+                if (can_id == motor_.recv_id()) {
                     motor_.store_status(data.can_data);
                 }
             }
         }
 
-        void uart_receive_callback(const Spec::Uart& uart, const View::Uart& data) override {
-
-            (void)uart;
-            (void)data;
-        }
 
         rclcpp::Logger logger_;
 

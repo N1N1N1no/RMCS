@@ -80,7 +80,7 @@ private:
             builder.can_transmit(
                 Spec::kCans.kCan1,
                 {
-                    .can_id = 0x200,
+                    .can_id = motor_.send_id(),
                     .can_data =
                         device::CanPacket8{
                             device::CanPacket8::PaddingQuarter{},
@@ -99,7 +99,7 @@ private:
             auto can_id = data.can_id;
 
             if (can == Spec::kCans.kCan1) {
-                if (can_id == 0x203) {
+                if (can_id == motor_.recv_id()) {
                     motor_.store_status(data.can_data);
                 }
             }
