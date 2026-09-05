@@ -1,42 +1,44 @@
-# motor_test_single 单 M3508 电机（C 板）速度环单环控制（启用 DR16）
-# 启动: ros2 launch rmcs_bringup rmcs.launch.py robot:=motor_test_single
-# 操作: 默认方波作为目标速度(±target_velocity_amplitude rad/s 切换，忽略摇杆)方便调试；
-#       square_wave_enabled 设为 false 后改为左摇杆前后 -> 目标速度(PID闭环)。
-#       左右两拨杆都拨到下位(DOWN) -> 停转；遥控器失联时同样停转（安全）。
-# 可视化: 先启动 foxglove bridge(.script/foxglove)，Foxglove Plot 中看：
-#         /test/motor/velocity        实际速度(rad/s)
-#         /test/motor/target_velocity 目标速度(rad/s)
-#         /test/motor/velocity_error  速度误差(rad/s)
-
 rmcs_executor:
   ros__parameters:
     update_rate: 1000.0
     components:
       - rmcs_core::hardware::MotorTestSingle -> motor_test_single
       - rmcs_core::controller::MotorTestSingleController -> motor_test_single_controller
+      - rmcs_core::controller::pid::PidController -> velocity_pid_controller
       - rmcs_core::broadcaster::ValueBroadcaster -> value_broadcaster
 
 motor_test_single:
   ros__parameters:
-    board_serial: ""          # C 板 USB 串口序列号过滤（留空自动匹配）
+    board_serial: ""          
 
 motor_test_single_controller:
   ros__parameters:
-    square_wave_enabled: true       # true: 方波作为目标速度(忽略摇杆); false: 左摇杆控制
-    target_velocity_amplitude: 2.0  # 方波幅值(rad/s)
-    square_wave_period: 2.0         # 方波半周期(秒)
-    max_velocity: 5.0         # 左摇杆满量程时的目标角速度(rad/s)
-    kp: 1.2                   # 速度环 P
-    ki: 0.1                   # 速度环 I
-    kd: 0.5                   # 速度环 D
-    integral_limit: 1.0       # 速度环积分限幅
-    velocity_filter_cutoff: 100.0  # 速度反馈低通滤波截止频率(Hz)，<=0 关闭
-    filter_sampling_frequency: 1000.0  # 滤波采样频率，应与 update_rate 一致
+    fixed_velocity_enabled: false
+    target_velocity: 20.0
+    max_velocity: 50.0
+    velocity_filter_cutoff: 100.0      # 速度反馈低通滤波截止频率
+    filter_sampling_frequency: 1000.0  # 滤波采样频率
+
+velocity_pid_controller:
+  ros__parameters:
+    setpoint: /test/motor/target_velocity      # 来自 motor_test_single_controller 的目标速度
+    measurement: /test/motor/measured_velocity  # 来自 motor_test_single_controller 的滤波后速度
+    feedforward: 0.0
+    control: /test/motor/control_torque         # 速度环输出：力矩，供硬件读取
+    kp: 0.3               # 速度环 P
+    ki: 0.005             # 速度环 I
+    kd: 0.0               # 速度环 D
+    integral_min: -10.0   # 速度环积分限幅下限
+    integral_max: 10.0    # 速度环积分限幅上限
+    output_min: -50.0     # 速度环输出限幅下限
+    output_max: 50.0      # 速度环输出限幅上限
 
 value_broadcaster:
   ros__parameters:
     forward_list:
       - /test/motor/velocity
+      - /test/motor/measured_velocity
       - /test/motor/target_velocity
       - /test/motor/velocity_error
+      - /test/motor/control_torque
       - /test/motor/torque

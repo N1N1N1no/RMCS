@@ -20,8 +20,6 @@ public:
               create_partner_component<MotorTestDoubleCommand>(
                   get_component_name() + "_command", *this)) {
 
-        // [未启用 DR16] 不创建 RemoteControl
-        // remote_control_ = std::make_unique<device::RemoteControl>(*this);
 
         board_ = std::make_unique<MotorBoard>(
             *this, *command_component_, get_parameter("board_serial").as_string());
@@ -36,8 +34,7 @@ public:
 
     void update() override {
         board_->update();
-        // [未启用 DR16] 不需要发布 /remote/* 话题
-        // remote_control_->update();
+
     }
 
     void command_update() { board_->command_update(); }
@@ -63,18 +60,15 @@ private:
 
             motor_.configure(
                 device::DjiMotor::Config{device::DjiMotor::Type::kM3508, 3}
-                    .enable_multi_turn_angle());
-
-            // [未启用 DR16] 不把 DR16 注册给 RemoteControl
-            // motor_test.remote_control_->register_dr16(&dr16_);
+                    .enable_multi_turn_angle()
+                    .set_reduction_ratio(13.0));
 
             board_ = std::make_unique<librmcs::board::CBoard>(*this, board_serial);
         }
 
         void update() {
             motor_.update_status();
-            // [未启用 DR16] 不需要刷新 DR16 状态
-            // dr16_.update_status();
+
         }
 
         void command_update() {
@@ -109,10 +103,7 @@ private:
         }
 
         void uart_receive_callback(const Spec::Uart& uart, const View::Uart& data) override {
-            // [未启用 DR16] 不处理 DBUS 遥控数据
-            // if (uart == Spec::kUarts.kDbus) {
-            //     dr16_.store_status(data.uart_data.data(), data.uart_data.size());
-            // }
+
             (void)uart;
             (void)data;
         }
@@ -120,13 +111,11 @@ private:
         rclcpp::Logger logger_;
 
         device::DjiMotor motor_;
-        // device::Dr16 dr16_;   // [未启用 DR16] 注释保留
 
         std::unique_ptr<librmcs::board::CBoard> board_;
     };
 
     std::shared_ptr<MotorBoard> board_;
-    // std::unique_ptr<device::RemoteControl> remote_control_;  // [未启用 DR16] 注释保留
 };
 } // namespace rmcs_core::hardware
 

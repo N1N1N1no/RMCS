@@ -1,18 +1,11 @@
-# motor_test_double 单 M3508 电机（C 板）角度环+速度环双环位置控制（未启用 DR16）
-# 启动: ros2 launch rmcs_bringup rmcs.launch.py robot:=motor_test_double
-# 调试: 默认用方波作为目标角度：在 ±target_angle_amplitude(rad) 之间每 square_wave_period 秒切换一次，
-#       用于观察位置环的阶跃响应/跟踪效果。
-# 可视化: 先启动 foxglove bridge(.script/foxglove)，Foxglove Plot 中看：
-#         /test/motor/angle         实际角度(rad)
-#         /test/motor/target_angle  目标角度(rad，方波)
-#         /test/motor/angle_error   角度误差(rad)
-
 rmcs_executor:
   ros__parameters:
     update_rate: 1000.0
     components:
       - rmcs_core::hardware::MotorTestDouble -> motor_test_double
       - rmcs_core::controller::MotorTestDoubleController -> motor_test_double_controller
+      - rmcs_core::controller::pid::PidController -> angle_pid_controller
+      - rmcs_core::controller::pid::PidController -> velocity_pid_controller
       - rmcs_core::broadcaster::ValueBroadcaster -> value_broadcaster
 
 motor_test_double:
@@ -21,27 +14,47 @@ motor_test_double:
 
 motor_test_double_controller:
   ros__parameters:
-    square_wave_enabled: false   # 启用方波目标角度（调试）
+    square_wave_enabled: true   # 启用方波目标角度（调试）
     target_angle_amplitude: 0.5 # 方波幅值(rad)：目标在 -0.5 和 +0.5 之间切换
     square_wave_period: 2.0     # 方波半周期(秒)：约每 2 秒切换一次
     target_angle: 0.0           # 方波关闭(square_wave_enabled=false)时的固定目标位置(rad)
     angle_filter_cutoff: 0.0    # 角度反馈低通滤波截止频率(Hz)，<=0 关闭
     velocity_filter_cutoff: 100.0  # 速度反馈低通滤波截止频率(Hz)，<=0 关闭
     filter_sampling_frequency: 1000.0  # 滤波采样频率，应与 update_rate 一致
-    max_velocity: 5.0           # 位置环输出的最大目标速度(rad/s)
-    angle_kp: 15.0               # 角度环(位置环) P
-    angle_ki: 0.0              # 角度环 I
-    angle_kd: 0.0              # 角度环 D
-    vel_kp: 1.16             # 速度环 P
-    vel_ki: 0.1                 # 速度环 I
-    vel_kd: 0.0               # 速度环 D
-    integral_limit: 1.0         # 速度环积分限幅
+
+angle_pid_controller:
+  ros__parameters:
+    setpoint: /test/motor/target_angle      # 来自 motor_test_double_controller 的目标角度
+    measurement: /test/motor/measured_angle # 来自 motor_test_double_controller 的滤波后角度
+    feedforward: 0.0
+    control: /test/motor/control_velocity   # 角度环输出：目标速度(rad/s)，供速度环 setpoint
+    kp: 15.0               # 角度环(位置环) P
+    ki: 0.003               # 角度环 I
+    kd: 0.0               # 角度环 D
+    output_min: -50.0      # 角度环输出的最大目标速度下限(rad/s)
+    output_max: 50.0       # 角度环输出的最大目标速度上限(rad/s)
+
+velocity_pid_controller:
+  ros__parameters:
+    setpoint: /test/motor/control_velocity      # 来自 angle_pid_controller 的目标速度
+    measurement: /test/motor/measured_velocity  # 来自 motor_test_double_controller 的滤波后速度
+    feedforward: 0.0
+    control: /test/motor/control_torque         # 速度环输出：力矩，供硬件读取
+    kp: 0.3              # 速度环 P
+    ki: 0.005               # 速度环 I
+    kd: 0.0               # 速度环 D
+    integral_min: -10.0    # 速度环积分限幅下限
+    integral_max: 10.0     # 速度环积分限幅上限
 
 value_broadcaster:
   ros__parameters:
     forward_list:
       - /test/motor/angle
+      - /test/motor/measured_angle
+      - /test/motor/measured_velocity
       - /test/motor/target_angle
       - /test/motor/angle_error
+      - /test/motor/control_velocity
+      - /test/motor/control_torque
       - /test/motor/velocity
       - /test/motor/torque

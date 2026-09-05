@@ -61,7 +61,8 @@ private:
 
             motor_.configure(
                 device::DjiMotor::Config{device::DjiMotor::Type::kM3508, 3}
-                    .enable_multi_turn_angle());
+                    .enable_multi_turn_angle()
+                    .set_reduction_ratio(13.0));
 
             motor_test.remote_control_->register_dr16(&dr16_);
 
