@@ -15,3 +15,5 @@
 ![alt text](docs/zh-cn/images/double.png)
 
 注：调试时有时会出现launch后剧烈振荡 我按着电机底座使它稳定后松手便恢复正常且运行顺滑 猜想可能是电机底座没固定导致 
+
+详情见README.md
