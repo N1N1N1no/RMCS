@@ -1,5 +1,7 @@
 #include "hardware/device/can_packet.hpp"
 #include "hardware/device/dji_motor.hpp"
+#include "hardware/device/dr16.hpp"
+#include "hardware/device/remote_control.hpp"
 #include "librmcs/board/c_board.hpp"
 #include <rclcpp/logger.hpp>
 #include <rclcpp/node.hpp>
@@ -19,6 +21,8 @@ public:
               create_partner_component<MotorTestDoubleCommand>(
                   get_component_name() + "_command", *this)) {
 
+        // 与 motor_test_single 相同：接入 DR16 遥控，发布 /remote/joystick/left 等
+        remote_control_ = std::make_unique<device::RemoteControl>(*this);
 
         board_ = std::make_unique<MotorBoard>(
             *this, *command_component_, get_parameter("board_serial").as_string());
@@ -33,7 +37,7 @@ public:
 
     void update() override {
         board_->update();
-
+        remote_control_->update();
     }
 
     void command_update() { board_->command_update(); }
@@ -61,12 +65,14 @@ private:
                 device::DjiMotor::Config{device::DjiMotor::Type::kGM6020, 1}
                     .enable_multi_turn_angle());
 
+            motor_test.remote_control_->register_dr16(&dr16_);
+
             board_ = std::make_unique<librmcs::board::CBoard>(*this, board_serial);
         }
 
         void update() {
             motor_.update_status();
-
+            dr16_.update_status();
         }
 
         void command_update() {
@@ -100,15 +106,22 @@ private:
             }
         }
 
+        void uart_receive_callback(const Spec::Uart& uart, const View::Uart& data) override {
+            if (uart == Spec::kUarts.kDbus) {
+                dr16_.store_status(data.uart_data.data(), data.uart_data.size());
+            }
+        }
 
         rclcpp::Logger logger_;
 
         device::DjiMotor motor_;
+        device::Dr16 dr16_;
 
         std::unique_ptr<librmcs::board::CBoard> board_;
     };
 
     std::shared_ptr<MotorBoard> board_;
+    std::unique_ptr<device::RemoteControl> remote_control_;
 };
 } // namespace rmcs_core::hardware
 

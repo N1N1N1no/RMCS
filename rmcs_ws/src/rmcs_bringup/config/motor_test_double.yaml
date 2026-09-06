@@ -14,10 +14,23 @@ motor_test_double:
 
 motor_test_double_controller:
   ros__parameters:
-    square_wave_enabled: true  # 启用方波目标角度（调试）
-    target_angle_amplitude: 3.0 # 方波幅值(rad)
-    square_wave_period: 3.0     # 方波半周期(秒)
-    target_angle: 0.0           # 方波关闭(square_wave_enabled=false)时的固定目标位置(rad)
+    trapezoid_enabled: false    # 启用梯形波目标角度（调试）
+    target_angle_amplitude: 3.0 # 梯形波幅值(rad)
+    trapezoid_rise_time: 2.0    # 斜坡时间(秒)
+    trapezoid_hold_time: 2.0    # 保持时间(秒)
+    target_angle: 2.0           # 波形关闭时的固定目标位置(rad)
+
+
+
+    major_arc_enabled: true    # true=走优弧；false=保持原来的直接跟踪 target_angle
+    major_arc_tolerance: 0.05   
+
+    # 只要左摇杆偏离中位（超过死区），目标角度就设定为 remote_angle_setpoint(rad)；回中则给定 0。
+    # 与 major_arc_enabled 组合：每次拨动/回中都会触发一次优弧运动（需 trapezoid_enabled=false）。
+    remote_angle_enabled: true          # true=用左摇杆给定目标角度
+    remote_angle_setpoint: 3.0           # 拨动左摇杆时给定的目标角度(rad)，0 < 值 ≤ π
+    remote_angle_deadband: 0.1           
+
     angle_filter_cutoff: 0.0    
     velocity_filter_cutoff: 100.0  
     filter_sampling_frequency: 1000.0  
@@ -27,19 +40,19 @@ angle_pid_controller:
     setpoint: /test/motor/target_angle      
     measurement: /test/motor/angle 
     feedforward: 0.0
-    control: /test/motor/control_velocity   # 角度环输出：目标速度(rad/s)，供速度环 setpoint
-    kp: 3.88             # 角度环(位置环) P
-    ki: 0.015               # 角度环 I
-    kd: 0.0085              # 角度环 D
-    output_min: -30.0      # 角度环输出的最大目标速度下限(rad/s)
-    output_max: 30.0       # 角度环输出的最大目标速度上限(rad/s)
-    integral_min: -6.0    
-    integral_max: 6.0     
+    control: /test/motor/control_velocity   
+    kp: 5.5            
+    ki: 0.0               
+    kd: 0.15              
+    output_min: -100.0      
+    output_max: 100.0       
+    integral_min: -60.0    
+    integral_max: 60.0     
 
 velocity_pid_controller:
   ros__parameters:
-    setpoint: /test/motor/control_velocity      # 目标速度
-    measurement: /test/motor/velocity  # 滤波后速度
+    setpoint:  /test/motor/control_velocity      # 目标速度
+    measurement: /test/motor/velocity  
     feedforward: 0.0
     control: /test/motor/control_torque        
     kp: 0.035            
@@ -47,6 +60,8 @@ velocity_pid_controller:
     kd: 0.0              
     integral_min: -18.0    # 速度环积分限幅下限
     integral_max: 18.0     # 速度环积分限幅上限
+    output_min: -80.0      
+    output_max: 80.0 
 
 value_broadcaster:
   ros__parameters:

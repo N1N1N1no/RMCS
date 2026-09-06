@@ -13,7 +13,7 @@ motor_test_single:
 
 motor_test_single_controller:
   ros__parameters:
-    fixed_velocity_enabled: false
+    fixed_velocity_enabled: false     #定速转动（调试）
     target_velocity: 20.0
     max_velocity: 50.0
     velocity_filter_cutoff: 100.0      # 速度反馈低通滤波截止频率
@@ -21,17 +21,17 @@ motor_test_single_controller:
 
 velocity_pid_controller:
   ros__parameters:
-    setpoint: /test/motor/target_velocity      # 来自 motor_test_single_controller 的目标速度
-    measurement: /test/motor/velocity  # 来自 motor_test_single_controller 的滤波后速度
+    setpoint: /test/motor/target_velocity     
+    measurement: /test/motor/velocity  
     feedforward: 0.0
-    control: /test/motor/control_torque         # 速度环输出：力矩，供硬件读取
-    kp: 0.3               # 速度环 P
-    ki: 0.005             # 速度环 I
-    kd: 0.0               # 速度环 D
-    integral_min: -10.0   # 速度环积分限幅下限
-    integral_max: 10.0    # 速度环积分限幅上限
-    output_min: -50.0     # 速度环输出限幅下限
-    output_max: 50.0      # 速度环输出限幅上限
+    control: /test/motor/control_torque         
+    kp: 0.3               
+    ki: 0.005             
+    kd: 0.0               
+    integral_min: -10.0   
+    integral_max: 10.0    
+    output_min: -50.0     
+    output_max: 50.0      
 
 value_broadcaster:
   ros__parameters:
