@@ -7,6 +7,7 @@
   <class type="rmcs_core::hardware::Sentry" base_class_type="rmcs_executor::Component" />
   <class type="rmcs_core::hardware::MotorTestSingle" base_class_type="rmcs_executor::Component" />
   <class type="rmcs_core::hardware::MotorTestDouble" base_class_type="rmcs_executor::Component" />
+  <class type="rmcs_core::hardware::GantryFrame" base_class_type="rmcs_executor::Component" />
   
   <class type="rmcs_core::hardware::Px4VisionBridge" base_class_type="rmcs_executor::Component" />
 
@@ -44,6 +45,7 @@
   <class type="rmcs_core::controller::pid::PidController" base_class_type="rmcs_executor::Component" />
   <class type="rmcs_core::controller::MotorTestSingleController" base_class_type="rmcs_executor::Component" />
   <class type="rmcs_core::controller::MotorTestDoubleController" base_class_type="rmcs_executor::Component" />
+  <class type="rmcs_core::controller::GantryFrameController" base_class_type="rmcs_executor::Component" />
   <class type="rmcs_core::controller::pid::ErrorPidController" base_class_type="rmcs_executor::Component" />
   <class type="rmcs_core::controller::pid::FrictionWheelPidRecorder" base_class_type="rmcs_executor::Component" />
 

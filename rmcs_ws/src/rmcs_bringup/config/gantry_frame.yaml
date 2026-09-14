@@ -1,0 +1,132 @@
+rmcs_executor:
+  ros__parameters:
+    update_rate: 1000.0
+    components:
+      - rmcs_core::hardware::GantryFrame -> gantry_frame
+      - rmcs_core::controller::GantryFrameController -> gantry_frame_controller
+      - rmcs_core::controller::pid::PidController -> frame_left_angle_pid_controller
+      - rmcs_core::controller::pid::PidController -> frame_left_velocity_pid_controller
+      - rmcs_core::controller::pid::PidController -> frame_right_angle_pid_controller
+      - rmcs_core::controller::pid::PidController -> frame_right_velocity_pid_controller
+      - rmcs_core::broadcaster::ValueBroadcaster -> value_broadcaster
+
+gantry_frame:
+  ros__parameters:
+    board_serial: ""
+
+gantry_frame_controller:
+  ros__parameters:
+    screw_lead_mm: 4.0             
+    # 龙门停在已知零点时读 /test/frame_*_motor/angle 填入
+    left_zero_angle: 0.0           
+    right_zero_angle: 0.0          
+    min_height: 0.0                
+    max_height: 80.0               
+    target_height: 40.0            
+
+    max_velocity: 20.0             
+    max_acceleration: 80.0         
+    max_jerk: 400.0               
+    height_tolerance: 0.1          
+    velocity_tolerance: 0.5        
+
+    remote_enabled: true
+    remote_center_height: 40.0     
+    remote_height_range: 40.0      
+    remote_deadband: 0.08          
+
+    sync_enabled: false
+    sync_kp: 0.5                   
+    sync_kd: 0.02                  
+    sync_output_limit: 0.3         
+    sync_error_limit_mm: 0.0       
+
+    left_gravity_ff: 0.0           
+    right_gravity_ff: 0.0          
+    friction_ff: 0.0               
+    friction_ff_velocity_scale: 5.0 
+
+    angle_filter_cutoff: 0.0       
+    velocity_filter_cutoff: 100.0  
+    filter_sampling_frequency: 1000.0
+
+
+frame_left_angle_pid_controller:
+  ros__parameters:
+    setpoint: /test/frame_left_motor/target_angle
+    measurement: /test/frame_left_motor/angle
+    feedforward: /test/frame_left_motor/feedforward_velocity
+    control: /test/frame_left_motor/control_velocity
+    kp: 5.5
+    ki: 0.0
+    kd: 0.15
+    output_min: -40.0
+    output_max: 40.0
+    integral_min: -10.0
+    integral_max: 10.0
+
+frame_left_velocity_pid_controller:
+  ros__parameters:
+    setpoint: /test/frame_left_motor/control_velocity
+    measurement: /test/frame_left_motor/velocity
+    feedforward: /test/frame_left_motor/feedforward_torque
+    control: /test/frame_left_motor/control_torque
+    kp: 0.05
+    ki: 0.002
+    kd: 0.0
+    integral_min: -0.3
+    integral_max: 0.3
+    output_min: -1.8              
+    output_max: 1.8
+
+frame_right_angle_pid_controller:
+  ros__parameters:
+    setpoint: /test/frame_right_motor/target_angle
+    measurement: /test/frame_right_motor/angle
+    feedforward: /test/frame_right_motor/feedforward_velocity
+    control: /test/frame_right_motor/control_velocity
+    kp: 5.5
+    ki: 0.0
+    kd: 0.15
+    output_min: -40.0
+    output_max: 40.0
+    integral_min: -10.0
+    integral_max: 10.0
+
+frame_right_velocity_pid_controller:
+  ros__parameters:
+    setpoint: /test/frame_right_motor/control_velocity
+    measurement: /test/frame_right_motor/velocity
+    feedforward: /test/frame_right_motor/feedforward_torque
+    control: /test/frame_right_motor/control_torque
+    kp: 0.05
+    ki: 0.002
+    kd: 0.0
+    integral_min: -0.3
+    integral_max: 0.3
+    output_min: -1.8
+    output_max: 1.8
+
+value_broadcaster:
+  ros__parameters:
+    forward_list:
+      - /test/frame_left_motor/angle
+      - /test/frame_left_motor/velocity
+      - /test/frame_left_motor/torque
+      - /test/frame_left_motor/target_angle
+      - /test/frame_left_motor/control_velocity
+      - /test/frame_left_motor/control_torque
+      - /test/frame_right_motor/angle
+      - /test/frame_right_motor/velocity
+      - /test/frame_right_motor/torque
+      - /test/frame_right_motor/target_angle
+      - /test/frame_right_motor/control_velocity
+      - /test/frame_right_motor/control_torque
+      - /test/gantry/height
+      - /test/gantry/target_height
+      - /test/gantry/reference_velocity
+      - /test/gantry/sync_error
+      - /test/gantry/sync_correction
+      - /test/gantry/left_angle_error
+      - /test/gantry/right_angle_error
+      - /test/gantry/enabled
