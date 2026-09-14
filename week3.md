@@ -1,4 +1,5 @@
-代码已上传仓库：
+代码已上传仓库：(龙门架)https://github.com/N1N1N1no/RMCS
+（视觉+导航）https://github.com/N1N1N1no/Week3
 # 任务一 PID参数配合
 ## 舵轮底盘的舵轮舵向电机外环和内环
 ### 控制需求与期望效果
@@ -111,13 +112,7 @@ $$
 \boldsymbol{v}_{w_i}
 =
 \begin{bmatrix}
-v_x-R\omega_z\sin\phi_i\\
-v_y+R\omega_z\cos\phi_i
-\end{bmatrix}.
-$$
-
-目标转角和目标角速度分别为
-
+v_x-R\omega_z\sin\phi_i\\docs/zh-cn/images/image-2.png docs/zh-cn/images/image (2).png
 $$
 \theta_i
 =\operatorname{atan2}\left(v_{w_i,y},v_{w_i,x}\right),
