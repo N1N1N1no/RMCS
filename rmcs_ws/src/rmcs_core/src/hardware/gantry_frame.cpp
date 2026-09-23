@@ -21,13 +21,17 @@ public:
               create_partner_component<GantryFrameCommand>(
                   get_component_name() + "_command", *this))
         , left_motor_(*this, *command_component_, "/test/frame_left_motor")
-        , right_motor_(*this, *command_component_, "/test/frame_right_motor") {
+        , right_motor_(*this, *command_component_, "/test/frame_right_motor")
+        , yaw_motor_(*this, *command_component_, "/test/frame_yaw_motor") {
+        // pitch 正方向 = 逆时针 = 上升（顺时针 = 下降）
         left_motor_.configure(
-            device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 1}
-                .enable_multi_turn_angle());
+            device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 3}
+            .set_reversed());
         right_motor_.configure(
             device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 2}
-                .enable_multi_turn_angle());
+            .set_reversed());
+        yaw_motor_.configure(device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 1}
+            .set_reversed());
 
         remote_control_ = std::make_unique<device::RemoteControl>(*this);
         remote_control_->register_dr16(&dr16_);
@@ -46,6 +50,7 @@ public:
     void update() override {
         left_motor_.update_status();
         right_motor_.update_status();
+        yaw_motor_.update_status();
         dr16_.update_status();
         remote_control_->update();
     }
@@ -58,10 +63,11 @@ public:
             {
                 .can_id = left_motor_.send_id(),
                 .can_data =
+                    // 0x200 帧的 quarter 下标 = 电机 ID - 1
                     device::CanPacket8{
-                        left_motor_.generate_command(),
+                        yaw_motor_.generate_command(),
                         right_motor_.generate_command(),
-                        device::CanPacket8::PaddingQuarter{},
+                        left_motor_.generate_command(),
                         device::CanPacket8::PaddingQuarter{},
                     }
                         .as_bytes(),
@@ -92,6 +98,8 @@ private:
             left_motor_.store_status(data.can_data);
         } else if (can_id == right_motor_.recv_id()) {
             right_motor_.store_status(data.can_data);
+        } else if (can_id == yaw_motor_.recv_id()) {
+            yaw_motor_.store_status(data.can_data);
         }
     }
 
@@ -104,6 +112,7 @@ private:
 
     device::DjiMotor left_motor_;
     device::DjiMotor right_motor_;
+    device::DjiMotor yaw_motor_;
     device::Dr16 dr16_;
 
     std::unique_ptr<device::RemoteControl> remote_control_;
