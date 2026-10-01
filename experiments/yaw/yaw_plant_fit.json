@@ -1,0 +1,68 @@
+{
+  "model": "G_tau_to_yaw(s) = exp(-delay*s)/(J*s^2 + B*s)",
+  "input": "motor-current-derived output torque (N m)",
+  "output": "yaw encoder angle relative to chassis (rad)",
+  "relative_speed": "gimbal IMU yaw rate minus chassis IMU yaw rate (rad/s)",
+  "training_file": "yaw_plant_1790857685500.csv",
+  "independent_file": "yaw_plant_1790857941873.csv",
+  "training_cycles": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "first_run_holdout_cycles": [
+    6,
+    7
+  ],
+  "delay_ms": 3,
+  "delay_training_r2_by_ms_0_to_6": [
+    0.9195463549629399,
+    0.9221475231852365,
+    0.9234076018113795,
+    0.9235918056435098,
+    0.9227436501018127,
+    0.9208596025768301,
+    0.9177800171903217
+  ],
+  "parameters": {
+    "J_kg_m2": 0.14261164568793971,
+    "B_Nm_s_per_rad": 1.3785478461447576,
+    "disturbance_Nm": 0.0009025252953363008,
+    "velocity_time_constant_s": 0.10345063182737327,
+    "nonzero_pole_per_s": -9.666446519811373
+  },
+  "cycle_bootstrap_95pct": {
+    "J_kg_m2": [
+      0.13682034513092836,
+      0.14871830275444073
+    ],
+    "B_Nm_s_per_rad": [
+      1.3318272374700244,
+      1.433750367643864
+    ]
+  },
+  "training": {
+    "samples": 479,
+    "acceleration_r2": 0.9235918056435098,
+    "acceleration_rmse_rad_s2": 1.4320464130090922
+  },
+  "first_run_holdout": {
+    "samples": 180,
+    "acceleration_r2": 0.937087599170925,
+    "acceleration_rmse_rad_s2": 1.296044319560985,
+    "velocity_rmse_rad_s": 0.034081284689575005,
+    "angle_rmse_rad": 0.005282603371641496
+  },
+  "independent_run": {
+    "samples": 489,
+    "acceleration_r2": 0.9076253870789315,
+    "acceleration_rmse_rad_s2": 1.5485712876940247,
+    "duration_s": 2.552917473,
+    "ended_early_at_0_12_rad_angle_limit": true,
+    "separately_fitted_J_kg_m2": 0.14439335312311571,
+    "separately_fitted_B_Nm_s_per_rad": 1.3922971665594996,
+    "separately_fitted_disturbance_Nm": -0.05737342685891307
+  }
+}

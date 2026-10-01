@@ -1,0 +1,67 @@
+{
+  "input": "yaw_sweep target_offset (rad)",
+  "output": "yaw encoder angle (rad)",
+  "sample_period_s": 0.005,
+  "training_files": [
+    "yaw_sweep_2026-10-01.csv",
+    "yaw_repeat_1_2026-10-01.csv",
+    "yaw_repeat_2_2026-10-01.csv"
+  ],
+  "validation_file": "yaw_repeat_3_2026-10-01.csv",
+  "model_1": {
+    "parameters": [
+      0.0976317176392355,
+      0.013314299626980537
+    ],
+    "gain": 0.9806729633922922,
+    "training_rmse_rad": 0.0018384221602525724,
+    "holdout_rmse_rad": 0.0017837114597703337,
+    "holdout_peak_abs_error_rad": 0.013694266471079963,
+    "training_drifts_rad_per_s": [
+      -0.0019029479003434622,
+      -0.0011297974923676283,
+      -0.0011929330401196539
+    ],
+    "mean_training_drift_rad_per_s": -0.0014085594776102482
+  },
+  "model_2": {
+    "parameters": [
+      25.02490811006289,
+      1.37240330221903,
+      1.5852975452860944e-17
+    ],
+    "gain": 0.978954225384571,
+    "training_rmse_rad": 0.001488988618042284,
+    "holdout_rmse_rad": 0.0015115757491332336,
+    "holdout_peak_abs_error_rad": 0.011757990374811733,
+    "training_drifts_rad_per_s": [
+      -0.00190844782542483,
+      -0.001135291921175901,
+      -0.0011984329652010221
+    ],
+    "mean_training_drift_rad_per_s": -0.0014140575706005846,
+    "numerator": 613.0661932018321,
+    "denominator": [
+      1.0,
+      68.68853305595619,
+      626.2460259170913
+    ],
+    "poles_rad_per_s": [
+      -10.82230620517113,
+      -57.866226850785054
+    ],
+    "holdout_rmse_deg": 0.08660691083965999,
+    "holdout_peak_abs_error_deg": 0.6736832240321572
+  },
+  "model_1_parameter_order": [
+    "time_constant_s",
+    "delay_s"
+  ],
+  "model_2_parameter_order": [
+    "natural_frequency_rad_per_s",
+    "damping_ratio",
+    "delay_s"
+  ],
+  "second_order_holdout_rmse_reduction_vs_first_order_percent": 15.25671145669152,
+  "figure": "yaw_closed_loop_fit.png"
+}

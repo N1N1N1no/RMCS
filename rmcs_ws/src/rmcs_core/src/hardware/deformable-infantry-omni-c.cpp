@@ -2,8 +2,11 @@
 #include <array>
 #include <atomic>
 #include <chrono>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <fstream>
+#include <iomanip>
 #include <limits>
 #include <memory>
 #include <numbers>
@@ -22,7 +25,9 @@
 #include <rmcs_executor/component.hpp>
 #include <rmcs_msgs/board_clock.hpp>
 #include <rmcs_msgs/imu_snapshot.hpp>
+#include <rmcs_msgs/mouse.hpp>
 #include <rmcs_msgs/serial_interface.hpp>
+#include <rmcs_msgs/switch.hpp>
 #include <rmcs_utility/ring_buffer.hpp>
 
 #include "hardware/device/bmi088.hpp"
@@ -58,6 +63,27 @@ public:
             "/auto_aim/camera_transform", camera_transform_, Eigen::Isometry3d::Identity());
         register_output("/auto_aim/barrel_direction", barrel_direction_, Eigen::Vector3d::UnitX());
         register_output("/auto_aim/yaw_velocity", auto_aim_yaw_velocity_, 0.0);
+        // The auto-aim component is disabled in the yaw-only configuration. Its direction
+        // interface is reused for a bounded, manually triggered baseline sweep.
+        register_output("/auto_aim/should_control", yaw_sweep_should_control_, false);
+        register_output(
+            "/auto_aim/control_direction", yaw_sweep_control_direction_,
+            Eigen::Vector3d::Constant(kNaN));
+        register_output("/gimbal/yaw_sweep/target_offset", yaw_sweep_target_offset_, kNaN);
+        register_output("/gimbal/yaw_sweep/active", yaw_sweep_active_output_, 0.0);
+        register_output("/gimbal/yaw_sweep/remote_ready", yaw_sweep_remote_ready_output_, 0.0);
+        register_output("/gimbal/yaw_sweep/right_switch", yaw_sweep_right_switch_output_, 0.0);
+
+        yaw_sweep_amplitude_rad_ = std::clamp(
+            std::abs(get_parameter_or("yaw_sweep_amplitude_rad", 0.10)), 0.01, 0.15);
+        yaw_sweep_hold_seconds_ =
+            std::clamp(get_parameter_or("yaw_sweep_hold_seconds", 1.5), 0.5, 5.0);
+        yaw_sweep_cycles_ = std::clamp(get_parameter_or("yaw_sweep_cycles", 4), 1, 10);
+        yaw_plant_torque_nm_ =
+            std::clamp(std::abs(get_parameter_or("yaw_plant_torque_nm", 0.9)), 0.1, 1.0);
+        yaw_plant_phase_seconds_ =
+            std::clamp(get_parameter_or("yaw_plant_phase_seconds", 0.12), 0.08, 0.20);
+        yaw_plant_cycles_ = std::clamp(get_parameter_or("yaw_plant_cycles", 8), 2, 10);
 
         tf_->set_transform<PitchLink, CameraLink>(Eigen::Translation3d{0.058, -0.08, 0.0});
 
@@ -75,6 +101,48 @@ public:
             [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
                 status_service_callback(response);
             });
+        yaw_sweep_start_service_ = create_service<Srv>(
+            "/rmcs/service/yaw_sweep/start",
+            [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
+                if (!yaw_sweep_remote_ready_.load()) {
+                    response->success = false;
+                    response->message =
+                        "Yaw sweep not started: hold the right switch UP or right mouse button "
+                        "with both remote switches valid. Current right switch value: "
+                        + std::to_string(yaw_sweep_right_switch_state_.load());
+                    return;
+                }
+                yaw_sweep_start_requested_.store(true);
+                response->success = true;
+                response->message = "Yaw sweep queued. Keep the auto-aim request active to run it.";
+            });
+        yaw_sweep_stop_service_ = create_service<Srv>(
+            "/rmcs/service/yaw_sweep/stop",
+            [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
+                yaw_sweep_stop_requested_.store(true);
+                response->success = true;
+                response->message = "Yaw sweep stop queued.";
+            });
+        yaw_plant_start_service_ = create_service<Srv>(
+            "/rmcs/service/yaw_plant/start",
+            [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
+                if (!yaw_sweep_remote_ready_.load()) {
+                    response->success = false;
+                    response->message = "Yaw plant test requires the right switch UP or right mouse "
+                                        "button and valid remote switches.";
+                    return;
+                }
+                yaw_plant_start_requested_.store(true);
+                response->success = true;
+                response->message = "Yaw plant test queued; keep the remote request active.";
+            });
+        yaw_plant_stop_service_ = create_service<Srv>(
+            "/rmcs/service/yaw_plant/stop",
+            [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
+                yaw_plant_stop_requested_.store(true);
+                response->success = true;
+                response->message = "Yaw plant test stop queued.";
+            });
     }
 
     ~DeformableInfantryOmniC() override = default;
@@ -91,6 +159,8 @@ public:
         *barrel_direction_ =
             *fast_tf::cast<OdomImu>(PitchLink::DirectionVector{Eigen::Vector3d::UnitX()}, *tf_);
         *auto_aim_yaw_velocity_ = top_board_->gimbal_yaw_velocity();
+        update_yaw_sweep();
+        update_yaw_plant();
     }
 
     void command_update() {
@@ -112,14 +182,195 @@ private:
         "right_front",
     };
 
+    void update_yaw_sweep() {
+        const auto right_switch = command_->right_switch();
+        const bool remote_ready = command_->sweep_allowed();
+        yaw_sweep_right_switch_state_.store(static_cast<int>(right_switch));
+        yaw_sweep_remote_ready_.store(remote_ready);
+        *yaw_sweep_remote_ready_output_ = remote_ready ? 1.0 : 0.0;
+        *yaw_sweep_right_switch_output_ = static_cast<double>(static_cast<int>(right_switch));
+        *yaw_sweep_should_control_ = false;
+        *yaw_sweep_control_direction_ = Eigen::Vector3d::Constant(kNaN);
+        *yaw_sweep_target_offset_ = kNaN;
+        *yaw_sweep_active_output_ = 0.0;
+
+        if (yaw_plant_active_) {
+            yaw_sweep_start_requested_.store(false);
+            yaw_sweep_active_ = false;
+            return;
+        }
+
+        if (yaw_sweep_stop_requested_.exchange(false)) {
+            yaw_sweep_start_requested_.store(false);
+            yaw_sweep_active_ = false;
+            // Capture the current direction once so the gimbal holds where it was stopped.
+            if (barrel_direction_->allFinite() && !barrel_direction_->isZero()) {
+                *yaw_sweep_should_control_ = true;
+                *yaw_sweep_control_direction_ = *barrel_direction_;
+            }
+            return;
+        }
+
+        // Match the gimbal controller's auto-aim request gate. Cancel when it drops so
+        // the sweep cannot unexpectedly resume when the operator enables it again.
+        if (!remote_ready) {
+            yaw_sweep_start_requested_.store(false);
+            yaw_sweep_active_ = false;
+            return;
+        }
+
+        if (yaw_sweep_start_requested_.exchange(false)) {
+            if (barrel_direction_->allFinite() && !barrel_direction_->isZero()) {
+                yaw_sweep_center_direction_ = barrel_direction_->normalized();
+                yaw_sweep_start_time_ = Clock::now();
+                yaw_sweep_active_ = true;
+            } else {
+                RCLCPP_WARN(get_logger(), "Yaw sweep start ignored: invalid gimbal direction");
+            }
+        }
+
+        if (!yaw_sweep_active_)
+            return;
+
+        const double elapsed_seconds =
+            std::chrono::duration<double>(Clock::now() - yaw_sweep_start_time_).count();
+        const int phase = static_cast<int>(elapsed_seconds / yaw_sweep_hold_seconds_);
+        const int final_center_phase = 2 * yaw_sweep_cycles_ + 1;
+        if (phase > final_center_phase) {
+            yaw_sweep_active_ = false;
+            return;
+        }
+
+        // One center interval, alternating right/left intervals, then one center interval.
+        const double offset =
+            phase == 0 || phase == final_center_phase
+                ? 0.0
+                : (phase % 2 == 1 ? yaw_sweep_amplitude_rad_ : -yaw_sweep_amplitude_rad_);
+        *yaw_sweep_should_control_ = true;
+        *yaw_sweep_control_direction_ =
+            Eigen::AngleAxisd{offset, Eigen::Vector3d::UnitZ()} * yaw_sweep_center_direction_;
+        *yaw_sweep_target_offset_ = offset;
+        *yaw_sweep_active_output_ = 1.0;
+    }
+
+    void finish_yaw_plant(const char* reason) {
+        yaw_plant_active_ = false;
+        yaw_plant_override_torque_.store(kNaN);
+        if (yaw_plant_csv_.is_open())
+            yaw_plant_csv_.close();
+        // Let the ordinary yaw controller catch the current position, without a stale target.
+        if (command_->sweep_allowed() && barrel_direction_->allFinite()) {
+            *yaw_sweep_should_control_ = true;
+            *yaw_sweep_control_direction_ = *barrel_direction_;
+        }
+        RCLCPP_INFO(get_logger(), "Yaw plant test ended (%s); CSV: %s", reason,
+                    yaw_plant_csv_path_.c_str());
+    }
+
+    void update_yaw_plant() {
+        if (yaw_plant_stop_requested_.exchange(false)) {
+            yaw_plant_start_requested_.store(false);
+            if (yaw_plant_active_)
+                finish_yaw_plant("operator stop");
+            return;
+        }
+
+        if (yaw_plant_start_requested_.exchange(false)) {
+            if (yaw_plant_active_ || !command_->sweep_allowed() || yaw_sweep_active_)
+                return;
+            const double angle = bottom_board_->gimbal_yaw_motor_.angle();
+            const double velocity = bottom_board_->gimbal_yaw_motor_.velocity();
+            if (!std::isfinite(angle) || !std::isfinite(velocity)
+                || std::abs(velocity) > 0.15 || !barrel_direction_->allFinite()) {
+                RCLCPP_WARN(get_logger(), "Yaw plant test refused: gimbal is not stationary");
+                return;
+            }
+            const auto epoch_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                      std::chrono::system_clock::now().time_since_epoch())
+                                      .count();
+            yaw_plant_csv_path_ = "/tmp/yaw_plant_" + std::to_string(epoch_ms) + ".csv";
+            yaw_plant_csv_.open(yaw_plant_csv_path_);
+            if (!yaw_plant_csv_) {
+                RCLCPP_ERROR(get_logger(), "Cannot open yaw plant CSV: %s",
+                             yaw_plant_csv_path_.c_str());
+                return;
+            }
+            yaw_plant_csv_ << std::setprecision(10)
+                           << "t_s,phase,torque_command_nm,torque_measured_nm,angle_rad,"
+                              "velocity_rad_s,gimbal_imu_rad_s,chassis_imu_rad_s\n";
+            yaw_plant_start_angle_ = angle;
+            yaw_plant_start_time_ = Clock::now();
+            yaw_plant_active_ = true;
+            RCLCPP_INFO(get_logger(), "Yaw plant test started; CSV: %s",
+                        yaw_plant_csv_path_.c_str());
+        }
+
+        if (!yaw_plant_active_)
+            return;
+
+        const double t =
+            std::chrono::duration<double>(Clock::now() - yaw_plant_start_time_).count();
+        const double angle = bottom_board_->gimbal_yaw_motor_.angle();
+        const double velocity = bottom_board_->gimbal_yaw_motor_.velocity();
+        const double displacement = std::remainder(angle - yaw_plant_start_angle_,
+                                                    2.0 * std::numbers::pi);
+        if (!command_->sweep_allowed() || !std::isfinite(displacement)
+            || !std::isfinite(velocity) || std::abs(displacement) > 0.12
+            || std::abs(velocity) > 0.9) {
+            finish_yaw_plant("remote or motion limit");
+            return;
+        }
+        const int phase = static_cast<int>(t / yaw_plant_phase_seconds_);
+        if (phase >= 4 * yaw_plant_cycles_) {
+            finish_yaw_plant("completed");
+            return;
+        }
+
+        // + - - + gives zero net speed and displacement in each ideal cycle.
+        const double torque = (phase % 4 == 0 || phase % 4 == 3)
+                                  ? yaw_plant_torque_nm_
+                                  : -yaw_plant_torque_nm_;
+        yaw_plant_override_torque_.store(torque);
+        *yaw_sweep_should_control_ = true;
+        *yaw_sweep_control_direction_ = *barrel_direction_;
+        yaw_plant_csv_ << t << ',' << phase << ',' << torque << ','
+                       << bottom_board_->gimbal_yaw_motor_.torque() << ',' << angle << ','
+                       << velocity << ',' << top_board_->gimbal_yaw_velocity() << ','
+                       << bottom_board_->chassis_yaw_velocity() << '\n';
+    }
+
     class Command : public Component {
     public:
         explicit Command(DeformableInfantryOmniC& deformableInfantry)
-            : deformableInfantry(deformableInfantry) {}
+            : deformableInfantry(deformableInfantry) {
+            register_input("/remote/switch/right", right_switch_);
+            register_input("/remote/switch/left", left_switch_);
+            register_input("/remote/mouse", mouse_);
+        }
 
         void update() override { deformableInfantry.command_update(); }
 
+        rmcs_msgs::Switch right_switch() const {
+            return right_switch_.ready() ? *right_switch_ : rmcs_msgs::Switch::UNKNOWN;
+        }
+
+        bool sweep_allowed() const {
+            const auto right = right_switch();
+            const auto left = left_switch_.ready() ? *left_switch_ : rmcs_msgs::Switch::UNKNOWN;
+            const bool controls_enabled = right != rmcs_msgs::Switch::UNKNOWN
+                                       && left != rmcs_msgs::Switch::UNKNOWN
+                                       && !(left == rmcs_msgs::Switch::DOWN
+                                            && right == rmcs_msgs::Switch::DOWN);
+            return controls_enabled
+                && (right == rmcs_msgs::Switch::UP || (mouse_.ready() && mouse_->right));
+        }
+
         DeformableInfantryOmniC& deformableInfantry;
+
+    private:
+        InputInterface<rmcs_msgs::Switch> right_switch_;
+        InputInterface<rmcs_msgs::Switch> left_switch_;
+        InputInterface<rmcs_msgs::Mouse> mouse_;
     };
 
     struct TopBoard final : public librmcs::board::RmcsBoardLite::Callback {
@@ -433,6 +684,8 @@ private:
                 gimbal_yaw_motor_.angle());
         }
 
+        double chassis_yaw_velocity() const { return *chassis_yaw_velocity_imu_; }
+
         void command_update(bool even) {
             auto builder = board_->start_transmit();
             if (even) {
@@ -487,7 +740,10 @@ private:
                             }
                                 .as_bytes(),
                     });
-                auto packet_can2_142 = gimbal_yaw_motor_.generate_command();
+                const double plant_torque = status_.yaw_plant_override_torque_.load();
+                auto packet_can2_142 = std::isfinite(plant_torque)
+                                           ? gimbal_yaw_motor_.generate_torque_command(plant_torque)
+                                           : gimbal_yaw_motor_.generate_command();
                 builder.can_transmit(
                     Spec::kCans.kCan2,         //
                     {
@@ -755,7 +1011,36 @@ private:
     OutputInterface<Eigen::Isometry3d> camera_transform_;
     OutputInterface<Eigen::Vector3d> barrel_direction_;
     OutputInterface<double> auto_aim_yaw_velocity_;
+    OutputInterface<bool> yaw_sweep_should_control_;
+    OutputInterface<Eigen::Vector3d> yaw_sweep_control_direction_;
+    OutputInterface<double> yaw_sweep_target_offset_;
+    OutputInterface<double> yaw_sweep_active_output_;
+    OutputInterface<double> yaw_sweep_remote_ready_output_;
+    OutputInterface<double> yaw_sweep_right_switch_output_;
     InputInterface<Clock::time_point> timestamp_;
+
+    std::atomic<bool> yaw_sweep_start_requested_{false};
+    std::atomic<bool> yaw_sweep_stop_requested_{false};
+    std::atomic<bool> yaw_sweep_remote_ready_{false};
+    std::atomic<int> yaw_sweep_right_switch_state_{0};
+    bool yaw_sweep_active_ = false;
+    double yaw_sweep_amplitude_rad_ = 0.10;
+    double yaw_sweep_hold_seconds_ = 1.5;
+    int yaw_sweep_cycles_ = 4;
+    Clock::time_point yaw_sweep_start_time_{};
+    Eigen::Vector3d yaw_sweep_center_direction_ = Eigen::Vector3d::UnitX();
+
+    std::atomic<bool> yaw_plant_start_requested_{false};
+    std::atomic<bool> yaw_plant_stop_requested_{false};
+    std::atomic<double> yaw_plant_override_torque_{kNaN};
+    bool yaw_plant_active_ = false;
+    double yaw_plant_torque_nm_ = 0.9;
+    double yaw_plant_phase_seconds_ = 0.12;
+    int yaw_plant_cycles_ = 8;
+    double yaw_plant_start_angle_ = 0.0;
+    Clock::time_point yaw_plant_start_time_{};
+    std::string yaw_plant_csv_path_;
+    std::ofstream yaw_plant_csv_;
 
     std::unique_ptr<BottomBoard> bottom_board_;
     std::unique_ptr<TopBoard> top_board_;
@@ -765,6 +1050,10 @@ private:
     uint32_t cmd_tick_ = 0;
 
     std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> status_service_;
+    std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_sweep_start_service_;
+    std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_sweep_stop_service_;
+    std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_plant_start_service_;
+    std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_plant_stop_service_;
 };
 
 } // namespace rmcs_core::hardware
