@@ -1,0 +1,175 @@
+{
+  "model": "G_tau_to_yaw(s) = exp(-delay*s)/(J*s^2 + B*s)",
+  "test_context": "final yaw PID 12/11 and feedforward B/J enabled, but direct motor torque override bypasses controller output",
+  "input": "motor-current-derived output torque (N m)",
+  "sample_period_s": 0.001,
+  "delay_ms_fixed_from_original": 3,
+  "original_parameters": {
+    "J_kg_m2": 0.14261164568793971,
+    "B_Nm_s_per_rad": 1.3785478461447576
+  },
+  "original_matched_cycles_1_2_parameters": {
+    "J_kg_m2": 0.14257989838553187,
+    "B_Nm_s_per_rad": 1.4297682895430217
+  },
+  "original_cycle_bootstrap_95pct": {
+    "J_kg_m2": [
+      0.13682034513092836,
+      0.14871830275444073
+    ],
+    "B_Nm_s_per_rad": [
+      1.3318272374700244,
+      1.433750367643864
+    ]
+  },
+  "new_pooled_parameters": {
+    "J_kg_m2": 0.14357367146119687,
+    "B_Nm_s_per_rad": 1.4376705697505385,
+    "acceleration_r2": 0.9136739197248824
+  },
+  "new_cycle_bootstrap_95pct_conditional_on_three_runs": {
+    "J_kg_m2": [
+      0.14112682751454503,
+      0.14594651525410776
+    ],
+    "B_Nm_s_per_rad": [
+      1.3902424517453804,
+      1.4919321652929174
+    ]
+  },
+  "new_pooled_relative_change_pct": {
+    "J": 0.6745772889839907,
+    "B": 4.2887683420726574
+  },
+  "new_vs_original_matched_cycles_1_2_change_pct": {
+    "J": 0.6969938167425749,
+    "B": 0.5526965638636749
+  },
+  "relative_change_cycle_bootstrap_95pct": {
+    "J_pct": [
+      -3.6989893993083838,
+      5.469951582357347
+    ],
+    "B_pct": [
+      -0.7735333089028804,
+      9.800188254721279
+    ]
+  },
+  "runs": [
+    {
+      "file": "/home/chen/Alliance/technology/RMCS/experiments/yaw/validation_2026-10-02/plant_after_pid_ff_01.csv",
+      "duration_s": 1.567888372,
+      "samples": 1569,
+      "last_phase": 13,
+      "start_angle_rad": 1.902903167,
+      "relative_end_angle_rad": 0.11955462799999972,
+      "max_encoder_speed_rad_s": 0.651007811,
+      "max_command_torque_Nm": 0.9,
+      "fitted_parameters": {
+        "J_kg_m2": 0.1449144639261241,
+        "B_Nm_s_per_rad": 1.5096564339143812,
+        "disturbance_Nm": -0.09906536752017979,
+        "velocity_time_constant_s": 0.09599168437972078,
+        "nonzero_pole_per_s": -10.417569047379486
+      },
+      "new_fit_cycles_1_2": {
+        "samples": 192,
+        "acceleration_r2": 0.9357093815169693,
+        "acceleration_rmse_rad_s2": 1.253363922611857
+      },
+      "old_fixed_J_B_cycles_1_2_with_run_disturbance": {
+        "samples": 192,
+        "acceleration_r2": 0.9316943308829038,
+        "acceleration_rmse_rad_s2": 1.291908521128948
+      },
+      "old_fixed_J_B_holdout_cycle_2": {
+        "samples": 96,
+        "acceleration_r2": 0.943817033859209,
+        "acceleration_rmse_rad_s2": 1.1757926243827916
+      },
+      "holdout_disturbance_Nm_from_cycle_1": -0.09718328448865568,
+      "holdout_cycle_2_angle_rmse_rad": 0.009916829797871127,
+      "holdout_cycle_2_speed_rmse_rad_s": 0.03620364313219709
+    },
+    {
+      "file": "/home/chen/Alliance/technology/RMCS/experiments/yaw/validation_2026-10-02/plant_after_pid_ff_02.csv",
+      "duration_s": 1.581915583,
+      "samples": 1583,
+      "last_phase": 13,
+      "start_angle_rad": 1.847871607,
+      "relative_end_angle_rad": 0.11965050099999996,
+      "max_encoder_speed_rad_s": 0.6597344573,
+      "max_command_torque_Nm": 0.9,
+      "fitted_parameters": {
+        "J_kg_m2": 0.14538384572434948,
+        "B_Nm_s_per_rad": 1.4246264230434442,
+        "disturbance_Nm": -0.06869934029757574,
+        "velocity_time_constant_s": 0.1020505048711398,
+        "nonzero_pole_per_s": -9.79906960051506
+      },
+      "new_fit_cycles_1_2": {
+        "samples": 192,
+        "acceleration_r2": 0.9047185147131613,
+        "acceleration_rmse_rad_s2": 1.5750479403200708
+      },
+      "old_fixed_J_B_cycles_1_2_with_run_disturbance": {
+        "samples": 192,
+        "acceleration_r2": 0.9039189045679139,
+        "acceleration_rmse_rad_s2": 1.5816430990728279
+      },
+      "old_fixed_J_B_holdout_cycle_2": {
+        "samples": 96,
+        "acceleration_r2": 0.9071732068630471,
+        "acceleration_rmse_rad_s2": 1.559906981113244
+      },
+      "holdout_disturbance_Nm_from_cycle_1": -0.08604906438630283,
+      "holdout_cycle_2_angle_rmse_rad": 0.0056412940191898665,
+      "holdout_cycle_2_speed_rmse_rad_s": 0.02746953512176411
+    },
+    {
+      "file": "/home/chen/Alliance/technology/RMCS/experiments/yaw/validation_2026-10-02/plant_after_pid_ff_03.csv",
+      "duration_s": 2.081896519,
+      "samples": 2083,
+      "last_phase": 17,
+      "start_angle_rad": 1.879126465,
+      "relative_end_angle_rad": 0.11974637500000007,
+      "max_encoder_speed_rad_s": 0.6754424205,
+      "max_command_torque_Nm": 0.9,
+      "fitted_parameters": {
+        "J_kg_m2": 0.14026931003903853,
+        "B_Nm_s_per_rad": 1.3864779369372768,
+        "disturbance_Nm": -0.05992108714823164,
+        "velocity_time_constant_s": 0.10116952192466384,
+        "nonzero_pole_per_s": -9.884399777480937
+      },
+      "new_fit_cycles_1_2": {
+        "samples": 192,
+        "acceleration_r2": 0.9049267008517972,
+        "acceleration_rmse_rad_s2": 1.6240186418543696
+      },
+      "old_fixed_J_B_cycles_1_2_with_run_disturbance": {
+        "samples": 192,
+        "acceleration_r2": 0.9046684210450808,
+        "acceleration_rmse_rad_s2": 1.6262230816740344
+      },
+      "old_fixed_J_B_holdout_cycle_2": {
+        "samples": 96,
+        "acceleration_r2": 0.8875638674579528,
+        "acceleration_rmse_rad_s2": 1.7289800712185224
+      },
+      "holdout_disturbance_Nm_from_cycle_1": -0.06234330830813696,
+      "holdout_cycle_2_angle_rmse_rad": 0.006170207902156571,
+      "holdout_cycle_2_speed_rmse_rad_s": 0.028823983819163575
+    }
+  ],
+  "new_delay_r2_by_ms_0_to_6": [
+    0.909054341743947,
+    0.9117217316470175,
+    0.9132618697790802,
+    0.9136739197248824,
+    0.9131242673715584,
+    0.9116771150580057,
+    0.9091437595832824
+  ],
+  "new_best_delay_ms": 3
+}

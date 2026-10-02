@@ -1,0 +1,191 @@
+{
+  "off": {
+    "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/ff_off_smooth_2026-10-02.csv",
+    "effective_gains": {
+      "reference_velocity": 0.0,
+      "model_velocity": 0.0,
+      "model_acceleration": 0.0
+    },
+    "samples": 3001,
+    "feedforward_scale": 0.0,
+    "reversal_count": 7,
+    "mean_moving_iae_rad_s": 0.01658174593942857,
+    "moving_rms_error_deg": 2.2271306007760336,
+    "median_late_abs_error_deg": 0.16620732143721753,
+    "speed_peak_abs_rad_s": 0.687117,
+    "measured_torque_p99_abs_Nm": 1.10537,
+    "measured_torque_peak_abs_Nm": 1.3084,
+    "command_torque_peak_abs_Nm": 1.46903,
+    "command_limit_fraction": 0.0,
+    "reversals": [
+      {
+        "phase": 2,
+        "moving_iae_rad_s": 0.016587975695,
+        "moving_peak_abs_error_deg": 3.378978489738371,
+        "late_abs_error_deg": 0.20916425916935588
+      },
+      {
+        "phase": 3,
+        "moving_iae_rad_s": 0.016497357189,
+        "moving_peak_abs_error_deg": 3.3579452090791184,
+        "late_abs_error_deg": 0.12603037492705396
+      },
+      {
+        "phase": 4,
+        "moving_iae_rad_s": 0.016622037395,
+        "moving_peak_abs_error_deg": 3.378497205190461,
+        "late_abs_error_deg": 0.20640031076564477
+      },
+      {
+        "phase": 5,
+        "moving_iae_rad_s": 0.01651084502,
+        "moving_peak_abs_error_deg": 3.3568164822227105,
+        "late_abs_error_deg": 0.09263037321769775
+      },
+      {
+        "phase": 6,
+        "moving_iae_rad_s": 0.016665252245,
+        "moving_peak_abs_error_deg": 3.377517447360787,
+        "late_abs_error_deg": 0.2101514654503663
+      },
+      {
+        "phase": 7,
+        "moving_iae_rad_s": 0.016523788117,
+        "moving_peak_abs_error_deg": 3.3631132883911983,
+        "late_abs_error_deg": 0.12377779135549714
+      },
+      {
+        "phase": 8,
+        "moving_iae_rad_s": 0.016664965914999996,
+        "moving_peak_abs_error_deg": 3.38922297511531,
+        "late_abs_error_deg": 0.16620732143721753
+      }
+    ]
+  },
+  "velocity_only": {
+    "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/ff_velocity_only_smooth_2026-10-02.csv",
+    "effective_gains": {
+      "reference_velocity": 1.0,
+      "model_velocity": 0.0,
+      "model_acceleration": 0.0
+    },
+    "samples": 3000,
+    "feedforward_scale": 1.0,
+    "reversal_count": 7,
+    "mean_moving_iae_rad_s": 0.0019203601708571432,
+    "moving_rms_error_deg": 0.26838074928434263,
+    "median_late_abs_error_deg": 0.1237391167043258,
+    "speed_peak_abs_rad_s": 0.792581,
+    "measured_torque_p99_abs_Nm": 1.40991,
+    "measured_torque_peak_abs_Nm": 1.73701,
+    "command_torque_peak_abs_Nm": 1.7884,
+    "command_limit_fraction": 0.0,
+    "reversals": [
+      {
+        "phase": 2,
+        "moving_iae_rad_s": 0.0022197472000000003,
+        "moving_peak_abs_error_deg": 0.4933269748479512,
+        "late_abs_error_deg": 0.16333966767258776
+      },
+      {
+        "phase": 3,
+        "moving_iae_rad_s": 0.0016245491322,
+        "moving_peak_abs_error_deg": 0.3897591238001035,
+        "late_abs_error_deg": 0.06405897332680655
+      },
+      {
+        "phase": 4,
+        "moving_iae_rad_s": 0.002188201645,
+        "moving_peak_abs_error_deg": 0.48474005637232553,
+        "late_abs_error_deg": 0.163804909402234
+      },
+      {
+        "phase": 5,
+        "moving_iae_rad_s": 0.0016223899898000003,
+        "moving_peak_abs_error_deg": 0.3944797230741864,
+        "late_abs_error_deg": 0.04254054065452702
+      },
+      {
+        "phase": 6,
+        "moving_iae_rad_s": 0.0021126493649999997,
+        "moving_peak_abs_error_deg": 0.4790425640575446,
+        "late_abs_error_deg": 0.14566076842492867
+      },
+      {
+        "phase": 7,
+        "moving_iae_rad_s": 0.0015924824240000001,
+        "moving_peak_abs_error_deg": 0.3862165257528097,
+        "late_abs_error_deg": 0.0497874254389007
+      },
+      {
+        "phase": 8,
+        "moving_iae_rad_s": 0.00208250144,
+        "moving_peak_abs_error_deg": 0.4690438775747166,
+        "late_abs_error_deg": 0.1237391167043258
+      }
+    ]
+  },
+  "on": {
+    "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/ff_on_smooth_2026-10-02.csv",
+    "effective_gains": {
+      "reference_velocity": 1.0,
+      "model_velocity": 1.378547846,
+      "model_acceleration": 0.142611646
+    },
+    "samples": 3000,
+    "feedforward_scale": 1.0,
+    "reversal_count": 7,
+    "mean_moving_iae_rad_s": 0.0005840737834142858,
+    "moving_rms_error_deg": 0.07965016719224338,
+    "median_late_abs_error_deg": 0.14798096101631092,
+    "speed_peak_abs_rad_s": 0.798973,
+    "measured_torque_p99_abs_Nm": 1.3310727999999972,
+    "measured_torque_peak_abs_Nm": 1.5791,
+    "command_torque_peak_abs_Nm": 1.65786,
+    "command_limit_fraction": 0.0,
+    "reversals": [
+      {
+        "phase": 2,
+        "moving_iae_rad_s": 0.0005585438014999999,
+        "moving_peak_abs_error_deg": 0.14229922504089612,
+        "late_abs_error_deg": 0.14798096101631092
+      },
+      {
+        "phase": 3,
+        "moving_iae_rad_s": 0.0006474414554000001,
+        "moving_peak_abs_error_deg": 0.16029353755477477,
+        "late_abs_error_deg": 0.023409336635660045
+      },
+      {
+        "phase": 4,
+        "moving_iae_rad_s": 0.000489462636,
+        "moving_peak_abs_error_deg": 0.1326981712678889,
+        "late_abs_error_deg": 0.16662300231758498
+      },
+      {
+        "phase": 5,
+        "moving_iae_rad_s": 0.0006741774130000002,
+        "moving_peak_abs_error_deg": 0.1710851976260638,
+        "late_abs_error_deg": 0.02215432988120549
+      },
+      {
+        "phase": 6,
+        "moving_iae_rad_s": 0.000505467544,
+        "moving_peak_abs_error_deg": 0.13982748511270174,
+        "late_abs_error_deg": 0.17319626062222335
+      },
+      {
+        "phase": 7,
+        "moving_iae_rad_s": 0.0007272392614999998,
+        "moving_peak_abs_error_deg": 0.18243205380083463,
+        "late_abs_error_deg": 0.058053229718245274
+      },
+      {
+        "phase": 8,
+        "moving_iae_rad_s": 0.0004861843725,
+        "moving_peak_abs_error_deg": 0.15328110710016862,
+        "late_abs_error_deg": 0.20916425916935588
+      }
+    ]
+  }
+}

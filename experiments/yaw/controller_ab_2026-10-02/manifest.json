@@ -1,0 +1,74 @@
+[
+  {
+    "label": "01_original",
+    "arm": "original",
+    "pair": 1,
+    "config_sha256": "f14b89e3a778df0dfeefeff947448cd0c9ce738ca38e11536984d9af4fae1731",
+    "robot_logger": "/tmp/yaw_2026-10-02_10-52-07.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.656223,
+    "max_command_torque_Nm": 1.88128,
+    "max_error_deg": 3.913450709770257,
+    "csv": "/workspaces/RMCS/experiments/yaw/controller_ab_2026-10-02/01_original.csv"
+  },
+  {
+    "label": "02_final",
+    "arm": "final",
+    "pair": 1,
+    "config_sha256": "dbebe05ddf4e44affb619e5a39b7a7c84a1af3abc927d8cc27614e49e08c3666",
+    "robot_logger": "/tmp/yaw_2026-10-02_10-52-30.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.803234,
+    "max_command_torque_Nm": 1.73609,
+    "max_error_deg": 0.2743442244223359,
+    "csv": "/workspaces/RMCS/experiments/yaw/controller_ab_2026-10-02/02_final.csv"
+  },
+  {
+    "label": "03_original",
+    "arm": "original",
+    "pair": 2,
+    "config_sha256": "f14b89e3a778df0dfeefeff947448cd0c9ce738ca38e11536984d9af4fae1731",
+    "robot_logger": "/tmp/yaw_2026-10-02_10-52-55.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.66368,
+    "max_command_torque_Nm": 1.5612,
+    "max_error_deg": 3.9112333631031007,
+    "csv": "/workspaces/RMCS/experiments/yaw/controller_ab_2026-10-02/03_original.csv"
+  },
+  {
+    "label": "04_final",
+    "arm": "final",
+    "pair": 2,
+    "config_sha256": "dbebe05ddf4e44affb619e5a39b7a7c84a1af3abc927d8cc27614e49e08c3666",
+    "robot_logger": "/tmp/yaw_2026-10-02_10-53-19.csv",
+    "samples": 3001,
+    "max_speed_rad_s": 0.786189,
+    "max_command_torque_Nm": 1.75474,
+    "max_error_deg": 0.241970390124059,
+    "csv": "/workspaces/RMCS/experiments/yaw/controller_ab_2026-10-02/04_final.csv"
+  },
+  {
+    "label": "05_original",
+    "arm": "original",
+    "pair": 3,
+    "config_sha256": "f14b89e3a778df0dfeefeff947448cd0c9ce738ca38e11536984d9af4fae1731",
+    "robot_logger": "/tmp/yaw_2026-10-02_10-53-42.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.650896,
+    "max_command_torque_Nm": 1.51543,
+    "max_error_deg": 3.8932596770698464,
+    "csv": "/workspaces/RMCS/experiments/yaw/controller_ab_2026-10-02/05_original.csv"
+  },
+  {
+    "label": "06_final",
+    "arm": "final",
+    "pair": 3,
+    "config_sha256": "dbebe05ddf4e44affb619e5a39b7a7c84a1af3abc927d8cc27614e49e08c3666",
+    "robot_logger": "/tmp/yaw_2026-10-02_10-54-06.csv",
+    "samples": 3001,
+    "max_speed_rad_s": 0.800038,
+    "max_command_torque_Nm": 1.83419,
+    "max_error_deg": 0.2459129127123542,
+    "csv": "/workspaces/RMCS/experiments/yaw/controller_ab_2026-10-02/06_final.csv"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "label": "01_current",
+    "arm": "current",
+    "B": 1.378547846,
+    "J": 0.142611646,
+    "robot_logger": "/tmp/yaw_2026-10-02_08-58-15.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.792581,
+    "max_command_torque_Nm": 1.80524,
+    "max_error_deg": 0.2471321669003926,
+    "csv": "/workspaces/RMCS/experiments/yaw/repeat_2026-10-02/01_current.csv"
+  },
+  {
+    "label": "02_candidate",
+    "arm": "candidate",
+    "B": 1.1,
+    "J": 0.171,
+    "robot_logger": "/tmp/yaw_2026-10-02_08-58-40.csv",
+    "samples": 3001,
+    "max_speed_rad_s": 0.798973,
+    "max_command_torque_Nm": 1.64795,
+    "max_error_deg": 0.26214079634384446,
+    "csv": "/workspaces/RMCS/experiments/yaw/repeat_2026-10-02/02_candidate.csv"
+  },
+  {
+    "label": "03_current",
+    "arm": "current",
+    "B": 1.378547846,
+    "J": 0.142611646,
+    "robot_logger": "/tmp/yaw_2026-10-02_08-59-04.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.786189,
+    "max_command_torque_Nm": 1.67789,
+    "max_error_deg": 0.243984909731739,
+    "csv": "/workspaces/RMCS/experiments/yaw/repeat_2026-10-02/03_current.csv"
+  },
+  {
+    "label": "04_candidate",
+    "arm": "candidate",
+    "B": 1.1,
+    "J": 0.171,
+    "robot_logger": "/tmp/yaw_2026-10-02_08-59-29.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.785124,
+    "max_command_torque_Nm": 1.7381,
+    "max_error_deg": 0.298016548685961,
+    "csv": "/workspaces/RMCS/experiments/yaw/repeat_2026-10-02/04_candidate.csv"
+  },
+  {
+    "label": "05_current",
+    "arm": "current",
+    "B": 1.378547846,
+    "J": 0.142611646,
+    "robot_logger": "/tmp/yaw_2026-10-02_08-59-54.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.78832,
+    "max_command_torque_Nm": 1.69669,
+    "max_error_deg": 0.3498508944958563,
+    "csv": "/workspaces/RMCS/experiments/yaw/repeat_2026-10-02/05_current.csv"
+  },
+  {
+    "label": "06_candidate",
+    "arm": "candidate",
+    "B": 1.1,
+    "J": 0.171,
+    "robot_logger": "/tmp/yaw_2026-10-02_09-00-21.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.782993,
+    "max_command_torque_Nm": 1.64105,
+    "max_error_deg": 0.3046061362877606,
+    "csv": "/workspaces/RMCS/experiments/yaw/repeat_2026-10-02/06_candidate.csv"
+  }
+]

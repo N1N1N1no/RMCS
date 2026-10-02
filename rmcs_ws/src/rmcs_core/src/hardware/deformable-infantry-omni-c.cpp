@@ -69,16 +69,28 @@ public:
         register_output(
             "/auto_aim/control_direction", yaw_sweep_control_direction_,
             Eigen::Vector3d::Constant(kNaN));
+        register_output("/auto_aim/ff_v", yaw_sweep_ff_velocity_, Eigen::Vector3d::Zero());
+        register_output("/auto_aim/ff_a", yaw_sweep_ff_acceleration_, Eigen::Vector3d::Zero());
         register_output("/gimbal/yaw_sweep/target_offset", yaw_sweep_target_offset_, kNaN);
         register_output("/gimbal/yaw_sweep/active", yaw_sweep_active_output_, 0.0);
         register_output("/gimbal/yaw_sweep/remote_ready", yaw_sweep_remote_ready_output_, 0.0);
         register_output("/gimbal/yaw_sweep/right_switch", yaw_sweep_right_switch_output_, 0.0);
+        register_output("/gimbal/yaw_sweep/reference_velocity", yaw_sweep_reference_velocity_, 0.0);
+        register_output(
+            "/gimbal/yaw_sweep/reference_acceleration", yaw_sweep_reference_acceleration_, 0.0);
+        register_output("/gimbal/yaw_sweep/feedforward_scale", yaw_sweep_ff_scale_output_, 0.0);
 
         yaw_sweep_amplitude_rad_ = std::clamp(
             std::abs(get_parameter_or("yaw_sweep_amplitude_rad", 0.10)), 0.01, 0.15);
         yaw_sweep_hold_seconds_ =
             std::clamp(get_parameter_or("yaw_sweep_hold_seconds", 1.5), 0.5, 5.0);
         yaw_sweep_cycles_ = std::clamp(get_parameter_or("yaw_sweep_cycles", 4), 1, 10);
+        yaw_sweep_transition_seconds_ =
+            std::clamp(get_parameter_or("yaw_sweep_transition_seconds", 0.0), 0.0, 1.0);
+        yaw_sweep_feedforward_scale_ =
+            std::clamp(get_parameter_or("yaw_sweep_feedforward_scale", 0.0), 0.0, 1.0);
+        yaw_sweep_torque_limit_nm_ =
+            std::clamp(get_parameter_or("yaw_sweep_torque_limit_nm", 0.0), 0.0, 4.5);
         yaw_plant_torque_nm_ =
             std::clamp(std::abs(get_parameter_or("yaw_plant_torque_nm", 0.9)), 0.1, 1.0);
         yaw_plant_phase_seconds_ =
@@ -193,6 +205,11 @@ private:
         *yaw_sweep_control_direction_ = Eigen::Vector3d::Constant(kNaN);
         *yaw_sweep_target_offset_ = kNaN;
         *yaw_sweep_active_output_ = 0.0;
+        *yaw_sweep_ff_velocity_ = Eigen::Vector3d::Zero();
+        *yaw_sweep_ff_acceleration_ = Eigen::Vector3d::Zero();
+        *yaw_sweep_reference_velocity_ = 0.0;
+        *yaw_sweep_reference_acceleration_ = 0.0;
+        *yaw_sweep_ff_scale_output_ = 0.0;
 
         if (yaw_plant_active_) {
             yaw_sweep_start_requested_.store(false);
@@ -222,6 +239,7 @@ private:
         if (yaw_sweep_start_requested_.exchange(false)) {
             if (barrel_direction_->allFinite() && !barrel_direction_->isZero()) {
                 yaw_sweep_center_direction_ = barrel_direction_->normalized();
+                yaw_sweep_start_angle_ = bottom_board_->gimbal_yaw_motor_.angle();
                 yaw_sweep_start_time_ = Clock::now();
                 yaw_sweep_active_ = true;
             } else {
@@ -241,16 +259,59 @@ private:
             return;
         }
 
+        const double displacement = std::remainder(
+            bottom_board_->gimbal_yaw_motor_.angle() - yaw_sweep_start_angle_,
+            2.0 * std::numbers::pi);
+        const double velocity = bottom_board_->gimbal_yaw_motor_.velocity();
+        if (!std::isfinite(displacement) || !std::isfinite(velocity)
+            || std::abs(displacement) > 0.18 || std::abs(velocity) > 1.2) {
+            yaw_sweep_active_ = false;
+            *yaw_sweep_should_control_ = true;
+            *yaw_sweep_control_direction_ = *barrel_direction_;
+            RCLCPP_WARN(get_logger(), "Yaw sweep stopped by motion limit");
+            return;
+        }
+
         // One center interval, alternating right/left intervals, then one center interval.
-        const double offset =
-            phase == 0 || phase == final_center_phase
-                ? 0.0
-                : (phase % 2 == 1 ? yaw_sweep_amplitude_rad_ : -yaw_sweep_amplitude_rad_);
+        const auto phase_offset = [this, final_center_phase](int p) {
+            return p <= 0 || p >= final_center_phase
+                     ? 0.0
+                     : (p % 2 == 1 ? yaw_sweep_amplitude_rad_ : -yaw_sweep_amplitude_rad_);
+        };
+        const double start_offset = phase_offset(phase - 1);
+        const double target_offset = phase_offset(phase);
+        double offset = target_offset;
+        double reference_velocity = 0.0;
+        double reference_acceleration = 0.0;
+        if (phase > 0 && yaw_sweep_transition_seconds_ > 0.0) {
+            const double phase_seconds =
+                elapsed_seconds - static_cast<double>(phase) * yaw_sweep_hold_seconds_;
+            const double s = std::clamp(
+                phase_seconds / yaw_sweep_transition_seconds_, 0.0, 1.0);
+            const double s2 = s * s;
+            const double s3 = s2 * s;
+            const double s4 = s3 * s;
+            const double s5 = s4 * s;
+            const double delta = target_offset - start_offset;
+            offset = start_offset + delta * (10.0 * s3 - 15.0 * s4 + 6.0 * s5);
+            reference_velocity = delta * (30.0 * s2 - 60.0 * s3 + 30.0 * s4)
+                               / yaw_sweep_transition_seconds_;
+            reference_acceleration = delta * (60.0 * s - 180.0 * s2 + 120.0 * s3)
+                                   / (yaw_sweep_transition_seconds_
+                                      * yaw_sweep_transition_seconds_);
+        }
         *yaw_sweep_should_control_ = true;
         *yaw_sweep_control_direction_ =
             Eigen::AngleAxisd{offset, Eigen::Vector3d::UnitZ()} * yaw_sweep_center_direction_;
         *yaw_sweep_target_offset_ = offset;
         *yaw_sweep_active_output_ = 1.0;
+        *yaw_sweep_reference_velocity_ = reference_velocity;
+        *yaw_sweep_reference_acceleration_ = reference_acceleration;
+        *yaw_sweep_ff_scale_output_ = yaw_sweep_feedforward_scale_;
+        *yaw_sweep_ff_velocity_ =
+            yaw_sweep_feedforward_scale_ * reference_velocity * Eigen::Vector3d::UnitZ();
+        *yaw_sweep_ff_acceleration_ =
+            yaw_sweep_feedforward_scale_ * reference_acceleration * Eigen::Vector3d::UnitZ();
     }
 
     void finish_yaw_plant(const char* reason) {
@@ -741,9 +802,18 @@ private:
                                 .as_bytes(),
                     });
                 const double plant_torque = status_.yaw_plant_override_torque_.load();
-                auto packet_can2_142 = std::isfinite(plant_torque)
-                                           ? gimbal_yaw_motor_.generate_torque_command(plant_torque)
-                                           : gimbal_yaw_motor_.generate_command();
+                auto packet_can2_142 = gimbal_yaw_motor_.generate_command();
+                if (std::isfinite(plant_torque)) {
+                    packet_can2_142 = gimbal_yaw_motor_.generate_torque_command(plant_torque);
+                } else if (status_.yaw_sweep_active_.load()
+                           && status_.yaw_sweep_torque_limit_nm_ > 0.0) {
+                    const double torque = gimbal_yaw_motor_.control_torque();
+                    if (std::isfinite(torque)) {
+                        const double limit = status_.yaw_sweep_torque_limit_nm_;
+                        packet_can2_142 = gimbal_yaw_motor_.generate_torque_command(
+                            std::clamp(torque, -limit, limit));
+                    }
+                }
                 builder.can_transmit(
                     Spec::kCans.kCan2,         //
                     {
@@ -1013,20 +1083,29 @@ private:
     OutputInterface<double> auto_aim_yaw_velocity_;
     OutputInterface<bool> yaw_sweep_should_control_;
     OutputInterface<Eigen::Vector3d> yaw_sweep_control_direction_;
+    OutputInterface<Eigen::Vector3d> yaw_sweep_ff_velocity_;
+    OutputInterface<Eigen::Vector3d> yaw_sweep_ff_acceleration_;
     OutputInterface<double> yaw_sweep_target_offset_;
     OutputInterface<double> yaw_sweep_active_output_;
     OutputInterface<double> yaw_sweep_remote_ready_output_;
     OutputInterface<double> yaw_sweep_right_switch_output_;
+    OutputInterface<double> yaw_sweep_reference_velocity_;
+    OutputInterface<double> yaw_sweep_reference_acceleration_;
+    OutputInterface<double> yaw_sweep_ff_scale_output_;
     InputInterface<Clock::time_point> timestamp_;
 
     std::atomic<bool> yaw_sweep_start_requested_{false};
     std::atomic<bool> yaw_sweep_stop_requested_{false};
     std::atomic<bool> yaw_sweep_remote_ready_{false};
     std::atomic<int> yaw_sweep_right_switch_state_{0};
-    bool yaw_sweep_active_ = false;
+    std::atomic<bool> yaw_sweep_active_{false};
     double yaw_sweep_amplitude_rad_ = 0.10;
     double yaw_sweep_hold_seconds_ = 1.5;
     int yaw_sweep_cycles_ = 4;
+    double yaw_sweep_transition_seconds_ = 0.0;
+    double yaw_sweep_feedforward_scale_ = 0.0;
+    double yaw_sweep_torque_limit_nm_ = 0.0;
+    double yaw_sweep_start_angle_ = 0.0;
     Clock::time_point yaw_sweep_start_time_{};
     Eigen::Vector3d yaw_sweep_center_direction_ = Eigen::Vector3d::UnitX();
 
