@@ -4,7 +4,9 @@ rmcs_executor:
     components:
       - rmcs_core::hardware::DeformableInfantryOmniC -> deformable_infantry
 
-      # 云台单独测试：仅保留硬件必需的裁判状态及供电信号；轮电机、关节、悬挂、发射和自瞄控制不加载。
+      # 默认：C 车正常云台与自瞄控制；底盘电机、关节和发射控制仍不加载。
+      # 若做仅云台辨识/扫动测试：注释下方三个 AutoAim 组件，将 yaw_test_mode 改为 true，
+      # 再取消注释 yaw_sweep 采集信号和 deformable_infantry 下要复现的测试参数。
       - rmcs_core::referee::Status -> referee_status
       # - rmcs_core::referee::Command -> referee_command
 
@@ -33,9 +35,9 @@ rmcs_executor:
       # - rmcs_core::controller::chassis::DeformableJointController -> rb_joint_controller
       # - rmcs_core::controller::chassis::DeformableJointController -> rf_joint_controller
 
-      # - rmcs::AutoAimRecorderComponent -> auto_aim_recorder
-      # - rmcs::AutoAimComponent -> auto_aim_component
-      # - rmcs::AutoAimCapturerComponent -> auto_aim_capturer
+      - rmcs::AutoAimRecorderComponent -> auto_aim_recorder
+      - rmcs::AutoAimComponent -> auto_aim_component
+      - rmcs::AutoAimCapturerComponent -> auto_aim_capturer
       # - rmcs_core::referee::app::ui::AutoAimUi -> auto_aim_ui
 
       # - rmcs_core::broadcaster::ValueBroadcaster -> value_broadcaster
@@ -45,13 +47,14 @@ value_collector:
   ros__parameters:
     csv_path: "/tmp/yaw_<timestamp>.csv"
     signals:
-      - /gimbal/yaw_sweep/active
-      - /gimbal/yaw_sweep/target_offset
-      - /gimbal/yaw_sweep/reference_velocity
-      - /gimbal/yaw_sweep/reference_acceleration
-      - /gimbal/yaw_sweep/feedforward_scale
-      - /gimbal/yaw_sweep/remote_ready
-      - /gimbal/yaw_sweep/right_switch
+      # 仅 yaw_test_mode: true 时取消注释；正常自瞄模式不提供这些测试信号。
+      # - /gimbal/yaw_sweep/active
+      # - /gimbal/yaw_sweep/target_offset
+      # - /gimbal/yaw_sweep/reference_velocity
+      # - /gimbal/yaw_sweep/reference_acceleration
+      # - /gimbal/yaw_sweep/feedforward_scale
+      # - /gimbal/yaw_sweep/remote_ready
+      # - /gimbal/yaw_sweep/right_switch
       - /gimbal/yaw/angle
       - /gimbal/yaw/velocity
       - /gimbal/yaw/velocity_imu
@@ -120,22 +123,30 @@ auto_aim_ui:
 
 deformable_infantry:
   ros__parameters:
+    yaw_test_mode: false
     serial_filter_bottom_board: "AF-C1C3-DFE8-40A8-FC4B-B853-6ED7-AC9F-1DED"
     serial_filter_top_board: "AF-ABAC-786D-1B53-99F6-00A2-42A6-AA95-9D69"
     chassis_radius: 0.2341741
     rod_length: 0.140
     yaw_motor_zero_point: 38910
     pitch_motor_zero_point: 32214
-    yaw_sweep_amplitude_rad: 0.10
-    yaw_sweep_hold_seconds: 1.5
-    yaw_sweep_cycles: 4
-    yaw_sweep_transition_seconds: 0.5
-    yaw_sweep_feedforward_scale: 1.0
-    yaw_sweep_torque_limit_nm: 4.0
-    # 主模型辨识：每相 0.12 s，+/- 0.9 N*m，8 个四相周期；C 车硬件另有限位保护。
-    yaw_plant_torque_nm: 0.9
-    yaw_plant_phase_seconds: 0.12
-    yaw_plant_cycles: 8
+    # 以下参数仅在 yaw_test_mode: true 时生效；正常控制不用。
+    # 平滑左右扫动：仅由 /rmcs/service/yaw_sweep/start 手动触发。
+    # yaw_sweep_amplitude_rad: 0.10
+    # yaw_sweep_hold_seconds: 1.5
+    # yaw_sweep_cycles: 4
+    # yaw_sweep_transition_seconds: 0.5
+    # yaw_sweep_feedforward_scale: 1.0
+    # yaw_sweep_torque_limit_nm: 4.0
+    # 主模型辨识：每相 0.12 s，±0.9 N·m，8 个四相周期。
+    # yaw_plant_torque_nm: 0.9
+    # yaw_plant_phase_seconds: 0.12
+    # yaw_plant_cycles: 8
+    # 扫频外推：须手动触发，原测试限制见硬件代码。
+    # yaw_chirp_amplitude_rad: 0.05
+    # yaw_chirp_start_hz: 0.4
+    # yaw_chirp_end_hz: 1.1
+    # yaw_chirp_duration_s: 8.0
 
 chassis_controller:
   ros__parameters:
@@ -202,7 +213,7 @@ gimbal_controller:
     yaw_angle_kd: 0.0
 
     yaw_velocity_kp: 11.0
-    yaw_velocity_ki: 0.02
+    yaw_velocity_ki: 0.05
     yaw_velocity_kd: 0.0
     yaw_velocity_integral_min: -5.0
     yaw_velocity_integral_max: 5.0

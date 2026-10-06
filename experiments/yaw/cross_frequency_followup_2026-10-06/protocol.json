@@ -1,0 +1,38 @@
+{
+  "plan": [
+    [
+      "01_high_004_repeat",
+      0.04,
+      2.5,
+      3.0
+    ],
+    [
+      "02_low_008",
+      0.08,
+      0.3,
+      0.65
+    ],
+    [
+      "03_low_011",
+      0.11,
+      0.3,
+      0.65
+    ],
+    [
+      "04_mid_008",
+      0.08,
+      1.0,
+      1.5
+    ]
+  ],
+  "duration_s": 8.0,
+  "torque_cap_Nm": 3.0,
+  "displacement_stop_rad": 0.18,
+  "speed_stop_rad_s": 1.2,
+  "maximum_start_angle_drift_rad": 0.12,
+  "original_yaml_sha256": "af5423346f8e7901e849c03acd4e6139c671ebd731df9b5d1390d4db95b2347c",
+  "original_library_sha256": "a9950e3b401b2240d1567f50dfa05a56cea006d3cf0411876ab1728d146155e6",
+  "test_yaml_sha256": "e5824494ecf05d531023c871427b0f1911ef39a7033ebab3c048434f56941ffd",
+  "test_library_sha256": "e07d6255257ab870c9717f325b97cf13e68f6ecc9df5a9c75cc724486b1ad789",
+  "source_cpp_sha256": "199b1da55a26f723d35688c32c2a8d4a8d19cea61a10f6cd07731470be270c14"
+}

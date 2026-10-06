@@ -1,0 +1,24 @@
+{
+  "method": "apparent_gap=reference-(encoder-encoder_initial); frame_difference=apparent_gap-control_angle_error; world_yaw_reconstruction=reference-control_angle_error",
+  "note": "world-yaw curve and frame mismatch are reconstructed from controller error, not independently measured",
+  "runs": [
+    {
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/02_final.csv",
+      "last_hold_apparent_gap_deg": 1.0164271285620727,
+      "last_hold_control_error_deg": 0.05268269576925577,
+      "last_hold_frame_difference_deg": 0.9630533311003304
+    },
+    {
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/04_final.csv",
+      "last_hold_apparent_gap_deg": 0.9723093783370157,
+      "last_hold_control_error_deg": 0.07010138623425623,
+      "last_hold_frame_difference_deg": 0.9011325503212989
+    },
+    {
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/06_final.csv",
+      "last_hold_apparent_gap_deg": 1.0433561449332198,
+      "last_hold_control_error_deg": 0.04334537446934728,
+      "last_hold_frame_difference_deg": 1.001442391458676
+    }
+  ]
+}

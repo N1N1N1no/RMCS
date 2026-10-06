@@ -1,0 +1,330 @@
+{
+  "protocol": {
+    "recorded_at_utc": "2026-10-02T13:02:29.680433+00:00",
+    "order": [
+      "original",
+      "final",
+      "original",
+      "final",
+      "original",
+      "final"
+    ],
+    "reference": "same 0.5 s quintic transitions, +/-0.10 rad, 1.5 s phases, four cycles",
+    "original": {
+      "yaw_angle_kp": 10.0,
+      "yaw_velocity_kp": 13.0,
+      "yaw_velocity_ki": 0.02,
+      "yaw_sweep_feedforward_scale": 0.0
+    },
+    "final": {
+      "yaw_angle_kp": 12.0,
+      "yaw_velocity_kp": 11.0,
+      "yaw_velocity_ki": 0.05,
+      "yaw_sweep_feedforward_scale": 1.0,
+      "yaw_velocity_ff_gain": 1.378547846,
+      "yaw_acceleration_ff_gain": 0.142611646
+    },
+    "source_final_yaml_sha256": "f2e4048cd65ecf90c74828538e502616f62b0e3e0d3d558a35f99d9ed5ceca18",
+    "original_yaml_sha256": "f14b89e3a778df0dfeefeff947448cd0c9ce738ca38e11536984d9af4fae1731",
+    "test_library_sha256": "2a046d42b9b5b389691688ffe89263a221e82579e9ac425ccf015f51d7431b3c"
+  },
+  "maximum_reference_difference_rad": 0.003004414,
+  "original": {
+    "moving_rms_error_deg": {
+      "mean": 2.562488435020169,
+      "sd": 0.0004577239823729017,
+      "min": 2.5621050464119492,
+      "max": 2.562995202530621
+    },
+    "mean_moving_iae_rad_s": {
+      "mean": 0.019062107226261903,
+      "sd": 2.3550662883329923e-05,
+      "min": 0.019039907889142855,
+      "max": 0.01908680931357143
+    },
+    "dynamic_change_rms_deg": {
+      "mean": 2.6989062129572563,
+      "sd": 0.01707776446864494,
+      "min": 2.681049058658129,
+      "max": 2.715079896696745
+    },
+    "median_late_abs_error_deg": {
+      "mean": 0.191154285809077,
+      "sd": 0.022491780886125516,
+      "min": 0.1698229716033906,
+      "max": 0.21465004357883596
+    },
+    "speed_peak_abs_rad_s": {
+      "mean": 0.6601290000000001,
+      "sd": 0.009060364617387087,
+      "min": 0.649831,
+      "max": 0.666876
+    },
+    "measured_torque_p99_abs_Nm": {
+      "mean": 1.1918466666666667,
+      "sd": 0.017226120669881953,
+      "min": 1.17305,
+      "max": 1.20688
+    },
+    "command_torque_peak_abs_Nm": {
+      "mean": 1.5204700000000002,
+      "sd": 0.005494624645960893,
+      "min": 1.51579,
+      "max": 1.52652
+    }
+  },
+  "final": {
+    "moving_rms_error_deg": {
+      "mean": 0.08207583178209814,
+      "sd": 0.0037963123977250257,
+      "min": 0.07942904643847354,
+      "max": 0.08642542394001529
+    },
+    "mean_moving_iae_rad_s": {
+      "mean": 0.0005820916604490476,
+      "sd": 1.039064218592914e-05,
+      "min": 0.0005711217343571429,
+      "max": 0.0005917850657471428
+    },
+    "dynamic_change_rms_deg": {
+      "mean": 0.1414470174612181,
+      "sd": 0.021801619957778465,
+      "min": 0.11943543112850553,
+      "max": 0.16303242229916046
+    },
+    "median_late_abs_error_deg": {
+      "mean": 0.11755900294011305,
+      "sd": 0.019738056930516817,
+      "min": 0.10203690781925805,
+      "max": 0.13977305412216431
+    },
+    "speed_peak_abs_rad_s": {
+      "mean": 0.7957766666666667,
+      "sd": 0.003690422920660125,
+      "min": 0.793646,
+      "max": 0.800038
+    },
+    "measured_torque_p99_abs_Nm": {
+      "mean": 1.4137075999999993,
+      "sd": 0.013057706432600551,
+      "min": 1.39863,
+      "max": 1.4213027999999972
+    },
+    "command_torque_peak_abs_Nm": {
+      "mean": 1.8110766666666667,
+      "sd": 0.1429925775462955,
+      "min": 1.64664,
+      "max": 1.90623
+    }
+  },
+  "paired_final_minus_original": {
+    "moving_rms_error_deg": {
+      "mean": -2.480412603238071,
+      "sd": 0.004173762994317614,
+      "min": -2.4835661560921474,
+      "max": -2.475679622471934
+    },
+    "mean_moving_iae_rad_s": {
+      "mean": -0.018480015565812857,
+      "sd": 3.14034604268221e-05,
+      "min": -0.018515687579214287,
+      "max": -0.018456539707899997
+    },
+    "dynamic_change_rms_deg": {
+      "mean": -2.557459195496038,
+      "sd": 0.0343886247134168,
+      "min": -2.58115425238839,
+      "max": -2.5180166363589684
+    },
+    "median_late_abs_error_deg": {
+      "mean": -0.07359528286896398,
+      "sd": 0.02774307209739039,
+      "min": -0.10378299669991922,
+      "max": -0.049216788122840166
+    },
+    "speed_peak_abs_rad_s": {
+      "mean": 0.1356476666666666,
+      "sd": 0.00854467297989415,
+      "min": 0.12676999999999994,
+      "max": 0.14381499999999992
+    },
+    "measured_torque_p99_abs_Nm": {
+      "mean": 0.22186093333333243,
+      "sd": 0.023542811952128016,
+      "min": 0.20301999999999998,
+      "max": 0.24825279999999728
+    },
+    "command_torque_peak_abs_Nm": {
+      "mean": 0.29060666666666674,
+      "sd": 0.1414226227777342,
+      "min": 0.1275400000000002,
+      "max": 0.37971
+    }
+  },
+  "pairs": [
+    {
+      "pair": 1,
+      "original_csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/01_original.csv",
+      "final_csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/02_final.csv",
+      "final_minus_original": {
+        "moving_rms_error_deg": -2.481992031150131,
+        "mean_moving_iae_rad_s": -0.018456539707899997,
+        "dynamic_change_rms_deg": -2.58115425238839,
+        "median_late_abs_error_deg": -0.06778606378413256,
+        "speed_peak_abs_rad_s": 0.13635799999999998,
+        "measured_torque_p99_abs_Nm": 0.21431,
+        "command_torque_peak_abs_Nm": 0.37971
+      }
+    },
+    {
+      "pair": 2,
+      "original_csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/03_original.csv",
+      "final_csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/04_final.csv",
+      "final_minus_original": {
+        "moving_rms_error_deg": -2.4835661560921474,
+        "mean_moving_iae_rad_s": -0.018515687579214287,
+        "dynamic_change_rms_deg": -2.5732066977407566,
+        "median_late_abs_error_deg": -0.10378299669991922,
+        "speed_peak_abs_rad_s": 0.12676999999999994,
+        "measured_torque_p99_abs_Nm": 0.20301999999999998,
+        "command_torque_peak_abs_Nm": 0.1275400000000002
+      }
+    },
+    {
+      "pair": 3,
+      "original_csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/05_original.csv",
+      "final_csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/06_final.csv",
+      "final_minus_original": {
+        "moving_rms_error_deg": -2.475679622471934,
+        "mean_moving_iae_rad_s": -0.01846781941032429,
+        "dynamic_change_rms_deg": -2.5180166363589684,
+        "median_late_abs_error_deg": -0.049216788122840166,
+        "speed_peak_abs_rad_s": 0.14381499999999992,
+        "measured_torque_p99_abs_Nm": 0.24825279999999728,
+        "command_torque_peak_abs_Nm": 0.36457000000000006
+      }
+    }
+  ],
+  "runs": [
+    {
+      "label": "01_original",
+      "arm": "original",
+      "pair": 1,
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/01_original.csv",
+      "samples": 3001,
+      "feedforward_scale": 0.0,
+      "reversal_count": 7,
+      "mean_moving_iae_rad_s": 0.019039907889142855,
+      "moving_rms_error_deg": 2.5623650561179363,
+      "median_late_abs_error_deg": 0.1698229716033906,
+      "speed_peak_abs_rad_s": 0.66368,
+      "measured_torque_p99_abs_Nm": 1.20688,
+      "measured_torque_peak_abs_Nm": 1.61294,
+      "command_torque_peak_abs_Nm": 1.52652,
+      "command_limit_fraction": 0.0,
+      "dynamic_change_rms_deg": 2.7005896835168954,
+      "start_angle_rad": 2.57546,
+      "end_angle_rad": 2.5582
+    },
+    {
+      "label": "02_final",
+      "arm": "final",
+      "pair": 1,
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/02_final.csv",
+      "samples": 3001,
+      "feedforward_scale": 1.0,
+      "reversal_count": 7,
+      "mean_moving_iae_rad_s": 0.0005833681812428571,
+      "moving_rms_error_deg": 0.0803730249678056,
+      "median_late_abs_error_deg": 0.10203690781925805,
+      "speed_peak_abs_rad_s": 0.800038,
+      "measured_torque_p99_abs_Nm": 1.42119,
+      "measured_torque_peak_abs_Nm": 1.64678,
+      "command_torque_peak_abs_Nm": 1.90623,
+      "command_limit_fraction": 0.0,
+      "dynamic_change_rms_deg": 0.11943543112850553,
+      "start_angle_rad": 2.54871,
+      "end_angle_rad": 2.53097
+    },
+    {
+      "label": "03_original",
+      "arm": "original",
+      "pair": 2,
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/03_original.csv",
+      "samples": 3000,
+      "feedforward_scale": 0.0,
+      "reversal_count": 7,
+      "mean_moving_iae_rad_s": 0.01908680931357143,
+      "moving_rms_error_deg": 2.562995202530621,
+      "median_late_abs_error_deg": 0.21465004357883596,
+      "speed_peak_abs_rad_s": 0.666876,
+      "measured_torque_p99_abs_Nm": 1.19561,
+      "measured_torque_peak_abs_Nm": 1.56782,
+      "command_torque_peak_abs_Nm": 1.5191,
+      "command_limit_fraction": 0.0,
+      "dynamic_change_rms_deg": 2.715079896696745,
+      "start_angle_rad": 2.51765,
+      "end_angle_rad": 2.49895
+    },
+    {
+      "label": "04_final",
+      "arm": "final",
+      "pair": 2,
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/04_final.csv",
+      "samples": 3000,
+      "feedforward_scale": 1.0,
+      "reversal_count": 7,
+      "mean_moving_iae_rad_s": 0.0005711217343571429,
+      "moving_rms_error_deg": 0.07942904643847354,
+      "median_late_abs_error_deg": 0.11086704687891674,
+      "speed_peak_abs_rad_s": 0.793646,
+      "measured_torque_p99_abs_Nm": 1.39863,
+      "measured_torque_peak_abs_Nm": 1.66934,
+      "command_torque_peak_abs_Nm": 1.64664,
+      "command_limit_fraction": 0.0,
+      "dynamic_change_rms_deg": 0.1418731989559883,
+      "start_angle_rad": 2.48908,
+      "end_angle_rad": 2.47211
+    },
+    {
+      "label": "05_original",
+      "arm": "original",
+      "pair": 3,
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/05_original.csv",
+      "samples": 3001,
+      "feedforward_scale": 0.0,
+      "reversal_count": 7,
+      "mean_moving_iae_rad_s": 0.01905960447607143,
+      "moving_rms_error_deg": 2.5621050464119492,
+      "median_late_abs_error_deg": 0.18898984224500448,
+      "speed_peak_abs_rad_s": 0.649831,
+      "measured_torque_p99_abs_Nm": 1.17305,
+      "measured_torque_peak_abs_Nm": 1.35352,
+      "command_torque_peak_abs_Nm": 1.51579,
+      "command_limit_fraction": 0.0,
+      "dynamic_change_rms_deg": 2.681049058658129,
+      "start_angle_rad": 2.46089,
+      "end_angle_rad": 2.44123
+    },
+    {
+      "label": "06_final",
+      "arm": "final",
+      "pair": 3,
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/controller_ab_current_2026-10-02/06_final.csv",
+      "samples": 3000,
+      "feedforward_scale": 1.0,
+      "reversal_count": 7,
+      "mean_moving_iae_rad_s": 0.0005917850657471428,
+      "moving_rms_error_deg": 0.08642542394001529,
+      "median_late_abs_error_deg": 0.13977305412216431,
+      "speed_peak_abs_rad_s": 0.793646,
+      "measured_torque_p99_abs_Nm": 1.4213027999999972,
+      "measured_torque_peak_abs_Nm": 1.6355,
+      "command_torque_peak_abs_Nm": 1.88036,
+      "command_limit_fraction": 0.0,
+      "dynamic_change_rms_deg": 0.16303242229916046,
+      "start_angle_rad": 2.42896,
+      "end_angle_rad": 2.41075
+    }
+  ]
+}

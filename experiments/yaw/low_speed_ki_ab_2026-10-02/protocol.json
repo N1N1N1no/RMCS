@@ -1,0 +1,24 @@
+{
+  "order": [
+    "current",
+    "ki_005",
+    "current",
+    "ki_005",
+    "current",
+    "ki_005"
+  ],
+  "trajectory": {
+    "amplitude_rad": 0.08,
+    "transition_s": 1.0,
+    "hold_s": 1.5,
+    "cycles": 4
+  },
+  "current_ki": 0.02,
+  "candidate_ki": 0.05,
+  "original_yaml_sha256": "dbebe05ddf4e44affb619e5a39b7a7c84a1af3abc927d8cc27614e49e08c3666",
+  "library_sha256": "2a046d42b9b5b389691688ffe89263a221e82579e9ac425ccf015f51d7431b3c",
+  "config_sha256": {
+    "current": "da712a25875a93b6cceda0794773f6fae3899f8ad1f10c8260546ad0d8bd2658",
+    "ki_005": "c6ae836cb2d188f57c57dd8e6d4f3ad23cc905b9f1714760d40aef6d64a41f58"
+  }
+}

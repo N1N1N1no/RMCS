@@ -1,0 +1,49 @@
+{
+  "recorded_at_utc": "2026-10-02T13:26:54.189019+00:00",
+  "order": [
+    {
+      "shape": "step",
+      "arm": "current"
+    },
+    {
+      "shape": "step",
+      "arm": "ki_008"
+    },
+    {
+      "shape": "step",
+      "arm": "ki_008"
+    },
+    {
+      "shape": "step",
+      "arm": "current"
+    },
+    {
+      "shape": "smooth",
+      "arm": "current"
+    },
+    {
+      "shape": "smooth",
+      "arm": "ki_008"
+    },
+    {
+      "shape": "smooth",
+      "arm": "ki_008"
+    },
+    {
+      "shape": "smooth",
+      "arm": "current"
+    }
+  ],
+  "reference": "four cycles, +/-0.10 rad, 1.5 s phases; step=0 s transition, smooth=0.5 s",
+  "current_velocity_ki": 0.05,
+  "candidate_velocity_ki": 0.08,
+  "other_gains_unchanged": true,
+  "base_yaml_sha256": "f2e4048cd65ecf90c74828538e502616f62b0e3e0d3d558a35f99d9ed5ceca18",
+  "library_sha256": "2a046d42b9b5b389691688ffe89263a221e82579e9ac425ccf015f51d7431b3c",
+  "config_sha256": {
+    "step_current": "3f575373cef41aa533696108745b36537a5162181b04eecaa30d85e34bb10d1a",
+    "step_ki_008": "322d90c31af50bf33d4b4ad80343d1bcd5edab9761595850a4e0ebee0d11ef58",
+    "smooth_current": "f2e4048cd65ecf90c74828538e502616f62b0e3e0d3d558a35f99d9ed5ceca18",
+    "smooth_ki_008": "2f1db09779da19dc04aa29181ae8c06813ede1a317ee3940dfa32df70a200d5f"
+  }
+}

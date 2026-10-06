@@ -1,0 +1,29 @@
+{
+  "recorded_at_utc": "2026-10-02T13:02:29.680433+00:00",
+  "order": [
+    "original",
+    "final",
+    "original",
+    "final",
+    "original",
+    "final"
+  ],
+  "reference": "same 0.5 s quintic transitions, +/-0.10 rad, 1.5 s phases, four cycles",
+  "original": {
+    "yaw_angle_kp": 10.0,
+    "yaw_velocity_kp": 13.0,
+    "yaw_velocity_ki": 0.02,
+    "yaw_sweep_feedforward_scale": 0.0
+  },
+  "final": {
+    "yaw_angle_kp": 12.0,
+    "yaw_velocity_kp": 11.0,
+    "yaw_velocity_ki": 0.05,
+    "yaw_sweep_feedforward_scale": 1.0,
+    "yaw_velocity_ff_gain": 1.378547846,
+    "yaw_acceleration_ff_gain": 0.142611646
+  },
+  "source_final_yaml_sha256": "f2e4048cd65ecf90c74828538e502616f62b0e3e0d3d558a35f99d9ed5ceca18",
+  "original_yaml_sha256": "f14b89e3a778df0dfeefeff947448cd0c9ce738ca38e11536984d9af4fae1731",
+  "test_library_sha256": "2a046d42b9b5b389691688ffe89263a221e82579e9ac425ccf015f51d7431b3c"
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "label": "01_ki_005",
+    "arm": "ki_005",
+    "pair": 1,
+    "config_sha256": "c6ae836cb2d188f57c57dd8e6d4f3ad23cc905b9f1714760d40aef6d64a41f58",
+    "robot_logger": "/tmp/yaw_2026-10-02_12-28-24.csv",
+    "samples": 3001,
+    "max_speed_rad_s": 0.331307,
+    "max_command_torque_Nm": 1.32511,
+    "max_error_deg": 0.26588163778825363,
+    "csv": "/workspaces/RMCS/experiments/yaw/low_speed_ki_ab_reverse_2026-10-02/01_ki_005.csv"
+  },
+  {
+    "label": "02_current",
+    "arm": "current",
+    "pair": 1,
+    "config_sha256": "da712a25875a93b6cceda0794773f6fae3899f8ad1f10c8260546ad0d8bd2658",
+    "robot_logger": "/tmp/yaw_2026-10-02_12-29-00.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.329177,
+    "max_command_torque_Nm": 1.25987,
+    "max_error_deg": 0.3302689159316702,
+    "csv": "/workspaces/RMCS/experiments/yaw/low_speed_ki_ab_reverse_2026-10-02/02_current.csv"
+  },
+  {
+    "label": "03_ki_005",
+    "arm": "ki_005",
+    "pair": 2,
+    "config_sha256": "c6ae836cb2d188f57c57dd8e6d4f3ad23cc905b9f1714760d40aef6d64a41f58",
+    "robot_logger": "/tmp/yaw_2026-10-02_12-29-25.csv",
+    "samples": 3001,
+    "max_speed_rad_s": 0.330242,
+    "max_command_torque_Nm": 1.36223,
+    "max_error_deg": 0.30649804292728255,
+    "csv": "/workspaces/RMCS/experiments/yaw/low_speed_ki_ab_reverse_2026-10-02/03_ki_005.csv"
+  },
+  {
+    "label": "04_current",
+    "arm": "current",
+    "pair": 2,
+    "config_sha256": "da712a25875a93b6cceda0794773f6fae3899f8ad1f10c8260546ad0d8bd2658",
+    "robot_logger": "/tmp/yaw_2026-10-02_12-29-50.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.332373,
+    "max_command_torque_Nm": 1.28577,
+    "max_error_deg": 0.32001640914559926,
+    "csv": "/workspaces/RMCS/experiments/yaw/low_speed_ki_ab_reverse_2026-10-02/04_current.csv"
+  },
+  {
+    "label": "05_ki_005",
+    "arm": "ki_005",
+    "pair": 3,
+    "config_sha256": "c6ae836cb2d188f57c57dd8e6d4f3ad23cc905b9f1714760d40aef6d64a41f58",
+    "robot_logger": "/tmp/yaw_2026-10-02_12-30-15.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.336634,
+    "max_command_torque_Nm": 1.32846,
+    "max_error_deg": 0.264959175738093,
+    "csv": "/workspaces/RMCS/experiments/yaw/low_speed_ki_ab_reverse_2026-10-02/05_ki_005.csv"
+  },
+  {
+    "label": "06_current",
+    "arm": "current",
+    "pair": 3,
+    "config_sha256": "da712a25875a93b6cceda0794773f6fae3899f8ad1f10c8260546ad0d8bd2658",
+    "robot_logger": "/tmp/yaw_2026-10-02_12-30-38.csv",
+    "samples": 3001,
+    "max_speed_rad_s": 0.347287,
+    "max_command_torque_Nm": 1.29457,
+    "max_error_deg": 0.35137610814649456,
+    "csv": "/workspaces/RMCS/experiments/yaw/low_speed_ki_ab_reverse_2026-10-02/06_current.csv"
+  }
+]

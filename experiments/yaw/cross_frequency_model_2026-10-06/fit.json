@@ -1,0 +1,260 @@
+{
+  "model": "J*q_ddot=tau(t-0.003)-B*q_dot-Fc*sign(q_dot)-d-K*(q-4.55), with static lock |net torque|<=Fs at near-zero speed",
+  "input": "measured motor-current-derived torque, not command",
+  "angle_reference_rad": 4.55,
+  "parameters": {
+    "J": 0.14261164568793971,
+    "B": 0.5,
+    "Fc": 0.5375000000000002,
+    "Fs": 0.5658333333333334,
+    "K": 0.4250000000000001,
+    "d": -0.007499999999999999
+  },
+  "same_train_linear_model": {
+    "parameters": {
+      "J": 0.14261164568793971,
+      "B": 2.9535478461447577,
+      "K": 0.6875,
+      "d": -0.07265625
+    },
+    "training_objective": 2.021944776026117
+  },
+  "training_runs": [
+    "low004_a",
+    "mid004_a",
+    "high004_a",
+    "low008"
+  ],
+  "held_out_runs": [
+    "low004_b",
+    "mid004_b",
+    "high004_b",
+    "low011",
+    "mid008"
+  ],
+  "fit_objective": "equal weight per training run; 2 s rolling angle RMSE normalised by motion scale, plus 0.25 times normalised velocity RMSE",
+  "search_trace": [
+    {
+      "round": 1,
+      "loss": 1.0365290400873142,
+      "parameters": {
+        "J": 0.14261164568793971,
+        "B": 0.6166666666666667,
+        "Fc": 0.5333333333333334,
+        "Fs": 0.7533333333333334,
+        "K": 0.3000000000000001,
+        "d": 0.0
+      }
+    },
+    {
+      "round": 2,
+      "loss": 0.7719553833054447,
+      "parameters": {
+        "J": 0.14261164568793971,
+        "B": 0.5,
+        "Fc": 0.5333333333333334,
+        "Fs": 0.6533333333333334,
+        "K": 0.4000000000000001,
+        "d": 0.0
+      }
+    },
+    {
+      "round": 3,
+      "loss": 0.727106253555034,
+      "parameters": {
+        "J": 0.14261164568793971,
+        "B": 0.5,
+        "Fc": 0.5500000000000002,
+        "Fs": 0.6033333333333334,
+        "K": 0.4000000000000001,
+        "d": 0.0
+      }
+    },
+    {
+      "round": 4,
+      "loss": 0.7104766460360166,
+      "parameters": {
+        "J": 0.14261164568793971,
+        "B": 0.5,
+        "Fc": 0.5500000000000002,
+        "Fs": 0.5783333333333334,
+        "K": 0.4250000000000001,
+        "d": -0.004999999999999999
+      }
+    },
+    {
+      "round": 5,
+      "loss": 0.6881751139779405,
+      "parameters": {
+        "J": 0.14261164568793971,
+        "B": 0.5,
+        "Fc": 0.5375000000000002,
+        "Fs": 0.5658333333333334,
+        "K": 0.4250000000000001,
+        "d": -0.007499999999999999
+      }
+    }
+  ],
+  "leave_one_training_run_out_parameters": {
+    "low004_a": {
+      "J": 0.14261164568793971,
+      "B": 0.5,
+      "Fc": 0.5375000000000002,
+      "Fs": 0.5658333333333334,
+      "K": 0.4250000000000001,
+      "d": -0.007499999999999999
+    },
+    "mid004_a": {
+      "J": 0.14261164568793971,
+      "B": 0.5729166666666667,
+      "Fc": 0.5000000000000001,
+      "Fs": 0.5658333333333334,
+      "K": 0.7000000000000002,
+      "d": -0.04999999999999999
+    },
+    "high004_a": {
+      "J": 0.14261164568793971,
+      "B": 0.9447916666666666,
+      "Fc": 0.5541666666666668,
+      "Fs": 0.6658333333333334,
+      "K": 0.6000000000000001,
+      "d": 0.027500000000000007
+    },
+    "low008": {
+      "J": 0.14261164568793971,
+      "B": 0.6458333333333334,
+      "Fc": 0.3875,
+      "Fs": 0.5991666666666667,
+      "K": 0.5,
+      "d": -0.019999999999999997
+    }
+  },
+  "runs": [
+    {
+      "run": "low004_a",
+      "partition": "train",
+      "initial_angle_rad": 4.721017622,
+      "actual_angle_std_rad": 0.002623016443632361,
+      "old_angle_rmse_deg": 13.013875815437293,
+      "same_train_linear_angle_rmse_deg": 2.690610149431698,
+      "new_angle_rmse_deg": 0.12163973557671878,
+      "old_velocity_rmse_rad_s": 0.27231084852442233,
+      "same_train_linear_velocity_rmse_rad_s": 0.09941388598796469,
+      "new_velocity_rmse_rad_s": 0.017160870702596396,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.08996177388569215,
+      "old_first_second_disturbance_Nm": 0.23582203632865348
+    },
+    {
+      "run": "mid004_a",
+      "partition": "train",
+      "initial_angle_rad": 4.706924174,
+      "actual_angle_std_rad": 0.016215170241074706,
+      "old_angle_rmse_deg": 5.741992432418456,
+      "same_train_linear_angle_rmse_deg": 0.49208272612302495,
+      "new_angle_rmse_deg": 1.0293655720750061,
+      "old_velocity_rmse_rad_s": 0.18507466033366096,
+      "same_train_linear_velocity_rmse_rad_s": 0.05441881160435733,
+      "new_velocity_rmse_rad_s": 0.11019847748756689,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.09485564016680005,
+      "old_first_second_disturbance_Nm": -0.08355508839162387
+    },
+    {
+      "run": "high004_a",
+      "partition": "train",
+      "initial_angle_rad": 4.702609853,
+      "actual_angle_std_rad": 0.028061061233485497,
+      "old_angle_rmse_deg": 1.0515261881922966,
+      "same_train_linear_angle_rmse_deg": 1.2359828189296753,
+      "new_angle_rmse_deg": 0.28277273889123117,
+      "old_velocity_rmse_rad_s": 0.0411652179826667,
+      "same_train_linear_velocity_rmse_rad_s": 0.2513813071062346,
+      "new_velocity_rmse_rad_s": 0.049630400243914526,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.1265412761382033,
+      "old_first_second_disturbance_Nm": 0.029518944734009293
+    },
+    {
+      "run": "low004_b",
+      "partition": "held_out",
+      "initial_angle_rad": 4.66569844,
+      "actual_angle_std_rad": 0.0009846543951077492,
+      "old_angle_rmse_deg": 13.997325428264784,
+      "same_train_linear_angle_rmse_deg": 2.8457107991352997,
+      "new_angle_rmse_deg": 0.036244476467284216,
+      "old_velocity_rmse_rad_s": 0.28721480458615745,
+      "same_train_linear_velocity_rmse_rad_s": 0.1033229711849708,
+      "new_velocity_rmse_rad_s": 0.016166841221988117,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.11059846102536641,
+      "old_first_second_disturbance_Nm": 0.21181004119922636
+    },
+    {
+      "run": "mid004_b",
+      "partition": "held_out",
+      "initial_angle_rad": 4.647386544,
+      "actual_angle_std_rad": 0.01567846925744754,
+      "old_angle_rmse_deg": 3.177573265595363,
+      "same_train_linear_angle_rmse_deg": 0.841743846631127,
+      "new_angle_rmse_deg": 1.5387933182589388,
+      "old_velocity_rmse_rad_s": 0.16904361160569445,
+      "same_train_linear_velocity_rmse_rad_s": 0.05223623746040413,
+      "new_velocity_rmse_rad_s": 0.09154952474587676,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.10625946221875565,
+      "old_first_second_disturbance_Nm": -0.10568933882328696
+    },
+    {
+      "run": "high004_b",
+      "partition": "held_out",
+      "initial_angle_rad": 4.607503044,
+      "actual_angle_std_rad": 0.027976578134847746,
+      "old_angle_rmse_deg": 5.005888594278516,
+      "same_train_linear_angle_rmse_deg": 2.115437774356512,
+      "new_angle_rmse_deg": 2.126306070363283,
+      "old_velocity_rmse_rad_s": 0.08950522510307372,
+      "same_train_linear_velocity_rmse_rad_s": 0.2492333904910884,
+      "new_velocity_rmse_rad_s": 0.056838217448042884,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.14386337798881108,
+      "old_first_second_disturbance_Nm": -0.054780270791171724
+    },
+    {
+      "run": "low008",
+      "partition": "train",
+      "initial_angle_rad": 4.540583132,
+      "actual_angle_std_rad": 0.023150694118703255,
+      "old_angle_rmse_deg": 17.810343644578953,
+      "same_train_linear_angle_rmse_deg": 2.56567173596523,
+      "new_angle_rmse_deg": 1.0022873849961411,
+      "old_velocity_rmse_rad_s": 0.3488246530671932,
+      "same_train_linear_velocity_rmse_rad_s": 0.09792783499837258,
+      "new_velocity_rmse_rad_s": 0.07525841243054465,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.13236955533004938,
+      "old_first_second_disturbance_Nm": 0.23314729719349864
+    },
+    {
+      "run": "low011",
+      "partition": "held_out",
+      "initial_angle_rad": 4.538282161,
+      "actual_angle_std_rad": 0.042460856756411695,
+      "old_angle_rmse_deg": 17.87106065681094,
+      "same_train_linear_angle_rmse_deg": 2.975989813657505,
+      "new_angle_rmse_deg": 3.23216697314175,
+      "old_velocity_rmse_rad_s": 0.3548008846958835,
+      "same_train_linear_velocity_rmse_rad_s": 0.08696778221293079,
+      "new_velocity_rmse_rad_s": 0.1070262743142641,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.14769178947359218,
+      "old_first_second_disturbance_Nm": 0.31669016488070495
+    },
+    {
+      "run": "mid008",
+      "partition": "held_out",
+      "initial_angle_rad": 4.399169278,
+      "actual_angle_std_rad": 0.056288063925280934,
+      "old_angle_rmse_deg": 6.55358896860213,
+      "same_train_linear_angle_rmse_deg": 4.844406652510836,
+      "new_angle_rmse_deg": 5.18749310613121,
+      "old_velocity_rmse_rad_s": 0.12774724608669907,
+      "same_train_linear_velocity_rmse_rad_s": 0.2832491300422735,
+      "new_velocity_rmse_rad_s": 0.19021728888170916,
+      "imu_integral_vs_encoder_angle_rmse_deg": 0.15601447832180748,
+      "old_first_second_disturbance_Nm": -0.10526234104844114
+    }
+  ]
+}

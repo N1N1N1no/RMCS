@@ -1,0 +1,30 @@
+{
+  "plan": [
+    [
+      "01_midlow_008",
+      0.08,
+      0.4,
+      1.1
+    ],
+    [
+      "02_midhigh_004",
+      0.04,
+      1.0,
+      2.5
+    ]
+  ],
+  "model": {
+    "J": 0.142611646,
+    "B": 1.378547846,
+    "delay_s": 0.003
+  },
+  "chirp_duration_s": 8.0,
+  "torque_cap_Nm": 3.0,
+  "displacement_stop_rad": 0.18,
+  "speed_stop_rad_s": 1.2,
+  "old_yaml_sha256": "dbebe05ddf4e44affb619e5a39b7a7c84a1af3abc927d8cc27614e49e08c3666",
+  "test_yaml_sha256": "bab11a06edf19ac20edcfa8dbcd174c46a62924fef67554cf570ae919cba493b",
+  "old_library_sha256": "2a046d42b9b5b389691688ffe89263a221e82579e9ac425ccf015f51d7431b3c",
+  "test_library_sha256": "e07d6255257ab870c9717f325b97cf13e68f6ecc9df5a9c75cc724486b1ad789",
+  "cpp_source_sha256": "199b1da55a26f723d35688c32c2a8d4a8d19cea61a10f6cd07731470be270c14"
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "label": "01_smooth_current",
+    "shape": "smooth",
+    "arm": "current",
+    "pair": 1,
+    "config_sha256": "f2e4048cd65ecf90c74828538e502616f62b0e3e0d3d558a35f99d9ed5ceca18",
+    "robot_logger": "/tmp/yaw_2026-10-02_13-31-30.csv",
+    "samples": 3000,
+    "max_speed_rad_s": 0.796842,
+    "max_command_torque_Nm": 1.66861,
+    "max_error_deg": 0.2036114386978455,
+    "csv": "/workspaces/RMCS/experiments/yaw/smooth_ki_optimization_2026-10-02/01_smooth_current.csv"
+  }
+]

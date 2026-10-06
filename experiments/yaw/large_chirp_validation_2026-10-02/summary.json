@@ -1,0 +1,490 @@
+{
+  "model_held_fixed": {
+    "J_kg_m2": 0.14261164568793971,
+    "B_Nm_s_per_rad": 1.3785478461447576,
+    "delay_ms": 3
+  },
+  "disturbance_estimation": "Only the first 1 s of each new run estimates one constant disturbance; J, B and delay are unchanged",
+  "runs": [
+    {
+      "label": "01_low_005",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_2026-10-02/01_low_005.csv",
+      "commanded_amplitude_rad": 0.05,
+      "frequency_range_hz": [
+        0.4,
+        1.1
+      ],
+      "completed": true,
+      "duration_s": 7.999914328,
+      "start_angle_rad": 2.574882626,
+      "max_abs_displacement_rad": 0.03806189900000012,
+      "max_abs_motor_speed_rad_s": 0.2670353756,
+      "max_abs_command_torque_Nm": 0.7943404306,
+      "max_abs_measured_torque_Nm": 0.8233886719,
+      "estimated_disturbance_Nm_from_first_second": 0.0777538867248403,
+      "fixed_model_holdout": {
+        "samples": 1388,
+        "acceleration_r2": -3.287912658252301,
+        "acceleration_rmse_rad_s2": 2.845500491624447
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 1388,
+        "acceleration_r2": -2.0783922141167293,
+        "acceleration_rmse_rad_s2": 2.41100258323584
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 0.4,
+          "high_hz": 0.65,
+          "samples": 371,
+          "acceleration_r2": -7.1329988699163085,
+          "acceleration_rmse_rad_s2": 3.17097254760145
+        },
+        {
+          "low_hz": 0.65,
+          "high_hz": 0.9,
+          "samples": 571,
+          "acceleration_r2": -3.4690676173921773,
+          "acceleration_rmse_rad_s2": 2.8847468557645413
+        },
+        {
+          "low_hz": 0.9,
+          "high_hz": 1.11,
+          "samples": 446,
+          "acceleration_r2": -1.5094574528783813,
+          "acceleration_rmse_rad_s2": 2.485970719488679
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 14.109758035491854
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 8.917326811595485
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 7.0,
+          "angle_rmse_deg": 8.34099864635268
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 1.0998787210553735,
+        "B_Nm_s_per_rad": 3.6294029189500243
+      }
+    },
+    {
+      "label": "02_low_010",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_2026-10-02/02_low_010.csv",
+      "commanded_amplitude_rad": 0.1,
+      "frequency_range_hz": [
+        0.4,
+        1.1
+      ],
+      "completed": true,
+      "duration_s": 7.999895749,
+      "start_angle_rad": 2.583607142,
+      "max_abs_displacement_rad": 0.11188472399999982,
+      "max_abs_motor_speed_rad_s": 0.8709192967,
+      "max_abs_command_torque_Nm": 1.139256477,
+      "max_abs_measured_torque_Nm": 1.229443359,
+      "estimated_disturbance_Nm_from_first_second": 0.1300293107895074,
+      "fixed_model_holdout": {
+        "samples": 1387,
+        "acceleration_r2": -0.012375095457031193,
+        "acceleration_rmse_rad_s2": 2.433448826424079
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 1387,
+        "acceleration_r2": 0.2884795064270327,
+        "acceleration_rmse_rad_s2": 2.040070604016793
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 0.4,
+          "high_hz": 0.65,
+          "samples": 371,
+          "acceleration_r2": -2.6478606484427245,
+          "acceleration_rmse_rad_s2": 2.8775186685077117
+        },
+        {
+          "low_hz": 0.65,
+          "high_hz": 0.9,
+          "samples": 571,
+          "acceleration_r2": -0.07068551489472785,
+          "acceleration_rmse_rad_s2": 2.2945578828519873
+        },
+        {
+          "low_hz": 0.9,
+          "high_hz": 1.11,
+          "samples": 445,
+          "acceleration_r2": 0.5205241930403813,
+          "acceleration_rmse_rad_s2": 2.1904418985549388
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 12.67409475090506
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 8.216309489424052
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 7.0,
+          "angle_rmse_deg": 6.327392573782655
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 0.21802660128374227,
+        "B_Nm_s_per_rad": 1.3693487241171822
+      }
+    },
+    {
+      "label": "03_low_015",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_2026-10-02/03_low_015.csv",
+      "commanded_amplitude_rad": 0.15,
+      "frequency_range_hz": [
+        0.4,
+        1.1
+      ],
+      "completed": false,
+      "duration_s": 5.101876412,
+      "start_angle_rad": 2.564048887,
+      "max_abs_displacement_rad": 0.17928400499999997,
+      "max_abs_motor_speed_rad_s": 1.059414856,
+      "max_abs_command_torque_Nm": 1.175679927,
+      "max_abs_measured_torque_Nm": 1.229443359,
+      "estimated_disturbance_Nm_from_first_second": 0.0845608053622099,
+      "fixed_model_holdout": {
+        "samples": 808,
+        "acceleration_r2": 0.03558944353761584,
+        "acceleration_rmse_rad_s2": 2.488855838225232
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 808,
+        "acceleration_r2": 0.22678593944700054,
+        "acceleration_rmse_rad_s2": 2.2285307726293366
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 0.4,
+          "high_hz": 0.65,
+          "samples": 371,
+          "acceleration_r2": -0.1950105075046229,
+          "acceleration_rmse_rad_s2": 2.0505397784433272
+        },
+        {
+          "low_hz": 0.65,
+          "high_hz": 0.9,
+          "samples": 437,
+          "acceleration_r2": 0.08457485044387458,
+          "acceleration_rmse_rad_s2": 2.807773317777028
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 8.046473145401341
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 7.233996374105841
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 0.1909720566748467,
+        "B_Nm_s_per_rad": 1.0424100447952986
+      }
+    },
+    {
+      "label": "01_high_006",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_followup_2026-10-02/01_high_006.csv",
+      "commanded_amplitude_rad": 0.06,
+      "frequency_range_hz": [
+        1.0,
+        2.5
+      ],
+      "completed": true,
+      "duration_s": 7.999869428,
+      "start_angle_rad": 2.606329232,
+      "max_abs_displacement_rad": 0.0758361759999997,
+      "max_abs_motor_speed_rad_s": 1.09606677,
+      "max_abs_command_torque_Nm": 2.565122072,
+      "max_abs_measured_torque_Nm": 2.594238281,
+      "estimated_disturbance_Nm_from_first_second": -0.14278608902958215,
+      "fixed_model_holdout": {
+        "samples": 1388,
+        "acceleration_r2": 0.8633119658333104,
+        "acceleration_rmse_rad_s2": 2.58450880111639
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 1388,
+        "acceleration_r2": 0.8736013878755573,
+        "acceleration_rmse_rad_s2": 2.4853291825960637
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 1.0,
+          "high_hz": 1.5,
+          "samples": 333,
+          "acceleration_r2": 0.7339842015949408,
+          "acceleration_rmse_rad_s2": 1.8710829751139681
+        },
+        {
+          "low_hz": 1.5,
+          "high_hz": 2.0,
+          "samples": 533,
+          "acceleration_r2": 0.8612080724950366,
+          "acceleration_rmse_rad_s2": 2.396549673297918
+        },
+        {
+          "low_hz": 2.0,
+          "high_hz": 2.51,
+          "samples": 522,
+          "acceleration_r2": 0.8775263770439046,
+          "acceleration_rmse_rad_s2": 3.1086111806208767
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 4.983861963868137
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 4.01738255428274
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 7.0,
+          "angle_rmse_deg": 5.8754522678296635
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 0.15102786699408602,
+        "B_Nm_s_per_rad": 0.9248425768263533
+      }
+    },
+    {
+      "label": "02_low_012",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_followup_2026-10-02/02_low_012.csv",
+      "commanded_amplitude_rad": 0.12,
+      "frequency_range_hz": [
+        0.4,
+        1.1
+      ],
+      "completed": true,
+      "duration_s": 7.999867262,
+      "start_angle_rad": 2.602014911,
+      "max_abs_displacement_rad": 0.14266021400000017,
+      "max_abs_motor_speed_rad_s": 1.057669527,
+      "max_abs_command_torque_Nm": 1.320723884,
+      "max_abs_measured_torque_Nm": 1.342236328,
+      "estimated_disturbance_Nm_from_first_second": 0.15197885961930757,
+      "fixed_model_holdout": {
+        "samples": 1388,
+        "acceleration_r2": 0.22811003686436682,
+        "acceleration_rmse_rad_s2": 2.576833885514446
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 1388,
+        "acceleration_r2": 0.4590545649756489,
+        "acceleration_rmse_rad_s2": 2.157175384993921
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 0.4,
+          "high_hz": 0.65,
+          "samples": 371,
+          "acceleration_r2": -1.6193897718436157,
+          "acceleration_rmse_rad_s2": 2.742042736000268
+        },
+        {
+          "low_hz": 0.65,
+          "high_hz": 0.9,
+          "samples": 571,
+          "acceleration_r2": 0.21516814004345652,
+          "acceleration_rmse_rad_s2": 2.384805302338659
+        },
+        {
+          "low_hz": 0.9,
+          "high_hz": 1.11,
+          "samples": 446,
+          "acceleration_r2": 0.5266940564780105,
+          "acceleration_rmse_rad_s2": 2.6700047657018464
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 11.745061515440511
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 9.207348440375203
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 7.0,
+          "angle_rmse_deg": 6.791997651383391
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 0.18485859249450334,
+        "B_Nm_s_per_rad": 1.163337641899044
+      }
+    },
+    {
+      "label": "03_low_013",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_followup_2026-10-02/03_low_013.csv",
+      "commanded_amplitude_rad": 0.13,
+      "frequency_range_hz": [
+        0.4,
+        1.1
+      ],
+      "completed": true,
+      "duration_s": 7.999907866,
+      "start_angle_rad": 2.586291608,
+      "max_abs_displacement_rad": 0.1627937110000004,
+      "max_abs_motor_speed_rad_s": 1.150171977,
+      "max_abs_command_torque_Nm": 1.396224354,
+      "max_abs_measured_torque_Nm": 1.455029297,
+      "estimated_disturbance_Nm_from_first_second": 0.10787339046006794,
+      "fixed_model_holdout": {
+        "samples": 1388,
+        "acceleration_r2": 0.34961967972402297,
+        "acceleration_rmse_rad_s2": 2.590105525672201
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 1388,
+        "acceleration_r2": 0.4628317607100184,
+        "acceleration_rmse_rad_s2": 2.3539049702369885
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 0.4,
+          "high_hz": 0.65,
+          "samples": 371,
+          "acceleration_r2": -1.0687462513221573,
+          "acceleration_rmse_rad_s2": 2.4901916185521342
+        },
+        {
+          "low_hz": 0.65,
+          "high_hz": 0.9,
+          "samples": 571,
+          "acceleration_r2": 0.4122599397979966,
+          "acceleration_rmse_rad_s2": 2.180361466561299
+        },
+        {
+          "low_hz": 0.9,
+          "high_hz": 1.11,
+          "samples": 446,
+          "acceleration_r2": 0.4986111537561845,
+          "acceleration_rmse_rad_s2": 3.1037695931741016
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 10.441058780833693
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 6.858812109701738
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 7.0,
+          "angle_rmse_deg": 4.66786934127978
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 0.17992710768367873,
+        "B_Nm_s_per_rad": 1.0530088409314227
+      }
+    },
+    {
+      "label": "04_low_014",
+      "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/large_chirp_followup_2026-10-02/04_low_014.csv",
+      "commanded_amplitude_rad": 0.14,
+      "frequency_range_hz": [
+        0.4,
+        1.1
+      ],
+      "completed": false,
+      "duration_s": 6.253896554,
+      "start_angle_rad": 2.560693304,
+      "max_abs_displacement_rad": 0.17966749999999987,
+      "max_abs_motor_speed_rad_s": 1.104793417,
+      "max_abs_command_torque_Nm": 1.309349682,
+      "max_abs_measured_torque_Nm": 1.387353516,
+      "estimated_disturbance_Nm_from_first_second": 0.07750198517608056,
+      "fixed_model_holdout": {
+        "samples": 1038,
+        "acceleration_r2": 0.19612210004033837,
+        "acceleration_rmse_rad_s2": 2.5298717702066433
+      },
+      "fixed_model_with_posthoc_constant_disturbance": {
+        "samples": 1038,
+        "acceleration_r2": 0.34602480509770595,
+        "acceleration_rmse_rad_s2": 2.2818342907529097
+      },
+      "frequency_bins": [
+        {
+          "low_hz": 0.4,
+          "high_hz": 0.65,
+          "samples": 371,
+          "acceleration_r2": -0.48501056904315853,
+          "acceleration_rmse_rad_s2": 2.2628378860117095
+        },
+        {
+          "low_hz": 0.65,
+          "high_hz": 0.9,
+          "samples": 571,
+          "acceleration_r2": 0.4356085017396978,
+          "acceleration_rmse_rad_s2": 2.3508947097519806
+        },
+        {
+          "low_hz": 0.9,
+          "high_hz": 1.11,
+          "samples": 96,
+          "acceleration_r2": -0.35317853301306124,
+          "acceleration_rmse_rad_s2": 4.067183368314404
+        }
+      ],
+      "rolling_angle_2s": [
+        {
+          "start_s": 1.0,
+          "end_s": 3.0,
+          "angle_rmse_deg": 8.73265618247679
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "angle_rmse_deg": 5.82240801184785
+        }
+      ],
+      "diagnostic_refit": {
+        "J_kg_m2": 0.1886340666153954,
+        "B_Nm_s_per_rad": 1.050301177912451
+      }
+    }
+  ]
+}

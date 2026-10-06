@@ -1,0 +1,36 @@
+[
+  {
+    "label": "01_verylow_008",
+    "amplitude_rad": 0.08,
+    "start_hz": 0.3,
+    "end_hz": 0.65,
+    "config_sha256": "f211d74c26035cc0c675a7aee2a6ff6e6eddc47f193dd944cd1b2ac69937a423",
+    "csv": "/workspaces/RMCS/experiments/yaw/chirp_extended_low_2026-10-02/01_verylow_008.csv",
+    "robot_csv": "/tmp/yaw_chirp_1790942615884.csv",
+    "samples": 7992,
+    "duration_s": 7.999880626,
+    "completed": true,
+    "max_abs_target_rad": 0.07999999985,
+    "max_abs_displacement_rad": 0.05867476499999991,
+    "max_abs_motor_speed_rad_s": 0.2391101075,
+    "max_abs_command_torque_Nm": 0.9802816476,
+    "start_angle_rad": 1.380774457
+  },
+  {
+    "label": "02_verylow_011",
+    "amplitude_rad": 0.11,
+    "start_hz": 0.3,
+    "end_hz": 0.65,
+    "config_sha256": "e5ec8b13c6b733e15dd7ca889d32fac4532e2b5a4d071a68bc8f880c900ab607",
+    "csv": "/workspaces/RMCS/experiments/yaw/chirp_extended_low_2026-10-02/02_verylow_011.csv",
+    "robot_csv": "/tmp/yaw_chirp_1790942634266.csv",
+    "samples": 8001,
+    "duration_s": 7.999883892,
+    "completed": true,
+    "max_abs_target_rad": 0.11,
+    "max_abs_displacement_rad": 0.07775365099999987,
+    "max_abs_motor_speed_rad_s": 0.3560471674,
+    "max_abs_command_torque_Nm": 0.9314806009,
+    "start_angle_rad": 1.414617908
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "deployed_at_utc": "2026-10-02T12:36:26.154792+00:00",
+  "host": "alliance-hero",
+  "robot_library_sha256": "2a046d42b9b5b389691688ffe89263a221e82579e9ac425ccf015f51d7431b3c",
+  "prior_yaml_sha256": "dbebe05ddf4e44affb619e5a39b7a7c84a1af3abc927d8cc27614e49e08c3666",
+  "deployed_yaml_sha256": "f2e4048cd65ecf90c74828538e502616f62b0e3e0d3d558a35f99d9ed5ceca18",
+  "change": {
+    "yaw_velocity_ki": {
+      "from": 0.02,
+      "to": 0.05
+    }
+  },
+  "c_car_executor_running": true
+}

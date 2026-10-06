@@ -1,0 +1,53 @@
+[
+  {
+    "label": "01_low_005",
+    "amplitude_rad": 0.05,
+    "start_hz": 0.4,
+    "end_hz": 1.1,
+    "config_sha256": "bab11a06edf19ac20edcfa8dbcd174c46a62924fef67554cf570ae919cba493b",
+    "csv": "/workspaces/RMCS/experiments/yaw/large_chirp_2026-10-02/01_low_005.csv",
+    "robot_csv": "/tmp/yaw_chirp_1790941403126.csv",
+    "samples": 8001,
+    "duration_s": 7.999914328,
+    "completed": true,
+    "max_abs_target_rad": 0.0499999996,
+    "max_abs_displacement_rad": 0.03806189900000012,
+    "max_abs_motor_speed_rad_s": 0.2670353756,
+    "max_abs_command_torque_Nm": 0.7943404306,
+    "start_angle_rad": 2.574882626
+  },
+  {
+    "label": "02_low_010",
+    "amplitude_rad": 0.1,
+    "start_hz": 0.4,
+    "end_hz": 1.1,
+    "config_sha256": "8dc6d9e4940716652f4afe73205d98845215df5c4924a47d26aa2d961b1de85a",
+    "csv": "/workspaces/RMCS/experiments/yaw/large_chirp_2026-10-02/02_low_010.csv",
+    "robot_csv": "/tmp/yaw_chirp_1790941422315.csv",
+    "samples": 7999,
+    "duration_s": 7.999895749,
+    "completed": true,
+    "max_abs_target_rad": 0.09999999997,
+    "max_abs_displacement_rad": 0.11188472399999982,
+    "max_abs_motor_speed_rad_s": 0.8709192967,
+    "max_abs_command_torque_Nm": 1.139256477,
+    "start_angle_rad": 2.583607142
+  },
+  {
+    "label": "03_low_015",
+    "amplitude_rad": 0.15,
+    "start_hz": 0.4,
+    "end_hz": 1.1,
+    "config_sha256": "64cb8734fe7dbb00b55865bad09d4a365d6722841f0671e24b012118d0eb1fd3",
+    "csv": "/workspaces/RMCS/experiments/yaw/large_chirp_2026-10-02/03_low_015.csv",
+    "robot_csv": "/tmp/yaw_chirp_1790941443798.csv",
+    "samples": 5103,
+    "duration_s": 5.101876412,
+    "completed": false,
+    "max_abs_target_rad": 0.1499999772,
+    "max_abs_displacement_rad": 0.17928400499999997,
+    "max_abs_motor_speed_rad_s": 1.059414856,
+    "max_abs_command_torque_Nm": 1.175679927,
+    "start_angle_rad": 2.564048887
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "mode": "deformable-infantry-omni-c yaw-only",
+  "robot_hostname": "alliance-hero",
+  "selected_parameters": {
+    "yaw_angle_kp": 12.0,
+    "yaw_velocity_kp": 11.0,
+    "yaw_velocity_ki": 0.05,
+    "yaw_ref_velocity_gain": 1.0,
+    "yaw_velocity_ff_gain": 1.378547846,
+    "yaw_acceleration_ff_gain": 0.142611646,
+    "yaw_sweep_feedforward_scale": 1.0,
+    "yaw_sweep_torque_limit_nm": 4.0
+  },
+  "before_library_sha256": "a9950e3b401b2240d1567f50dfa05a56cea006d3cf0411876ab1728d146155e6",
+  "before_yaml_sha256": "af5423346f8e7901e849c03acd4e6139c671ebd731df9b5d1390d4db95b2347c",
+  "deployed_library_sha256": "e07d6255257ab870c9717f325b97cf13e68f6ecc9df5a9c75cc724486b1ad789",
+  "deployed_yaml_sha256": "e5824494ecf05d531023c871427b0f1911ef39a7033ebab3c048434f56941ffd",
+  "on_robot_library_backup": "/var/tmp/librmcs_core_before_selected_yaw_1791258064.so",
+  "on_robot_yaml_backup": "/var/tmp/deformable_infantry_omni_c_before_selected_yaw_1791258064.yaml",
+  "yaw_logger": "/tmp/yaw_2026-10-06_03-41-18.csv",
+  "executor_running": true
+}
