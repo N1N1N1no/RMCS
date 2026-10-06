@@ -15,10 +15,16 @@ gantry_frame:
 
 gantry_frame_controller:
   ros__parameters:
-    # 左摇杆 x 轴满量程对应的 pitch 电机目标速度，单位 rad/s。
-    max_velocity: 15.0
-    # 右摇杆 y 轴满量程对应的 yaw 电机目标速度，单位 rad/s。
-    yaw_max_velocity: 15.0
+    # 左摇杆 x 轴
+    max_velocity: 20.0
+    # 右摇杆 y 轴
+    yaw_max_velocity: 20.0
+    # 调平速度
+    homing_velocity: -15.0
+    # 堵转判定：速度低于阈值且反馈力矩高于阈值，连续满足指定周期数。
+    stall_velocity_threshold: 0.2
+    stall_torque_threshold: 0.15
+    stall_ticks: 200
 
 frame_left_velocity_pid_controller:
   ros__parameters:
