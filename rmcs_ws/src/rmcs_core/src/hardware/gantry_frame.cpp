@@ -2,9 +2,11 @@
 #include "hardware/device/dji_motor.hpp"
 #include "hardware/device/dr16.hpp"
 #include "hardware/device/remote_control.hpp"
+#include <chrono>
 #include <librmcs/board/c_board.hpp>
 #include <rclcpp/node.hpp>
 #include <rmcs_executor/component.hpp>
+#include <thread>
 
 namespace rmcs_core::hardware {
 
@@ -26,10 +28,12 @@ public:
         // pitch 正方向 = 逆时针 = 上升（顺时针 = 下降）
         left_motor_.configure(
             device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 3}
-            .set_reversed());
+                .set_reversed()
+                .enable_multi_turn_angle());
         right_motor_.configure(
             device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 2}
-            .set_reversed());
+                .set_reversed()
+                .enable_multi_turn_angle());
         yaw_motor_.configure(device::DjiMotor::Config{device::DjiMotor::Type::kM2006, 1}
             .set_reversed());
 
@@ -45,7 +49,7 @@ public:
     GantryFrame(GantryFrame&&) = delete;
     GantryFrame& operator=(GantryFrame&&) = delete;
 
-    ~GantryFrame() override = default;
+    ~GantryFrame() override { stop_all_motors(); }
 
     void update() override {
         left_motor_.update_status();
@@ -63,7 +67,6 @@ public:
             {
                 .can_id = left_motor_.send_id(),
                 .can_data =
-                    // 0x200 帧的 quarter 下标 = 电机 ID - 1
                     device::CanPacket8{
                         yaw_motor_.generate_command(),
                         right_motor_.generate_command(),
@@ -72,6 +75,37 @@ public:
                     }
                         .as_bytes(),
             });
+    }
+
+    void stop_all_motors() {
+        if (!board_)
+            return;
+
+        try {
+            const auto zero_command = [](const device::DjiMotor& motor) {
+                return motor.generate_command(0.0);
+            };
+
+            // 正常退出时连续发送零力矩，避免电机保留最后一帧驱动命令。
+            for (int i = 0; i < 10; ++i) {
+                board_->start_transmit().can_transmit(
+                    Spec::kCans.kCan1,
+                    {
+                        .can_id = left_motor_.send_id(),
+                        .can_data =
+                            device::CanPacket8{
+                                zero_command(yaw_motor_),
+                                zero_command(right_motor_),
+                                zero_command(left_motor_),
+                                device::CanPacket8::PaddingQuarter{},
+                            }
+                                .as_bytes(),
+                    });
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            }
+        } catch (...) {
+            // 析构函数不能向退出流程传播异常。
+        }
     }
 
 private:

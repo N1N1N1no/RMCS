@@ -25,6 +25,12 @@ gantry_frame_controller:
     stall_velocity_threshold: 0.2
     stall_torque_threshold: 0.15
     stall_ticks: 200
+    # 左右 pitch 同步：编码器角度差换算为高度差，通过差速速度修正。
+    screw_lead_mm: 2.0
+    sync_kp: 5.0
+    sync_kd: 0.0
+    sync_max_velocity: 2.0
+    sync_deadband_mm: 0.1
 
 frame_left_velocity_pid_controller:
   ros__parameters:
@@ -83,3 +89,5 @@ value_broadcaster:
       - /test/frame_yaw_motor/torque
       - /test/frame_yaw_motor/target_velocity
       - /test/frame_yaw_motor/control_torque
+      - /test/gantry/pitch_sync_error
+      - /test/gantry/pitch_sync_correction
