@@ -1,0 +1,13 @@
+[
+  {
+    "label": "01_newff",
+    "arm": "newff",
+    "start_angle_rad": 5.56221,
+    "config_sha256": "ab68e7ffae7f37dc9933910070f18168625be94a4ad855051e326a542507c751",
+    "samples": 3000,
+    "max_speed_rad_s": 0.481514,
+    "max_command_torque_Nm": 1.19897,
+    "max_error_deg": 0.15366728065408677,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_ff_ab_reverse_2026-10-13/01_newff.csv"
+  }
+]

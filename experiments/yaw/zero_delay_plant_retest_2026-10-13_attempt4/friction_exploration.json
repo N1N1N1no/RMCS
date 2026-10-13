@@ -1,0 +1,79 @@
+{
+  "model_friction": "J*q_ddot + B*q_dot + Fc*tanh(q_dot/v0) + d_run = measured_torque(t)",
+  "fixed_v0_rad_s": 0.04,
+  "selection_note": "v0 was chosen during exploratory inspection of this data set; holdout scores are descriptive, not unbiased generalization estimates",
+  "training": "0.5 N m run1 cycles1-5 plus 0.9 N m stopped run cycle1; separate constant disturbance per run",
+  "heldout": "0.5 N m run1 cycles6-7, 0.9 N m stopped run cycle2, 0.5 N m run2 cycles4-7",
+  "friction_candidate": {
+    "parameters": {
+      "J_kg_m2": 0.10696656566980907,
+      "B_Nm_s_per_rad": 0.603174456916748,
+      "F_c_Nm": 0.3364607972495375,
+      "v0_rad_s": 0.04,
+      "d_low1_Nm": -2.7528932682839223e-05,
+      "d_high_Nm": -0.041739214127734674
+    },
+    "training_low_0p5": {
+      "samples": 480,
+      "acceleration_r2": 0.6203504519810137,
+      "acceleration_rmse_rad_s2": 1.5755771238252056
+    },
+    "training_high_0p9_cycle1": {
+      "samples": 96,
+      "acceleration_r2": 0.9227545581172406,
+      "acceleration_rmse_rad_s2": 1.871712200018831
+    },
+    "holdout_low1_cycles6_7": {
+      "samples": 180,
+      "acceleration_r2": 0.6109661827892103,
+      "acceleration_rmse_rad_s2": 1.7049554234632014
+    },
+    "holdout_high_cycle2": {
+      "samples": 96,
+      "acceleration_r2": 0.934562859969227,
+      "acceleration_rmse_rad_s2": 1.6863538278596326
+    },
+    "holdout_low2_cycles4_7": {
+      "samples": 372,
+      "acceleration_r2": 0.45317172036082043,
+      "acceleration_rmse_rad_s2": 1.9294396111904921
+    },
+    "low2_disturbance_Nm_from_cycles2_3": 0.010515248749361428
+  },
+  "same_data_linear_comparator": {
+    "parameters": {
+      "J_kg_m2": 0.14065851326540477,
+      "B_Nm_s_per_rad": 1.7601611443665799,
+      "F_c_Nm": 0.0,
+      "v0_rad_s": null,
+      "d_low1_Nm": -0.010134454496876496,
+      "d_high_Nm": -0.09551745827648671
+    },
+    "training_low_0p5": {
+      "samples": 480,
+      "acceleration_r2": 0.3495429096862983,
+      "acceleration_rmse_rad_s2": 2.0623271016792226
+    },
+    "training_high_0p9_cycle1": {
+      "samples": 96,
+      "acceleration_r2": 0.7904839245823281,
+      "acceleration_rmse_rad_s2": 3.082558415757629
+    },
+    "holdout_low1_cycles6_7": {
+      "samples": 180,
+      "acceleration_r2": 0.3787096379680328,
+      "acceleration_rmse_rad_s2": 2.154600020965328
+    },
+    "holdout_high_cycle2": {
+      "samples": 96,
+      "acceleration_r2": 0.8164853081698716,
+      "acceleration_rmse_rad_s2": 2.8240473046454824
+    },
+    "holdout_low2_cycles4_7": {
+      "samples": 372,
+      "acceleration_r2": 0.16920995387375815,
+      "acceleration_rmse_rad_s2": 2.3782162890479253
+    },
+    "low2_disturbance_Nm_from_cycles2_3": 0.0015952705150021505
+  }
+}

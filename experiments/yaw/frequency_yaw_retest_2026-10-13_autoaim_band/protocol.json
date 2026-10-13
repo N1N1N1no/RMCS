@@ -1,0 +1,28 @@
+{
+  "plan": [
+    {
+      "label": "f7p5",
+      "phase_s": 0.03333333333333333,
+      "cycles": 48,
+      "frequency_hz": 7.5,
+      "torque_Nm": 0.5
+    },
+    {
+      "label": "f8p333",
+      "phase_s": 0.03,
+      "cycles": 53,
+      "frequency_hz": 8.333333333333334,
+      "torque_Nm": 0.5
+    }
+  ],
+  "repeats": 2,
+  "sampling_rate_hz": 1000,
+  "original_chassis_components_enabled": true,
+  "chassis_guard_rad": 0.05,
+  "chassis_yaw_delta_guard_rad": 0.03,
+  "baseline_yaml_sha256": "4f1974f583edb47c2e453461fabe1fb23fb87948605a445227c9cb946339c72a",
+  "baseline_library_sha256": "8545d781b4ffeb4daf32f449cec15845c0bd09f775fbe8e362f24fd9721b80f4",
+  "test_library_sha256": "3da87769467705dd8cf6b88a293ab705463856935136991a752d44b5732790aa",
+  "robot_backup_yaml": "/tmp/c_car_before_frequency_yaw_1791863098.yaml",
+  "robot_backup_library": "/tmp/librmcs_core_before_frequency_yaw_1791863098.so"
+}

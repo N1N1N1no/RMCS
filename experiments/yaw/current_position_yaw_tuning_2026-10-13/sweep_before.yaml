@@ -1,0 +1,64 @@
+rmcs_executor:
+  ros__parameters:
+    update_rate: 1000.0
+    components:
+      - rmcs_core::hardware::DeformableInfantryOmniC -> deformable_infantry
+      - rmcs_core::referee::Status -> referee_status
+      - rmcs_core::controller::pid::PidController -> supercap_charge_limit_stub
+      - rmcs_core::controller::identification::SweptFrequencyController -> yaw_sweep_controller
+      - rmcs_core::controller::pid::PidController -> pitch_hold_angle_controller
+      - rmcs_core::controller::pid::PidController -> pitch_hold_velocity_controller
+
+supercap_charge_limit_stub:
+  ros__parameters:
+    measurement: 0.0
+    setpoint: 0.0
+    control: /chassis/supercap/charge_power_limit
+    kp: 0.0
+    ki: 0.0
+    kd: 0.0
+
+deformable_infantry:
+  ros__parameters:
+    serial_filter_bottom_board: "AF-C1C3-DFE8-40A8-FC4B-B853-6ED7-AC9F-1DED"
+    serial_filter_top_board: "AF-ABAC-786D-1B53-99F6-00A2-42A6-AA95-9D69"
+    chassis_radius: 0.2341741
+    rod_length: 0.140
+    yaw_motor_zero_point: 38910
+    pitch_motor_zero_point: 7093
+
+yaw_sweep_controller:
+  ros__parameters:
+    target: /gimbal/yaw
+    sweep: true
+    pid: false
+    logarithmic: true
+    dc_offset: 0.0
+    start_freq: 10.0
+    end_freq: 0.5
+    duration: 25.0
+    amplitude: 1.0
+
+pitch_hold_angle_controller:
+  ros__parameters:
+    measurement: /gimbal/pitch/angle
+    setpoint: 0.0
+    control: /pitch_hold/velocity_reference
+    kp: 35.0
+    ki: 0.0
+    kd: 0.3
+    output_min: -6.0
+    output_max: 6.0
+
+pitch_hold_velocity_controller:
+  ros__parameters:
+    measurement: /gimbal/pitch/velocity_imu
+    setpoint: /pitch_hold/velocity_reference
+    control: /gimbal/pitch/control_torque
+    kp: 2.0
+    ki: 0.1
+    kd: 0.0
+    integral_min: -30.0
+    integral_max: 30.0
+    output_min: -5.0
+    output_max: 5.0

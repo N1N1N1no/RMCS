@@ -1,0 +1,24 @@
+[
+  {
+    "label": "01_newff",
+    "arm": "newff",
+    "start_angle_rad": 5.2023,
+    "config_sha256": "acf42545f5682fa66df495ba50192b9a919432cab0e40a3180bb0c905b978c22",
+    "samples": 3000,
+    "max_speed_rad_s": 0.490037,
+    "max_command_torque_Nm": 1.19122,
+    "max_error_deg": 0.1580057170788174,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_ff_ab_chassis_disabled_reverse_2026-10-13/01_newff.csv"
+  },
+  {
+    "label": "02_baseline",
+    "arm": "baseline",
+    "start_angle_rad": 5.16415,
+    "config_sha256": "dbd0768f78860028354c399d4e60e32629b1849fe3922b769b4acc6f7ce64444",
+    "samples": 3000,
+    "max_speed_rad_s": 0.478318,
+    "max_command_torque_Nm": 1.22687,
+    "max_error_deg": 0.17804778075249358,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_ff_ab_chassis_disabled_reverse_2026-10-13/02_baseline.csv"
+  }
+]

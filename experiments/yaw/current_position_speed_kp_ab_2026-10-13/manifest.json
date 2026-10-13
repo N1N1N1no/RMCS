@@ -1,0 +1,24 @@
+[
+  {
+    "label": "01_newff",
+    "arm": "newff",
+    "start_angle_rad": 4.92523,
+    "config_sha256": "acf42545f5682fa66df495ba50192b9a919432cab0e40a3180bb0c905b978c22",
+    "samples": 3000,
+    "max_speed_rad_s": 0.490037,
+    "max_command_torque_Nm": 1.09915,
+    "max_error_deg": 0.15139550299639307,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_speed_kp_ab_2026-10-13/01_newff.csv"
+  },
+  {
+    "label": "02_speed13",
+    "arm": "speed13",
+    "start_angle_rad": 4.87307,
+    "config_sha256": "be51627825b2537629a932de788d51cb37c8dd6c9a85cbbef4418b5ce28cfb8f",
+    "samples": 3000,
+    "max_speed_rad_s": 0.491102,
+    "max_command_torque_Nm": 1.21953,
+    "max_error_deg": 0.1537830181287032,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_speed_kp_ab_2026-10-13/02_speed13.csv"
+  }
+]

@@ -142,6 +142,12 @@ deformable_infantry:
     # yaw_plant_torque_nm: 0.9
     # yaw_plant_phase_seconds: 0.12
     # yaw_plant_cycles: 8
+    # 延迟观测：/rmcs/service/yaw_latency/start 手动触发，按 +力矩、零、-力矩、零重复。
+    # 记录主机事件时间与两块 IMU 各自的板载采样时间；不代表微秒级物理延迟。
+    # yaw_latency_torque_nm: 0.5
+    # yaw_latency_pulse_s: 0.04
+    # yaw_latency_rest_s: 0.12
+    # yaw_latency_cycles: 12
     # 扫频外推：须手动触发，原测试限制见硬件代码。
     # yaw_chirp_amplitude_rad: 0.05
     # yaw_chirp_start_hz: 0.4

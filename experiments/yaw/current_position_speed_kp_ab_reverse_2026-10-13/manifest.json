@@ -1,0 +1,13 @@
+[
+  {
+    "label": "01_speed13",
+    "arm": "speed13",
+    "start_angle_rad": 4.8097,
+    "config_sha256": "be51627825b2537629a932de788d51cb37c8dd6c9a85cbbef4418b5ce28cfb8f",
+    "samples": 3000,
+    "max_speed_rad_s": 0.48258,
+    "max_command_torque_Nm": 1.29864,
+    "max_error_deg": 0.14957120537669652,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_speed_kp_ab_reverse_2026-10-13/01_speed13.csv"
+  }
+]

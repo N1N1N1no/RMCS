@@ -1,0 +1,48 @@
+[
+  {
+    "label": "run1",
+    "robot_csv": "/tmp/yaw_plant_1791859286736.csv",
+    "local_csv": "/workspaces/RMCS/experiments/yaw/chassis_stable_yaw_retest_2026-10-13_attempt4/run1.csv",
+    "sha256": "8336ccf4c49a90661459af927cbafbc0eb3a0b5b72388ae12fa84e338b63b701",
+    "samples": 3841,
+    "duration_s": 3.83987715,
+    "last_phase": 31,
+    "start_angle_rad": 0.2105388631,
+    "max_abs_displacement_rad": 0.052059472999999995,
+    "max_abs_velocity_rad_s": 0.3054326191,
+    "max_chassis_yaw_delta_rad": 0.002214693813,
+    "max_chassis_yaw_rate_rad_s": 0.04154658091,
+    "max_chassis_state_change_rad": {
+      "chassis_pitch_rad": 0.00205565104,
+      "chassis_roll_rad": 0.002406638519999999,
+      "lf_joint_rad": 0.0,
+      "lb_joint_rad": 0.0,
+      "rb_joint_rad": 0.0,
+      "rf_joint_rad": 9.587400000010682e-05
+    },
+    "completed": true
+  },
+  {
+    "label": "run2",
+    "robot_csv": "/tmp/yaw_plant_1791859298692.csv",
+    "local_csv": "/workspaces/RMCS/experiments/yaw/chassis_stable_yaw_retest_2026-10-13_attempt4/run2.csv",
+    "sha256": "426f03954eea6be3cf22a851343809867e67b47775c74fd50aa62125df6598eb",
+    "samples": 3841,
+    "duration_s": 3.839894518,
+    "last_phase": 31,
+    "start_angle_rad": 0.2261662924,
+    "max_abs_displacement_rad": 0.03921238390000001,
+    "max_abs_velocity_rad_s": 0.3054326191,
+    "max_chassis_yaw_delta_rad": 0.001818384646,
+    "max_chassis_yaw_rate_rad_s": 0.04474247175,
+    "max_chassis_state_change_rad": {
+      "chassis_pitch_rad": 0.0003056299099999972,
+      "chassis_roll_rad": 0.0004584715399999998,
+      "lf_joint_rad": 0.0,
+      "lb_joint_rad": 0.0,
+      "rb_joint_rad": 0.0,
+      "rf_joint_rad": 0.0
+    },
+    "completed": true
+  }
+]

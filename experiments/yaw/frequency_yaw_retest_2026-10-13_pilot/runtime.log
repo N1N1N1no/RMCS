@@ -1,0 +1,26 @@
+1791859778.8629012 [INFO] [launch]: All log files can be found below /root/.ros/log/2026-10-13-02-49-38-862287-alliance-hero-6793
+1791859778.8630023 [INFO] [launch]: Default logging verbosity is set to INFO
+1791859778.8776441 [INFO] [launch.user]: Starting RMCS on robot 'deformable-infantry-omni-c' -> deformable-infantry-omni-c.yaml
+1791859778.8785102 [INFO] [rmcs_executor-1]: process started with pid [6798]
+1791859778.9254336 [rmcs_executor-1] [librmcs] [warn] USB device firmware version mismatch: found 'RMCS Agent v3.3.0-beta.2', expected 'RMCS Agent v3.3.0-beta.1'. Continuing because dangerously_skip_version_checks is enabled.
+1791859778.9307129 [rmcs_executor-1] [librmcs] [error] Deserializer encountered an error while parsing input
+1791859779.1517646 [rmcs_executor-1] [librmcs] [warn] USB device firmware version mismatch: found 'RMCS Agent v3.3.0-beta.2', expected 'RMCS Agent v3.3.0-beta.1'. Continuing because dangerously_skip_version_checks is enabled.
+1791859779.1521218 [rmcs_executor-1] [librmcs] [error] Deserializer encountered an error while parsing input
+1791859779.3832054 [rmcs_executor-1] [0m[INFO] [1791859779.382910839] [value_collector]: collecting 11 signals to /tmp/yaw_2026-10-13_02-49-39.csv[0m
+1791859779.3833530 [rmcs_executor-1] [0m[INFO] [1791859779.382982714] [rmcs_executor]: Calculating component dependencies[0m
+1791859779.3834116 [rmcs_executor-1] [0m[INFO] [1791859779.382989317] [rmcs_executor]: - predefined_msg_provider[0m
+1791859779.3834665 [rmcs_executor-1] [0m[INFO] [1791859779.382992412] [rmcs_executor]: -     deformable_infantry[0m
+1791859779.3836517 [rmcs_executor-1] [0m[INFO] [1791859779.382994717] [rmcs_executor]: -         referee_status[0m
+1791859779.3836923 [rmcs_executor-1] [0m[INFO] [1791859779.382998854] [rmcs_executor]: -         value_collector[0m
+1791859779.3837147 [rmcs_executor-1] [0m[INFO] [1791859779.383000928] [rmcs_executor]: -     gimbal_controller[0m
+1791859779.3837342 [rmcs_executor-1] [0m[INFO] [1791859779.383003032] [rmcs_executor]: -     chassis_controller[0m
+1791859779.3837514 [rmcs_executor-1] [0m[INFO] [1791859779.383005156] [rmcs_executor]: -         chassis_power_controller[0m
+1791859779.3837676 [rmcs_executor-1] [0m[INFO] [1791859779.383007481] [rmcs_executor]: -         deformable_chassis_controller[0m
+1791859779.3837864 [rmcs_executor-1] [0m[INFO] [1791859779.383009585] [rmcs_executor]: -     deformable_suspension[0m
+1791859779.3838029 [rmcs_executor-1] [0m[INFO] [1791859779.383011779] [rmcs_executor]: -         lf_joint_controller[0m
+1791859779.3838181 [rmcs_executor-1] [0m[INFO] [1791859779.383013843] [rmcs_executor]: -         lb_joint_controller[0m
+1791859779.3838339 [rmcs_executor-1] [0m[INFO] [1791859779.383015826] [rmcs_executor]: -         rb_joint_controller[0m
+1791859779.3838494 [rmcs_executor-1] [0m[INFO] [1791859779.383017840] [rmcs_executor]: -         rf_joint_controller[0m
+1791859779.3838642 [rmcs_executor-1] [0m[INFO] [1791859779.383019794] [rmcs_executor]: -             deformable_infantry_command[0m
+1791859779.3838799 [rmcs_executor-1] [0m[INFO] [1791859779.383039691] [deformable_chassis_controller]: Max control torque of wheel motor: 6[0m
+1791859779.3839328 [rmcs_executor-1] [33m[WARN] [1791859779.383230960] [deformable_infantry]: deformable joint feedback invalid, fallback chassis radius to default 0.374 m[0m

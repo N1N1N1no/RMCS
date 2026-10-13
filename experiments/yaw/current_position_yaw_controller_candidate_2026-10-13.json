@@ -1,0 +1,33 @@
+{
+  "status": "locally_validated_test_candidate_not_deployed_to_normal_c_car_config",
+  "date_cst": "2026-10-13",
+  "operating_point": {
+    "identification_start_yaw_rad": [5.319941246, 5.392038343],
+    "identification_torque_command_Nm": 0.7,
+    "identification_frequencies_Hz": [3.125, 6.25],
+    "chassis_control_components_enabled": false,
+    "closed_loop_test_start_yaw_rad": [5.1642, 5.3286],
+    "closed_loop_trajectory_amplitude_rad": 0.06,
+    "closed_loop_transition_s": 0.5,
+    "closed_loop_torque_limit_Nm": 2.5
+  },
+  "gimbal_controller": {
+    "yaw_angle_kp": 12.0,
+    "yaw_angle_ki": 0.0,
+    "yaw_angle_kd": 0.0,
+    "yaw_velocity_kp": 11.0,
+    "yaw_velocity_ki": 0.05,
+    "yaw_velocity_kd": 0.0,
+    "yaw_ref_velocity_gain": 1.0,
+    "yaw_velocity_ff_gain": 1.781243415052695,
+    "yaw_acceleration_ff_gain": 0.11221803719098242
+  },
+  "validation": {
+    "independent_speed_fundamental_mean_relative_error": 0.10403274423495557,
+    "feedforward_ab_pairs": 2,
+    "feedforward_moving_rms_improved_in_both_pairs": true,
+    "angle_kp_14_rejected_on_moving_rms": true,
+    "velocity_kp_13_not_selected_incomplete_reverse_pair": true,
+    "real_autoaim_target_or_replay_validation": false
+  }
+}

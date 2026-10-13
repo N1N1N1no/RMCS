@@ -1,0 +1,60 @@
+[
+  {
+    "label": "f3p125_run1",
+    "robot_csv": "/tmp/yaw_plant_1791861683903.csv",
+    "local_csv": "/workspaces/RMCS/experiments/yaw/frequency_yaw_retest_2026-10-13_cross_position_0p7nm_high/f3p125_run1.csv",
+    "sha256": "4aa792768fec3158c5519966a2b94ccaaf7302ed4951655f015458272eef5a0b",
+    "frequency_hz": 3.125,
+    "phase_s": 0.08,
+    "cycles": 20,
+    "torque_command_Nm": 0.7,
+    "samples": 6401,
+    "duration_s": 6.399849447,
+    "last_phase": 79,
+    "start_angle_rad": 1.984779392,
+    "max_abs_displacement_rad": 0.05340170599999983,
+    "max_abs_encoder_velocity_rad_s": 0.3804817769,
+    "max_abs_chassis_yaw_delta_rad": 0.003603536597,
+    "max_abs_chassis_yaw_rate_rad_s": 0.05646073815,
+    "max_abs_chassis_state_change_rad": {
+      "chassis_pitch_rad": 0.0034704561800000013,
+      "chassis_roll_rad": 0.0023191507439999995,
+      "lf_joint_rad": 0.0,
+      "lb_joint_rad": 0.0,
+      "rb_joint_rad": 0.0,
+      "rf_joint_rad": 0.0
+    },
+    "completed": true,
+    "preflight_yaw_rad": 1.98813,
+    "config_sha256": "a739c8326402bd404f9179045fd9d97c2fa8fdd4c40280d1b377075808a4c303"
+  },
+  {
+    "label": "f6p25_run1",
+    "robot_csv": "/tmp/yaw_plant_1791861725238.csv",
+    "local_csv": "/workspaces/RMCS/experiments/yaw/frequency_yaw_retest_2026-10-13_cross_position_0p7nm_high/f6p25_run1.csv",
+    "sha256": "8c50a8cef9381c54d0b2573e097d8212217b57f396c00d6ce64fcf15160a20e5",
+    "frequency_hz": 6.25,
+    "phase_s": 0.04,
+    "cycles": 40,
+    "torque_command_Nm": 0.7,
+    "samples": 6401,
+    "duration_s": 6.399914495,
+    "last_phase": 159,
+    "start_angle_rad": 1.975575507,
+    "max_abs_displacement_rad": 0.01955825499999997,
+    "max_abs_encoder_velocity_rad_s": 0.4345869837,
+    "max_abs_chassis_yaw_delta_rad": 0.00199288786,
+    "max_abs_chassis_yaw_rate_rad_s": 0.04687306564,
+    "max_abs_chassis_state_change_rad": {
+      "chassis_pitch_rad": 0.0018723273899999993,
+      "chassis_roll_rad": 0.0016163210200000003,
+      "lf_joint_rad": 0.0,
+      "lb_joint_rad": 0.0,
+      "rb_joint_rad": 0.0,
+      "rf_joint_rad": 0.0
+    },
+    "completed": true,
+    "preflight_yaw_rad": 1.98219,
+    "config_sha256": "e0ad9e1163752f59acddf90f93315232897e821bd59de7da7d5a8a579792b669"
+  }
+]

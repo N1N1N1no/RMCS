@@ -1,0 +1,232 @@
+{
+  "input": "motor-current-derived measured torque",
+  "output": "gimbal IMU yaw rate minus chassis IMU yaw rate",
+  "start_yaw_span_rad": [
+    5.657225272,
+    5.683590567
+  ],
+  "torque_command_Nm": 0.7,
+  "frequency_hz": [
+    3.125,
+    6.25
+  ],
+  "train": "run1 at both frequencies, after excluding the first cycle",
+  "holdout": "run2 at both frequencies, with fixed parameters",
+  "records": [
+    {
+      "label": "f3p125_run1",
+      "frequency_hz": 3.125,
+      "completed": true,
+      "full_cycles_used_after_startup": 9,
+      "guard_stopped_usable_segment": false,
+      "torque_command_Nm": 0.7,
+      "start_angle_rad": 5.683590567,
+      "max_abs_displacement_rad": 0.02751577999999988,
+      "torque_phasor": {
+        "real": 0.8499021228551797,
+        "imag": -0.17480680647398336
+      },
+      "speed_phasor": {
+        "real": 0.127209713106542,
+        "imag": -0.3291864354015358
+      },
+      "angle_phasor": {
+        "real": -0.015671444992275588,
+        "imag": -0.006557046471761292
+      },
+      "torque_amplitude_Nm": 0.8676929399409526,
+      "speed_amplitude_rad_s": 0.3529107824380239,
+      "angle_amplitude_rad": 0.016987908834778836,
+      "speed_harmonic_to_residual_std": 8.315974223215091,
+      "angle_harmonic_to_residual_std": 21.769086438723757,
+      "pointwise_B_Nm_s_per_rad": 1.3301094185422497,
+      "pointwise_J_kg_m2": 0.10531336105485609,
+      "max_chassis_yaw_change_rad": 0.0004913963925,
+      "max_chassis_state_change_rad": 0.0027270580800000006,
+      "sha256": "0b735f56cf793e32f838420fe4b9e3f17dc9df1e8005f6b9fea6b054b6fb00eb",
+      "speed_pass": true,
+      "angle_derivative_to_imu_gain": 0.9451590219648274,
+      "angle_derivative_to_imu_phase_deg": 1.57642810530445,
+      "angle_pass": true
+    },
+    {
+      "label": "f3p125_run2",
+      "frequency_hz": 3.125,
+      "completed": true,
+      "full_cycles_used_after_startup": 9,
+      "guard_stopped_usable_segment": false,
+      "torque_command_Nm": 0.7,
+      "start_angle_rad": 5.661923088,
+      "max_abs_displacement_rad": 0.05407282300000027,
+      "torque_phasor": {
+        "real": 0.8495489169518831,
+        "imag": -0.19478338774633228
+      },
+      "speed_phasor": {
+        "real": 0.11680434726653643,
+        "imag": -0.3204924685373414
+      },
+      "angle_phasor": {
+        "real": -0.015332610590682421,
+        "imag": -0.005439328261847096
+      },
+      "torque_amplitude_Nm": 0.8715927549240273,
+      "speed_amplitude_rad_s": 0.34111387824232603,
+      "angle_amplitude_rad": 0.01626884259760464,
+      "speed_harmonic_to_residual_std": 6.77811366734538,
+      "angle_harmonic_to_residual_std": 3.969582806884974,
+      "pointwise_B_Nm_s_per_rad": 1.3893043334710575,
+      "pointwise_J_kg_m2": 0.10921467943854223,
+      "max_chassis_yaw_change_rad": 0.002158349863,
+      "max_chassis_state_change_rad": 0.0007689317500000001,
+      "sha256": "376fe5f26c6c972cedbd276ff0a134c654a800a1b3109e0fd0827abec20ec4f8",
+      "speed_pass": true,
+      "angle_derivative_to_imu_gain": 0.9364555293528513,
+      "angle_derivative_to_imu_phase_deg": -0.4919845987809117,
+      "angle_pass": true
+    },
+    {
+      "label": "f6p25_run1",
+      "frequency_hz": 6.25,
+      "completed": true,
+      "full_cycles_used_after_startup": 19,
+      "guard_stopped_usable_segment": false,
+      "torque_command_Nm": 0.7,
+      "start_angle_rad": 5.657225272,
+      "max_abs_displacement_rad": 0.02550243100000049,
+      "torque_phasor": {
+        "real": 0.7616517693409951,
+        "imag": -0.3423058976570931
+      },
+      "speed_phasor": {
+        "real": 0.002366537478363892,
+        "imag": -0.17357839528168456
+      },
+      "angle_phasor": {
+        "real": -0.003623048770639696,
+        "imag": -0.00013478362239721875
+      },
+      "torque_amplitude_Nm": 0.8350369724216388,
+      "speed_amplitude_rad_s": 0.17359452701108188,
+      "angle_amplitude_rad": 0.0036255549946594837,
+      "speed_harmonic_to_residual_std": 7.49889870303149,
+      "angle_harmonic_to_residual_std": 1.1477909928781516,
+      "pointwise_B_Nm_s_per_rad": 2.03150039382771,
+      "pointwise_J_kg_m2": 0.11103270038442055,
+      "max_chassis_yaw_change_rad": 0.002066148694,
+      "max_chassis_state_change_rad": 0.002878591350000001,
+      "sha256": "28344ef8287b56a4562c330254cfebeb47b2dbbd322781f5fc7f2c208a1a7816",
+      "speed_pass": true,
+      "angle_derivative_to_imu_gain": 0.8201595646849585,
+      "angle_derivative_to_imu_phase_deg": 1.3494064411466338,
+      "angle_pass": false
+    },
+    {
+      "label": "f6p25_run2",
+      "frequency_hz": 6.25,
+      "completed": true,
+      "full_cycles_used_after_startup": 19,
+      "guard_stopped_usable_segment": false,
+      "torque_command_Nm": 0.7,
+      "start_angle_rad": 5.660005612,
+      "max_abs_displacement_rad": 0.022722091000000333,
+      "torque_phasor": {
+        "real": 0.764855337320266,
+        "imag": -0.347444346733326
+      },
+      "speed_phasor": {
+        "real": 0.0009646957735678086,
+        "imag": -0.17243796795184613
+      },
+      "angle_phasor": {
+        "real": -0.0035839444599860978,
+        "imag": -0.00016877505904747312
+      },
+      "torque_amplitude_Nm": 0.8400721761278882,
+      "speed_amplitude_rad_s": 0.1724406664023816,
+      "angle_amplitude_rad": 0.003587916235480076,
+      "speed_harmonic_to_residual_std": 7.703002453888092,
+      "angle_harmonic_to_residual_std": 1.3886696793896292,
+      "pointwise_B_Nm_s_per_rad": 2.039645263847282,
+      "pointwise_J_kg_m2": 0.11265950295821367,
+      "max_chassis_yaw_change_rad": 0.001250694387,
+      "max_chassis_state_change_rad": 0.0008468020000000007,
+      "sha256": "1745d89d663a1b49ef2f0713381a6fee264a2bcb7879521e0fa28c2655615418",
+      "speed_pass": true,
+      "angle_derivative_to_imu_gain": 0.8170760646431311,
+      "angle_derivative_to_imu_phase_deg": 2.375645014846181,
+      "angle_pass": false
+    }
+  ],
+  "models": {
+    "current_position_fit_run1": {
+      "J_kg_m2": 0.10823597922511707,
+      "B_Nm_s_per_rad": 1.4753943401158371
+    },
+    "previous_best_6p23rad": {
+      "J_kg_m2": 0.12304739162041455,
+      "B_Nm_s_per_rad": 1.931395397790235
+    },
+    "previous_5p3rad_0p5Nm": {
+      "J_kg_m2": 0.08015,
+      "B_Nm_s_per_rad": 2.64024
+    }
+  },
+  "scores_on_holdout": {
+    "current_position_fit_run1": {
+      "per_run": [
+        {
+          "frequency_hz": 3.125,
+          "label": "f3p125_run2",
+          "relative_torque_phasor_error_from_imu_speed": 0.03452209354342715,
+          "relative_torque_phasor_error_from_encoder_angle": 0.06514844078583698
+        },
+        {
+          "frequency_hz": 6.25,
+          "label": "f6p25_run2",
+          "relative_torque_phasor_error_from_imu_speed": 0.1211877135179392,
+          "relative_torque_phasor_error_from_encoder_angle": 0.2735797478410203
+        }
+      ],
+      "mean_relative_torque_phasor_error_from_imu_speed": 0.07785490353068317,
+      "mean_relative_torque_phasor_error_from_encoder_angle": 0.16936409431342864
+    },
+    "previous_best_6p23rad": {
+      "per_run": [
+        {
+          "frequency_hz": 3.125,
+          "label": "f3p125_run2",
+          "relative_torque_phasor_error_from_imu_speed": 0.23729704138791458,
+          "relative_torque_phasor_error_from_encoder_angle": 0.17632281718900564
+        },
+        {
+          "frequency_hz": 6.25,
+          "label": "f6p25_run2",
+          "relative_torque_phasor_error_from_imu_speed": 0.08663369883785026,
+          "relative_torque_phasor_error_from_encoder_angle": 0.15414716173471033
+        }
+      ],
+      "mean_relative_torque_phasor_error_from_imu_speed": 0.16196537011288242,
+      "mean_relative_torque_phasor_error_from_encoder_angle": 0.165234989461858
+    },
+    "previous_5p3rad_0p5Nm": {
+      "per_run": [
+        {
+          "frequency_hz": 3.125,
+          "label": "f3p125_run2",
+          "relative_torque_phasor_error_from_imu_speed": 0.5381166132598187,
+          "relative_torque_phasor_error_from_encoder_angle": 0.5071868548642958
+        },
+        {
+          "frequency_hz": 6.25,
+          "label": "f6p25_run2",
+          "relative_torque_phasor_error_from_imu_speed": 0.28960644217636095,
+          "relative_torque_phasor_error_from_encoder_angle": 0.362342288652544
+        }
+      ],
+      "mean_relative_torque_phasor_error_from_imu_speed": 0.4138615277180898,
+      "mean_relative_torque_phasor_error_from_encoder_angle": 0.43476457175841987
+    }
+  },
+  "scope": "local frequency-domain equivalent; no automatic closed-loop validation"
+}

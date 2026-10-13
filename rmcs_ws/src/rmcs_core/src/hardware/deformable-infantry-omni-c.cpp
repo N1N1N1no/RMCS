@@ -14,6 +14,7 @@
 #include <sstream>
 #include <span>
 #include <string>
+#include <string_view>
 #include <tuple>
 
 #include <eigen3/Eigen/Dense>
@@ -41,6 +42,7 @@
 #include "hardware/device/supercap.hpp"
 #include "hardware/device/vt13.hpp"
 #include "hardware/util/status_monitor.hpp"
+#include "hardware/yaw_latency_recorder.hpp"
 
 namespace rmcs_core::hardware {
 
@@ -97,8 +99,15 @@ public:
         yaw_plant_torque_nm_ =
             std::clamp(std::abs(get_parameter_or("yaw_plant_torque_nm", 0.9)), 0.1, 1.0);
         yaw_plant_phase_seconds_ =
-            std::clamp(get_parameter_or("yaw_plant_phase_seconds", 0.12), 0.08, 0.20);
-        yaw_plant_cycles_ = std::clamp(get_parameter_or("yaw_plant_cycles", 8), 2, 10);
+            std::clamp(get_parameter_or("yaw_plant_phase_seconds", 0.12), 0.0125, 0.40);
+        yaw_plant_cycles_ = std::clamp(get_parameter_or("yaw_plant_cycles", 8), 2, 128);
+        yaw_latency_torque_nm_ =
+            std::clamp(std::abs(get_parameter_or("yaw_latency_torque_nm", 0.5)), 0.2, 0.9);
+        yaw_latency_pulse_s_ =
+            std::clamp(get_parameter_or("yaw_latency_pulse_s", 0.04), 0.02, 0.08);
+        yaw_latency_rest_s_ =
+            std::clamp(get_parameter_or("yaw_latency_rest_s", 0.12), 0.08, 0.30);
+        yaw_latency_cycles_ = std::clamp(get_parameter_or("yaw_latency_cycles", 12), 4, 24);
         yaw_chirp_amplitude_rad_ =
             std::clamp(std::abs(get_parameter_or("yaw_chirp_amplitude_rad", 0.05)), 0.03, 0.15);
         yaw_chirp_start_hz_ =
@@ -167,6 +176,26 @@ public:
                     response->success = true;
                     response->message = "Yaw plant test stop queued.";
                 });
+            yaw_latency_start_service_ = create_service<Srv>(
+                "/rmcs/service/yaw_latency/start",
+                [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
+                    if (!yaw_sweep_remote_ready_.load()) {
+                        response->success = false;
+                        response->message = "Yaw latency test requires a valid remote and right "
+                                            "switch UP or right mouse button.";
+                        return;
+                    }
+                    yaw_latency_start_requested_.store(true);
+                    response->success = true;
+                    response->message = "Yaw latency test queued; keep the remote request active.";
+                });
+            yaw_latency_stop_service_ = create_service<Srv>(
+                "/rmcs/service/yaw_latency/stop",
+                [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
+                    yaw_latency_stop_requested_.store(true);
+                    response->success = true;
+                    response->message = "Yaw latency test stop queued.";
+                });
             yaw_chirp_start_service_ = create_service<Srv>(
                 "/rmcs/service/yaw_chirp/start",
                 [this](const Srv::Request::SharedPtr&, const Srv::Response::SharedPtr& response) {
@@ -208,6 +237,7 @@ public:
             update_yaw_sweep();
             update_yaw_plant();
             update_yaw_chirp();
+            update_yaw_latency();
         }
     }
 
@@ -247,7 +277,7 @@ private:
         *yaw_sweep_reference_acceleration_ = 0.0;
         *yaw_sweep_ff_scale_output_ = 0.0;
 
-        if (yaw_plant_active_ || yaw_chirp_active_) {
+        if (yaw_plant_active_ || yaw_chirp_active_ || yaw_latency_active_) {
             yaw_sweep_start_requested_.store(false);
             yaw_sweep_active_ = false;
             return;
@@ -373,7 +403,8 @@ private:
         }
 
         if (yaw_plant_start_requested_.exchange(false)) {
-            if (yaw_plant_active_ || yaw_chirp_active_ || !command_->sweep_allowed()
+            if (yaw_plant_active_ || yaw_chirp_active_ || yaw_latency_active_
+                || !command_->sweep_allowed()
                 || yaw_sweep_active_)
                 return;
             const double angle = bottom_board_->gimbal_yaw_motor_.angle();
@@ -381,6 +412,12 @@ private:
             if (!std::isfinite(angle) || !std::isfinite(velocity)
                 || std::abs(velocity) > 0.15 || !barrel_direction_->allFinite()) {
                 RCLCPP_WARN(get_logger(), "Yaw plant test refused: gimbal is not stationary");
+                return;
+            }
+            const auto chassis = bottom_board_->chassis_state();
+            if (!std::ranges::all_of(chassis, [](double value) { return std::isfinite(value); })
+                || std::abs(chassis[6]) > 0.08) {
+                RCLCPP_WARN(get_logger(), "Yaw plant test refused: chassis feedback is invalid or moving");
                 return;
             }
             const auto epoch_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -395,8 +432,13 @@ private:
             }
             yaw_plant_csv_ << std::setprecision(10)
                            << "t_s,phase,torque_command_nm,torque_measured_nm,angle_rad,"
-                              "velocity_rad_s,gimbal_imu_rad_s,chassis_imu_rad_s\n";
+                              "velocity_rad_s,gimbal_imu_rad_s,chassis_imu_rad_s,"
+                              "chassis_pitch_rad,chassis_roll_rad,lf_joint_rad,lb_joint_rad,"
+                              "rb_joint_rad,rf_joint_rad,chassis_yaw_delta_rad\n";
             yaw_plant_start_angle_ = angle;
+            yaw_plant_chassis_start_ = chassis;
+            yaw_plant_chassis_yaw_delta_ = 0.0;
+            yaw_plant_last_sample_time_ = 0.0;
             yaw_plant_start_time_ = Clock::now();
             yaw_plant_active_ = true;
             RCLCPP_INFO(get_logger(), "Yaw plant test started; CSV: %s",
@@ -412,10 +454,20 @@ private:
         const double velocity = bottom_board_->gimbal_yaw_motor_.velocity();
         const double displacement = std::remainder(angle - yaw_plant_start_angle_,
                                                     2.0 * std::numbers::pi);
+        const auto chassis = bottom_board_->chassis_state();
+        const double dt = std::clamp(t - yaw_plant_last_sample_time_, 0.0, 0.02);
+        yaw_plant_last_sample_time_ = t;
+        yaw_plant_chassis_yaw_delta_ += chassis[6] * dt;
+        bool chassis_stable = std::ranges::all_of(chassis, [](double value) {
+            return std::isfinite(value);
+        }) && std::abs(chassis[6]) <= 0.15
+           && std::abs(yaw_plant_chassis_yaw_delta_) <= 0.03;
+        for (std::size_t i = 0; i < 6 && chassis_stable; ++i)
+            chassis_stable = std::abs(chassis[i] - yaw_plant_chassis_start_[i]) <= 0.05;
         if (!command_->sweep_allowed() || !std::isfinite(displacement)
             || !std::isfinite(velocity) || std::abs(displacement) > 0.12
-            || std::abs(velocity) > 0.9) {
-            finish_yaw_plant("remote or motion limit");
+            || std::abs(velocity) > 0.9 || !chassis_stable) {
+            finish_yaw_plant(chassis_stable ? "remote or motion limit" : "chassis state changed");
             return;
         }
         const int phase = static_cast<int>(t / yaw_plant_phase_seconds_);
@@ -434,7 +486,108 @@ private:
         yaw_plant_csv_ << t << ',' << phase << ',' << torque << ','
                        << bottom_board_->gimbal_yaw_motor_.torque() << ',' << angle << ','
                        << velocity << ',' << top_board_->gimbal_yaw_velocity() << ','
-                       << bottom_board_->chassis_yaw_velocity() << '\n';
+                       << chassis[6];
+        for (std::size_t i = 0; i < 6; ++i)
+            yaw_plant_csv_ << ',' << chassis[i];
+        yaw_plant_csv_ << ',' << yaw_plant_chassis_yaw_delta_ << '\n';
+    }
+
+    void finish_yaw_latency(const char* reason) {
+        yaw_latency_active_ = false;
+        yaw_plant_override_torque_.store(kNaN);
+        yaw_latency_recorder_.record(
+            YawLatencyRecorder::Event::test_end,
+            std::string_view{reason} == "completed" ? 1.0 : 0.0);
+        if (command_->sweep_allowed() && barrel_direction_->allFinite()) {
+            *yaw_sweep_should_control_ = true;
+            *yaw_sweep_control_direction_ = *barrel_direction_;
+        }
+        std::size_t recorded = 0, dropped = 0;
+        yaw_latency_recorder_.finish(yaw_latency_csv_path_, recorded, dropped);
+        RCLCPP_INFO(get_logger(),
+                    "Yaw latency test ended (%s); writing CSV: %s; events: %zu; dropped: %zu",
+                    reason, yaw_latency_csv_path_.c_str(), recorded, dropped);
+    }
+
+    void update_yaw_latency() {
+        if (yaw_latency_stop_requested_.exchange(false)) {
+            yaw_latency_start_requested_.store(false);
+            if (yaw_latency_active_)
+                finish_yaw_latency("operator stop");
+            return;
+        }
+
+        if (yaw_latency_start_requested_.exchange(false)) {
+            if (yaw_latency_active_ || yaw_plant_active_ || yaw_chirp_active_
+                || yaw_sweep_active_ || !command_->sweep_allowed())
+                return;
+            const double angle = bottom_board_->gimbal_yaw_motor_.angle();
+            const double motor_speed = bottom_board_->gimbal_yaw_motor_.velocity();
+            const double relative_speed = top_board_->gimbal_yaw_velocity()
+                                        - bottom_board_->chassis_yaw_velocity();
+            if (!std::isfinite(angle) || !std::isfinite(motor_speed)
+                || !std::isfinite(relative_speed) || std::abs(motor_speed) > 0.15
+                || std::abs(relative_speed) > 0.15 || !barrel_direction_->allFinite()) {
+                RCLCPP_WARN(get_logger(), "Yaw latency test refused: gimbal is not stationary");
+                return;
+            }
+            const auto epoch_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                      std::chrono::system_clock::now().time_since_epoch())
+                                      .count();
+            yaw_latency_csv_path_ = "/tmp/yaw_latency_" + std::to_string(epoch_ms) + ".csv";
+            yaw_latency_recorder_.start();
+            yaw_latency_start_angle_ = angle;
+            yaw_latency_start_time_ = Clock::now();
+            yaw_latency_last_torque_ = kNaN;
+            yaw_latency_active_ = true;
+            yaw_plant_override_torque_.store(0.0);
+            RCLCPP_INFO(get_logger(), "Yaw latency test started; CSV: %s",
+                        yaw_latency_csv_path_.c_str());
+        }
+
+        if (!yaw_latency_active_)
+            return;
+        const double t =
+            std::chrono::duration<double>(Clock::now() - yaw_latency_start_time_).count();
+        const double angle = bottom_board_->gimbal_yaw_motor_.angle();
+        const double motor_speed = bottom_board_->gimbal_yaw_motor_.velocity();
+        const double relative_speed = top_board_->gimbal_yaw_velocity()
+                                    - bottom_board_->chassis_yaw_velocity();
+        const double displacement = std::remainder(angle - yaw_latency_start_angle_,
+                                                    2.0 * std::numbers::pi);
+        if (!command_->sweep_allowed() || !std::isfinite(displacement)
+            || !std::isfinite(motor_speed) || !std::isfinite(relative_speed)
+            || std::abs(displacement) > 0.12 || std::abs(motor_speed) > 0.9
+            || std::abs(relative_speed) > 0.9) {
+            finish_yaw_latency("remote or motion limit");
+            return;
+        }
+
+        constexpr double kWarmupS = 0.20;
+        constexpr double kCooldownS = 0.20;
+        const double period = 2.0 * (yaw_latency_pulse_s_ + yaw_latency_rest_s_);
+        const double active_time = yaw_latency_cycles_ * period;
+        if (t >= kWarmupS + active_time + kCooldownS) {
+            finish_yaw_latency("completed");
+            return;
+        }
+
+        double torque = 0.0;
+        if (t >= kWarmupS && t < kWarmupS + active_time) {
+            const double phase_time = std::fmod(t - kWarmupS, period);
+            if (phase_time < yaw_latency_pulse_s_)
+                torque = yaw_latency_torque_nm_;
+            else if (phase_time >= yaw_latency_pulse_s_ + yaw_latency_rest_s_
+                     && phase_time < 2.0 * yaw_latency_pulse_s_ + yaw_latency_rest_s_)
+                torque = -yaw_latency_torque_nm_;
+        }
+        if (torque != yaw_latency_last_torque_) {
+            yaw_plant_override_torque_.store(torque);
+            yaw_latency_recorder_.record(YawLatencyRecorder::Event::request, torque, t);
+            yaw_latency_last_torque_ = torque;
+        }
+        *yaw_sweep_should_control_ = true;
+        *yaw_sweep_control_direction_ = *barrel_direction_;
     }
 
     void finish_yaw_chirp(const char* reason) {
@@ -459,7 +612,8 @@ private:
         }
 
         if (yaw_chirp_start_requested_.exchange(false)) {
-            if (yaw_chirp_active_ || yaw_plant_active_ || yaw_sweep_active_
+            if (yaw_chirp_active_ || yaw_plant_active_ || yaw_latency_active_
+                || yaw_sweep_active_
                 || !command_->sweep_allowed())
                 return;
             const double angle = bottom_board_->gimbal_yaw_motor_.angle();
@@ -750,14 +904,23 @@ private:
         }
 
         void gyroscope_receive_callback(const View::ImuGyroscope& data) override {
+            const bool measuring = status_.yaw_latency_recorder_.recording();
+            const auto received_at = measuring ? Clock::now() : Clock::time_point{};
             const auto timestamp = board_clock_lifter_.lift_timestamp(data.timestamp_quarter_us);
             monitor_.tick("Top::Imu", "Gyr");
             if (!timestamp.has_value())
                 return;
             auto snapshot =
                 bmi088_.try_update_with_gyroscope_sample(data.x, data.y, data.z, *timestamp);
-            if (snapshot)
+            if (snapshot) {
+                if (measuring) {
+                    status_.yaw_latency_recorder_.record_at(
+                        YawLatencyRecorder::Event::gimbal_gyro, received_at,
+                        snapshot->gyro_body.z(), snapshot->gyro_body.x(),
+                        snapshot->gyro_body.y(), data.timestamp_quarter_us);
+                }
                 imu_snapshot_output_.emit(*snapshot);
+            }
         }
 
         void gpio_digital_read_result_callback(
@@ -918,6 +1081,14 @@ private:
 
         double chassis_yaw_velocity() const { return *chassis_yaw_velocity_imu_; }
 
+        // Pitch, roll, four physical joint angles, and chassis yaw rate.
+        std::array<double, 7> chassis_state() const {
+            return {*chassis_imu_pitch_, *chassis_imu_roll_,
+                    *joint_physical_angle_[kLeftFront], *joint_physical_angle_[kLeftBack],
+                    *joint_physical_angle_[kRightBack], *joint_physical_angle_[kRightFront],
+                    *chassis_yaw_velocity_imu_};
+        }
+
         void command_update(bool even) {
             auto builder = board_->start_transmit();
             if (even) {
@@ -993,6 +1164,10 @@ private:
                         .can_id = 0x142,
                         .can_data = packet_can2_142.as_bytes(),
                     });
+                if (status_.yaw_latency_recorder_.recording()) {
+                    status_.yaw_latency_recorder_.record(
+                        YawLatencyRecorder::Event::can_enqueue, plant_torque);
+                }
                 builder.can_transmit(
                     Spec::kCans.kCan1,         //
                     {
@@ -1163,6 +1338,8 @@ private:
         }
 
         void can_receive_callback(const Spec::Can& can, const View::Can& data) override {
+            const bool measuring = status_.yaw_latency_recorder_.recording();
+            const auto received_at = measuring ? Clock::now() : Clock::time_point{};
             if (data.is_extended_can_id || data.is_remote_transmission)
                 return;
             if (can == Spec::kCans.kCan0) {
@@ -1181,6 +1358,18 @@ private:
                 if (data.is_extended_can_id || data.is_remote_transmission)
                     return;
                 if (data.can_id == 0x142) {
+                    if (measuring && data.can_data.size() == 8
+                        && (std::to_integer<unsigned char>(data.can_data[0]) & 0xF0) != 0x80) {
+                        const auto read_u16 = [&data](std::size_t offset) -> std::uint16_t {
+                            return static_cast<std::uint16_t>(
+                                std::to_integer<unsigned char>(data.can_data[offset])
+                                | (std::to_integer<unsigned char>(data.can_data[offset + 1]) << 8));
+                        };
+                        status_.yaw_latency_recorder_.record_at(
+                            YawLatencyRecorder::Event::motor_feedback, received_at,
+                            static_cast<std::int16_t>(read_u16(2)),
+                            static_cast<std::int16_t>(read_u16(4)), read_u16(6));
+                    }
                     gimbal_yaw_motor_.store_status(data.can_data);
                 } else if (data.can_id == 0x203)
                     gimbal_bullet_feeder_.store_status(data.can_data);
@@ -1210,6 +1399,15 @@ private:
         }
 
         void gyroscope_receive_callback(const View::ImuGyroscope& data) override {
+            if (status_.yaw_latency_recorder_.recording()) {
+                const auto received_at = Clock::now();
+                constexpr double kRawGyroToRadPerS =
+                    2000.0 / 32767.0 * std::numbers::pi / 180.0;
+                status_.yaw_latency_recorder_.record_at(
+                    YawLatencyRecorder::Event::chassis_gyro, received_at,
+                    data.z * kRawGyroToRadPerS, -data.y * kRawGyroToRadPerS,
+                    data.x * kRawGyroToRadPerS, data.timestamp_quarter_us);
+            }
             imu_.store_gyroscope_status(data.x, data.y, data.z);
             monitor_.tick("Bottom::Imu", "Gyr");
         }
@@ -1291,9 +1489,25 @@ private:
     double yaw_plant_phase_seconds_ = 0.12;
     int yaw_plant_cycles_ = 8;
     double yaw_plant_start_angle_ = 0.0;
+    std::array<double, 7> yaw_plant_chassis_start_{};
+    double yaw_plant_chassis_yaw_delta_ = 0.0;
+    double yaw_plant_last_sample_time_ = 0.0;
     Clock::time_point yaw_plant_start_time_{};
     std::string yaw_plant_csv_path_;
     std::ofstream yaw_plant_csv_;
+
+    std::atomic<bool> yaw_latency_start_requested_{false};
+    std::atomic<bool> yaw_latency_stop_requested_{false};
+    bool yaw_latency_active_ = false;
+    double yaw_latency_torque_nm_ = 0.5;
+    double yaw_latency_pulse_s_ = 0.04;
+    double yaw_latency_rest_s_ = 0.12;
+    int yaw_latency_cycles_ = 12;
+    double yaw_latency_start_angle_ = 0.0;
+    double yaw_latency_last_torque_ = kNaN;
+    Clock::time_point yaw_latency_start_time_{};
+    std::string yaw_latency_csv_path_;
+    YawLatencyRecorder yaw_latency_recorder_;
 
     std::atomic<bool> yaw_chirp_start_requested_{false};
     std::atomic<bool> yaw_chirp_stop_requested_{false};
@@ -1319,6 +1533,8 @@ private:
     std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_sweep_stop_service_;
     std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_plant_start_service_;
     std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_plant_stop_service_;
+    std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_latency_start_service_;
+    std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_latency_stop_service_;
     std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_chirp_start_service_;
     std::shared_ptr<rclcpp::Service<std_srvs::srv::Trigger>> yaw_chirp_stop_service_;
 };

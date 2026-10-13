@@ -1,0 +1,344 @@
+{
+  "model_units": {
+    "J": "kg*m^2",
+    "B": "N*m*s/rad",
+    "F_c": "N*m"
+  },
+  "quality_gate": "complete runs, relative IMU speed harmonic / residual std >= 3",
+  "position_and_amplitude_cells": {
+    "near_0p5": [
+      {
+        "label": "chassis_stable_yaw_retest_2026-10-13_attempt4/run1",
+        "sha256": "8336ccf4c49a90661459af927cbafbc0eb3a0b5b72388ae12fa84e338b63b701",
+        "frequency_hz": 2.0833333333333335,
+        "start_angle_rad": 0.2105388631,
+        "torque_command_Nm": 0.5,
+        "speed_harmonic_to_residual_std": 4.145177757884783,
+        "angle_harmonic_to_residual_std": 13.205082561474049
+      },
+      {
+        "label": "chassis_stable_yaw_retest_2026-10-13_attempt4/run2",
+        "sha256": "426f03954eea6be3cf22a851343809867e67b47775c74fd50aa62125df6598eb",
+        "frequency_hz": 2.0833333333333335,
+        "start_angle_rad": 0.2261662924,
+        "torque_command_Nm": 0.5,
+        "speed_harmonic_to_residual_std": 3.870156287270158,
+        "angle_harmonic_to_residual_std": 10.74592908621304
+      }
+    ],
+    "near_0p7": [
+      {
+        "label": "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run1",
+        "sha256": "39bb80ba02e585d7499f3e66e2b32be8c42d5ffafe659290f9c97fcb15940fdd",
+        "frequency_hz": 2.0833333333333335,
+        "start_angle_rad": 0.1119805975,
+        "torque_command_Nm": 0.7,
+        "speed_harmonic_to_residual_std": 6.629200026767566,
+        "angle_harmonic_to_residual_std": 7.085420624929016
+      },
+      {
+        "label": "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2",
+        "sha256": "f43e82b7bc7b32f23a024c43810ca9f47182677aeb5fc64a42f42d9fe178df33",
+        "frequency_hz": 2.0833333333333335,
+        "start_angle_rad": 0.1242524438,
+        "torque_command_Nm": 0.7,
+        "speed_harmonic_to_residual_std": 6.5099348027874235,
+        "angle_harmonic_to_residual_std": 6.761674321940015
+      }
+    ],
+    "mid_0p5": [
+      {
+        "label": "f3p125_run1",
+        "start_angle_rad": 2.172500291,
+        "frequency_hz": 3.125,
+        "sha256": "9e2d81c17bfe8a517f492bbb7f63fcb0aeed661249f2d69e25f7e6bbbe0e6ae3"
+      },
+      {
+        "label": "f6p25_run1",
+        "start_angle_rad": 2.104909262,
+        "frequency_hz": 6.25,
+        "sha256": "1b6960ee60ffc788628509caf26b25ae0cca237a38b1a01c909bb5f1bfd8f25a"
+      }
+    ],
+    "mid_0p7": [
+      {
+        "label": "f3p125_run1",
+        "start_angle_rad": 1.984779392,
+        "frequency_hz": 3.125,
+        "sha256": "4aa792768fec3158c5519966a2b94ccaaf7302ed4951655f015458272eef5a0b"
+      },
+      {
+        "label": "f6p25_run1",
+        "start_angle_rad": 1.975575507,
+        "frequency_hz": 6.25,
+        "sha256": "8c50a8cef9381c54d0b2573e097d8212217b57f396c00d6ce64fcf15160a20e5"
+      }
+    ]
+  },
+  "linear_cell_fits": {
+    "near_0p5": {
+      "J_kg_m2": 0.12938535171460058,
+      "B_Nm_s_per_rad": 2.7007003433755092
+    },
+    "near_0p7": {
+      "J_kg_m2": 0.09566077100963481,
+      "B_Nm_s_per_rad": 1.37777324005586
+    },
+    "mid_0p5": {
+      "J_kg_m2": 0.12152790903904415,
+      "B_Nm_s_per_rad": 4.735766253745939
+    },
+    "mid_0p7": {
+      "J_kg_m2": 0.11869144353538308,
+      "B_Nm_s_per_rad": 2.7173090734345013
+    }
+  },
+  "amplitude_slope_B_per_Nm": {
+    "near": -6.614635516598246,
+    "mid": -10.092285901557187
+  },
+  "cross_position_amplitude_transfer": {
+    "near_slope_to_mid_0p7": {
+      "unshifted_0p5_model": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.4293867651123828,
+        "per_run": {
+          "f3p125_run1": 0.7101551517467504,
+          "f6p25_run1": 0.1486183784780152
+        }
+      },
+      "transferred_slope_model": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.19030297704140753,
+        "per_run": {
+          "f3p125_run1": 0.3111667223597254,
+          "f6p25_run1": 0.0694392317230896
+        }
+      },
+      "candidate": {
+        "J_kg_m2": 0.12152790903904415,
+        "B_Nm_s_per_rad": 3.4128391504262896
+      }
+    },
+    "mid_slope_to_near_0p7_repeat": {
+      "unshifted_0p5_model": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.7005724140235176,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.7005724140235176
+        }
+      },
+      "transferred_slope_model": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.43694847949663884,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.43694847949663884
+        }
+      },
+      "candidate": {
+        "J_kg_m2": 0.12938535171460058,
+        "B_Nm_s_per_rad": 0.6822431630640717
+      }
+    }
+  },
+  "cross_position_friction_transfer": {
+    "near_fc_to_mid_0p7": {
+      "training": [
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run1",
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run1",
+        "f3p125_run1",
+        "f6p25_run1"
+      ],
+      "validation": [
+        "f3p125_run1",
+        "f6p25_run1"
+      ],
+      "model": {
+        "J_kg_m2": 0.12152790903904416,
+        "B_Nm_s_per_rad": 0.5810898890479097,
+        "F_c_Nm": 0.345639788381046
+      },
+      "score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.03504487966617092,
+        "per_run": {
+          "f3p125_run1": 0.05486378444250177,
+          "f6p25_run1": 0.015225974889840071
+        }
+      },
+      "same_amplitude_mid_0p5_repeat_score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.07855290417618174,
+        "per_run": {
+          "f3p125_run1": 0.11792145028397098,
+          "f6p25_run1": 0.039184358068392516
+        }
+      }
+    },
+    "mid_fc_to_near_0p7_repeat": {
+      "training": [
+        "f3p125_run1",
+        "f6p25_run1",
+        "f3p125_run1",
+        "f6p25_run1",
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run1"
+      ],
+      "validation": [
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2"
+      ],
+      "model": {
+        "J_kg_m2": 0.1293853517146006,
+        "B_Nm_s_per_rad": 0.5683533458952202,
+        "F_c_Nm": 0.3262666108715701
+      },
+      "score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.21143960435392548,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.21143960435392548
+        }
+      },
+      "angle_score": {
+        "mean_relative_torque_phasor_error_from_encoder_angle": 0.21178943447610452,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.21178943447610452
+        }
+      },
+      "angle_rollout": {
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": {
+          "calibrated_disturbance_Nm": -0.0030870996721074854,
+          "speed_rmse_rad_s": 0.09389892794821192,
+          "angle_rmse_deg": 0.961260037903449
+        }
+      }
+    }
+  },
+  "friction_candidate": {
+    "rule": "tau_1=(B+j*2*pi*f*J)*v_1+(4/pi)*F_c*v_1/abs(v_1)",
+    "rollout_rule": "F_c*tanh(v/0.04 rad/s); constant disturbance calibrated on first post-startup cycle",
+    "near": {
+      "training": [
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run1",
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run1"
+      ],
+      "validation": [
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run2",
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2"
+      ],
+      "linear": {
+        "J_kg_m2": 0.10423824484885516,
+        "B_Nm_s_per_rad": 1.7142451066504525,
+        "F_c_Nm": 0.0
+      },
+      "friction": {
+        "J_kg_m2": 0.10423824484885515,
+        "B_Nm_s_per_rad": 0.44173807017446276,
+        "F_c_Nm": 0.345639788381046
+      },
+      "linear_score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.2612538892292369,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": 0.3635844564443896,
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.15892332201408424
+        }
+      },
+      "friction_score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.08559084190556275,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": 0.1326215239988514,
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.03856015981227409
+        }
+      },
+      "linear_angle_score": {
+        "mean_relative_torque_phasor_error_from_encoder_angle": 0.254475045539251,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": 0.39797171498934675,
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.11097837608915519
+        }
+      },
+      "friction_angle_score": {
+        "mean_relative_torque_phasor_error_from_encoder_angle": 0.08655438434781718,
+        "per_run": {
+          "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": 0.11206925890209814,
+          "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": 0.06103950979353623
+        }
+      },
+      "angle_quality": {
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": {
+          "harmonic_to_residual_std": 10.74592908621304,
+          "derivative_to_imu_speed_gain": 0.9621065613685974,
+          "derivative_to_imu_speed_phase_deg": 2.9562619728445103
+        },
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": {
+          "harmonic_to_residual_std": 6.761674321940015,
+          "derivative_to_imu_speed_gain": 0.9694105392960224,
+          "derivative_to_imu_speed_phase_deg": 2.241732839016238
+        }
+      },
+      "linear_rollout": {
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": {
+          "calibrated_disturbance_Nm": 0.00996518855937034,
+          "speed_rmse_rad_s": 0.0763983258443383,
+          "angle_rmse_deg": 0.439647237963162
+        },
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": {
+          "calibrated_disturbance_Nm": -0.022472267086448193,
+          "speed_rmse_rad_s": 0.05959197058960912,
+          "angle_rmse_deg": 0.41887187820263067
+        }
+      },
+      "friction_rollout": {
+        "chassis_stable_yaw_retest_2026-10-13_attempt4/run2": {
+          "calibrated_disturbance_Nm": 0.022781852269182064,
+          "speed_rmse_rad_s": 0.03451645939634487,
+          "angle_rmse_deg": 0.18414977536904617
+        },
+        "chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2": {
+          "calibrated_disturbance_Nm": -0.0037105209163728614,
+          "speed_rmse_rad_s": 0.066996692185283,
+          "angle_rmse_deg": 0.8689214185648543
+        }
+      }
+    },
+    "mid": {
+      "training": [
+        "f3p125_run1",
+        "f6p25_run1",
+        "f3p125_run1",
+        "f6p25_run1"
+      ],
+      "validation": [
+        "f3p125_run1",
+        "f6p25_run1"
+      ],
+      "linear": {
+        "J_kg_m2": 0.11971473726117488,
+        "B_Nm_s_per_rad": 3.381146019607201,
+        "F_c_Nm": 0.0
+      },
+      "friction": {
+        "J_kg_m2": 0.11971473726117483,
+        "B_Nm_s_per_rad": 0.8255776177329843,
+        "F_c_Nm": 0.3262666108715701
+      },
+      "linear_score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.37523010697585246,
+        "per_run": {
+          "f3p125_run1": 0.35262783494482836,
+          "f6p25_run1": 0.3978323790068766
+        }
+      },
+      "friction_score": {
+        "mean_relative_torque_phasor_error_from_imu_speed": 0.07717242639387809,
+        "per_run": {
+          "f3p125_run1": 0.12160292749616611,
+          "f6p25_run1": 0.03274192529159005
+        }
+      },
+      "angle_quality": {
+        "f3p125_run1": {
+          "harmonic_to_residual_std": 0.6692224917674451,
+          "passes_threshold_3": false
+        },
+        "f6p25_run1": {
+          "harmonic_to_residual_std": 0.31070105958912664,
+          "passes_threshold_3": false
+        }
+      }
+    }
+  },
+  "decision": "Amplitude-dependent friction is a research candidate only. Do not replace the selected J/B map: 0.7 N m near-position angle rollout worsens and 2 rad angle harmonics fail quality checks."
+}

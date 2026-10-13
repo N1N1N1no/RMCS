@@ -1,0 +1,25 @@
+[
+  {
+    "label": "01_baseline",
+    "arm": "baseline",
+    "start_angle_rad": 5.66394,
+    "config_sha256": "26d7e55c77b02165634aab11ee20ffe7dda0653639c04b7bd88f2c781d8537e8",
+    "samples": 3000,
+    "max_speed_rad_s": 0.480449,
+    "max_command_torque_Nm": 1.3004,
+    "max_error_deg": 0.20035933025268296,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_ff_ab_2026-10-13/01_baseline.csv"
+  },
+  {
+    "label": "02_newff",
+    "arm": "newff",
+    "start_angle_rad": 5.6228,
+    "config_sha256": "ab68e7ffae7f37dc9933910070f18168625be94a4ad855051e326a542507c751",
+    "samples": 3000,
+    "max_speed_rad_s": 0.480449,
+    "max_command_torque_Nm": 1.0607,
+    "max_error_deg": 0.1869801927785831,
+    "csv": "/home/chen/Alliance/technology/RMCS/experiments/yaw/current_position_ff_ab_2026-10-13/02_newff.csv",
+    "recovered_after_scp_timeout": true
+  }
+]

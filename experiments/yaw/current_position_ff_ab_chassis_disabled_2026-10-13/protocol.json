@@ -1,0 +1,39 @@
+{
+  "order": [
+    "baseline",
+    "newff"
+  ],
+  "arms": {
+    "newff": {
+      "angle_kp": 12.0,
+      "velocity_kp": 11.0,
+      "velocity_ki": 0.05,
+      "velocity_ff": 1.781243415052695,
+      "acceleration_ff": 0.11221803719098242
+    },
+    "baseline": {
+      "angle_kp": 12.0,
+      "velocity_kp": 11.0,
+      "velocity_ki": 0.05,
+      "velocity_ff": 1.378547846,
+      "acceleration_ff": 0.142611646
+    }
+  },
+  "trajectory": {
+    "amplitude_rad": 0.06,
+    "transition_s": 0.5,
+    "hold_s": 1.5,
+    "cycles": 4
+  },
+  "torque_command_limit_Nm": 2.5,
+  "chassis_components": "all chassis controllers disabled; feedback remains available",
+  "reference_start_yaw_rad": [
+    5.319,
+    5.393
+  ],
+  "preflight_yaw_center_rad": 5.32,
+  "accepted_start_tolerance_rad": 0.15,
+  "source_model": "/workspaces/RMCS/experiments/yaw/current_position_yaw_tuning_chassis_disabled_retry_2026-10-13/analysis.json",
+  "robot_yaml_backup": "/tmp/sweep_before_yaw_ab_1791892781.yaml",
+  "robot_library_backup": "/tmp/librmcs_core_before_yaw_ab_1791892781.so"
+}

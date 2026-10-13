@@ -1,0 +1,202 @@
+{
+  "source": "experiments/yaw/latency_2026-10-13/run2.csv",
+  "completed": true,
+  "meaning": {
+    "current_interval": "CAN enqueue on host -> first motor-reported current crossing 50%; includes transport and telemetry lag",
+    "gyro_interval": "CAN enqueue on host -> first detectable relative gyro change; host-aligned, threshold-dependent diagnostic",
+    "encoder_interval": "CAN enqueue on host -> first persistent yaw encoder change >= 3 counts (0.000287621 rad); threshold-dependent diagnostic",
+    "physical_delay": "not identifiable from this CSV"
+  },
+  "event_counts": {
+    "request": 49,
+    "chassis_gyro": 8495,
+    "gimbal_gyro": 8494,
+    "can_enqueue": 2120,
+    "motor_feedback": 2120,
+    "test_end": 1
+  },
+  "cadence": {
+    "motor_feedback": {
+      "host_arrival_ms": {
+        "n": 2119,
+        "median": 1.997627,
+        "p05": 1.940682,
+        "p95": 2.0888212999999998
+      },
+      "own_board_sample_ms": {
+        "n": 0,
+        "median": null,
+        "p05": null,
+        "p95": null
+      }
+    },
+    "gimbal_gyro": {
+      "host_arrival_ms": {
+        "n": 8493,
+        "median": 0.499482,
+        "p05": 0.429066,
+        "p95": 0.569602
+      },
+      "own_board_sample_ms": {
+        "n": 8493,
+        "median": 0.4995,
+        "p05": 0.45075,
+        "p95": 0.548
+      }
+    },
+    "chassis_gyro": {
+      "host_arrival_ms": {
+        "n": 8494,
+        "median": 0.4986855,
+        "p05": 0.422124,
+        "p95": 0.57601385
+      },
+      "own_board_sample_ms": {
+        "n": 8494,
+        "median": 0.49925,
+        "p05": 0.45075,
+        "p95": 0.54775
+      }
+    }
+  },
+  "edges_total": 48,
+  "request_to_enqueue_ms": {
+    "n": 48,
+    "median": 0.004412,
+    "p05": 0.004061,
+    "p95": 0.005007
+  },
+  "reported_current_onset_lower_ms": {
+    "n": 24,
+    "median": 2.635412,
+    "p05": 0.54046275,
+    "p95": 12.229023549999997
+  },
+  "reported_current_onset_upper_ms": {
+    "n": 24,
+    "median": 4.7053355,
+    "p05": 2.54456225,
+    "p95": 14.213451249999995
+  },
+  "reported_current_50pct_lower_ms": {
+    "n": 48,
+    "median": 2.6660785000000002,
+    "p05": 0.5347286,
+    "p95": 7.993708249999997
+  },
+  "reported_current_50pct_upper_ms": {
+    "n": 48,
+    "median": 4.6271135,
+    "p05": 2.5453957999999997,
+    "p95": 9.971080099999998
+  },
+  "reported_current_bracket_width_ms": {
+    "n": 48,
+    "median": 1.989027,
+    "p05": 1.9433202,
+    "p95": 2.0428041
+  },
+  "first_detectable_gyro_upper_ms": {
+    "n": 12,
+    "median": 27.025224,
+    "p05": 15.29073015,
+    "p95": 33.4246371
+  },
+  "first_detectable_encoder_upper_ms": {
+    "n": 24,
+    "median": 13.596846,
+    "p05": 10.5273685,
+    "p95": 16.66270655
+  },
+  "torque_step_groups": {
+    "positive_on": {
+      "edges": 12,
+      "reported_current_onset_lower_ms": {
+        "n": 12,
+        "median": 1.6829315,
+        "p05": 0.5304064500000001,
+        "p95": 13.438217649999999
+      },
+      "reported_current_onset_upper_ms": {
+        "n": 12,
+        "median": 3.7132485,
+        "p05": 2.53920495,
+        "p95": 15.430781649999998
+      },
+      "reported_current_50pct_lower_ms": {
+        "n": 12,
+        "median": 5.5411245000000005,
+        "p05": 2.62274415,
+        "p95": 10.5961779
+      },
+      "reported_current_50pct_upper_ms": {
+        "n": 12,
+        "median": 7.558284,
+        "p05": 4.5813283,
+        "p95": 12.56548595
+      }
+    },
+    "negative_on": {
+      "edges": 12,
+      "reported_current_onset_lower_ms": {
+        "n": 12,
+        "median": 3.579528,
+        "p05": 0.5945364,
+        "p95": 9.530585899999998
+      },
+      "reported_current_onset_upper_ms": {
+        "n": 12,
+        "median": 5.6283615000000005,
+        "p05": 2.60132685,
+        "p95": 11.5172976
+      },
+      "reported_current_50pct_lower_ms": {
+        "n": 12,
+        "median": 5.6308705,
+        "p05": 3.72259685,
+        "p95": 6.66463405
+      },
+      "reported_current_50pct_upper_ms": {
+        "n": 12,
+        "median": 7.6344125,
+        "p05": 5.7121507000000005,
+        "p95": 8.634987149999999
+      }
+    },
+    "off": {
+      "edges": 24,
+      "reported_current_onset_lower_ms": {
+        "n": 0,
+        "median": null,
+        "p05": null,
+        "p95": null
+      },
+      "reported_current_onset_upper_ms": {
+        "n": 0,
+        "median": null,
+        "p05": null,
+        "p95": null
+      },
+      "reported_current_50pct_lower_ms": {
+        "n": 24,
+        "median": 0.6411905,
+        "p05": 0.5227400999999999,
+        "p95": 2.6529190999999996
+      },
+      "reported_current_50pct_upper_ms": {
+        "n": 24,
+        "median": 2.646851,
+        "p05": 2.539445,
+        "p95": 4.66162005
+      }
+    }
+  },
+  "notes": [
+    "Incomplete or emergency-stopped runs should not be used as full-test summaries.",
+    "All host times are monotonic-clock callback/queue times, not board CAN wire times.",
+    "The motor feedback CAN frame has no board sample timestamp in the current SDK.",
+    "Board tick units are 0.25 us, but IMU samples occur much less often; tick precision is not delay accuracy.",
+    "The top and bottom board tick origins are independent; never subtract them directly.",
+    "A dropped-event count is printed in the robot log when the test ends; discard overloaded recordings."
+  ]
+}

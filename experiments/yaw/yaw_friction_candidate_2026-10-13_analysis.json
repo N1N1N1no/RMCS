@@ -1,0 +1,89 @@
+{
+  "train": [
+    "f2p083_run1",
+    "f3p125_run1",
+    "f6p25_run1"
+  ],
+  "test": [
+    "f2p083_run2",
+    "f3p125_run2",
+    "f6p25_run2"
+  ],
+  "harmonic_friction_rule": "tau1=(B+j*omega*J)*v1+(4/pi)*Fc*v1/abs(v1)",
+  "rollout_friction_rule": "Fc*tanh(v/0.04 rad/s)",
+  "models": {
+    "linear": {
+      "J_kg_m2": 0.11860432747858127,
+      "B_Nm_s_per_rad": 2.193810529163708,
+      "F_c_Nm": 0.0
+    },
+    "smooth_Coulomb": {
+      "J_kg_m2": 0.1186043274785813,
+      "B_Nm_s_per_rad": 0.9325680764212865,
+      "F_c_Nm": 0.20559205433841096
+    }
+  },
+  "validation": {
+    "f2p083_run2": {
+      "linear": {
+        "relative_torque_phasor_error_from_imu_speed": 0.12498626098354827,
+        "relative_torque_phasor_error_from_encoder_angle": 0.03978832349012468,
+        "short_cycle_rollout": {
+          "calibrated_disturbance_Nm": -0.006722880927812085,
+          "speed_rmse_rad_s": 0.028218354176400062,
+          "angle_rmse_deg": 0.05648250319508429
+        }
+      },
+      "smooth_Coulomb": {
+        "relative_torque_phasor_error_from_imu_speed": 0.05874118518224225,
+        "relative_torque_phasor_error_from_encoder_angle": 0.054280610003335575,
+        "short_cycle_rollout": {
+          "calibrated_disturbance_Nm": 0.022966635543814458,
+          "speed_rmse_rad_s": 0.026996417970177624,
+          "angle_rmse_deg": 0.16141565876753944
+        }
+      }
+    },
+    "f3p125_run2": {
+      "linear": {
+        "relative_torque_phasor_error_from_imu_speed": 0.17092075534620385,
+        "relative_torque_phasor_error_from_encoder_angle": 0.2529235731072657,
+        "short_cycle_rollout": {
+          "calibrated_disturbance_Nm": -0.12097898737969844,
+          "speed_rmse_rad_s": 0.06324646169972847,
+          "angle_rmse_deg": 0.6875947048304198
+        }
+      },
+      "smooth_Coulomb": {
+        "relative_torque_phasor_error_from_imu_speed": 0.1711667531559872,
+        "relative_torque_phasor_error_from_encoder_angle": 0.22174825524607295,
+        "short_cycle_rollout": {
+          "calibrated_disturbance_Nm": -0.08894457770465233,
+          "speed_rmse_rad_s": 0.07286756892269389,
+          "angle_rmse_deg": 0.7799677912704047
+        }
+      }
+    },
+    "f6p25_run2": {
+      "linear": {
+        "relative_torque_phasor_error_from_imu_speed": 0.2949798712676683,
+        "relative_torque_phasor_error_from_encoder_angle": 0.9284623791077945,
+        "short_cycle_rollout": {
+          "calibrated_disturbance_Nm": -0.07117225058901314,
+          "speed_rmse_rad_s": 0.03967451383410489,
+          "angle_rmse_deg": 0.2960151866438619
+        }
+      },
+      "smooth_Coulomb": {
+        "relative_torque_phasor_error_from_imu_speed": 0.1332765923034165,
+        "relative_torque_phasor_error_from_encoder_angle": 0.663323326112012,
+        "short_cycle_rollout": {
+          "calibrated_disturbance_Nm": -0.08441692696100828,
+          "speed_rmse_rad_s": 0.03196078856242665,
+          "angle_rmse_deg": 0.24772322839155672
+        }
+      }
+    }
+  },
+  "decision": "Exploratory friction term is not promoted: it worsens qualified 2.083 and 3.125 Hz held-out encoder-angle short-cycle rollouts."
+}

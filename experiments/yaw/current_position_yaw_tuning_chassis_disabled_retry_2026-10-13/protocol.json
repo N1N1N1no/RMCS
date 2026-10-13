@@ -1,0 +1,30 @@
+{
+  "purpose": "Refit J and B at the current yaw angle before controller tuning",
+  "plan": [
+    {
+      "label": "f3p125",
+      "phase_s": 0.08,
+      "cycles": 10,
+      "frequency_hz": 3.125,
+      "torque_command_Nm": 0.7
+    },
+    {
+      "label": "f6p25",
+      "phase_s": 0.04,
+      "cycles": 20,
+      "frequency_hz": 6.25,
+      "torque_command_Nm": 0.7
+    }
+  ],
+  "repeats_per_frequency": 2,
+  "train": "run1 only",
+  "holdout": "run2 only",
+  "start_angle_tolerance_rad": 0.3,
+  "note": "Shorter runs reduce post-run drift; the recorded start angles must still be checked before fitting",
+  "chassis_components": "all chassis controllers disabled; feedback remains available",
+  "baseline_sweep_yaml_sha256": "3e02806428b1e95ac5c959aff3b8eef2017a53f93444b4fec457adc2339b9eb3",
+  "baseline_library_sha256": "97d034a6b7de07b59a3e2e292f5bd2ca52ea9fa26805f02cc95e64fbceb813c7",
+  "test_library_sha256": "3da87769467705dd8cf6b88a293ab705463856935136991a752d44b5732790aa",
+  "remote_yaml_backup": "/tmp/sweep_before_yaw_tuning_1791892608.yaml",
+  "remote_library_backup": "/tmp/librmcs_core_before_yaw_tuning_1791892608.so"
+}

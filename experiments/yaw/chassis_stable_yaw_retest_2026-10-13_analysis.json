@@ -1,0 +1,323 @@
+{
+  "model_convention": "no explicit input delay; measured torque and relative yaw angle",
+  "chassis_controllers": "original C-car chassis/suspension/wheel/joint components enabled",
+  "amplitudes_Nm": {
+    "0p5": 0.5,
+    "0p7": 0.7
+  },
+  "manifests": {
+    "0p5": [
+      {
+        "label": "run1",
+        "robot_csv": "/tmp/yaw_plant_1791859286736.csv",
+        "local_csv": "/workspaces/RMCS/experiments/yaw/chassis_stable_yaw_retest_2026-10-13_attempt4/run1.csv",
+        "sha256": "8336ccf4c49a90661459af927cbafbc0eb3a0b5b72388ae12fa84e338b63b701",
+        "samples": 3841,
+        "duration_s": 3.83987715,
+        "last_phase": 31,
+        "start_angle_rad": 0.2105388631,
+        "max_abs_displacement_rad": 0.052059472999999995,
+        "max_abs_velocity_rad_s": 0.3054326191,
+        "max_chassis_yaw_delta_rad": 0.002214693813,
+        "max_chassis_yaw_rate_rad_s": 0.04154658091,
+        "max_chassis_state_change_rad": {
+          "chassis_pitch_rad": 0.00205565104,
+          "chassis_roll_rad": 0.002406638519999999,
+          "lf_joint_rad": 0.0,
+          "lb_joint_rad": 0.0,
+          "rb_joint_rad": 0.0,
+          "rf_joint_rad": 9.587400000010682e-05
+        },
+        "completed": true
+      },
+      {
+        "label": "run2",
+        "robot_csv": "/tmp/yaw_plant_1791859298692.csv",
+        "local_csv": "/workspaces/RMCS/experiments/yaw/chassis_stable_yaw_retest_2026-10-13_attempt4/run2.csv",
+        "sha256": "426f03954eea6be3cf22a851343809867e67b47775c74fd50aa62125df6598eb",
+        "samples": 3841,
+        "duration_s": 3.839894518,
+        "last_phase": 31,
+        "start_angle_rad": 0.2261662924,
+        "max_abs_displacement_rad": 0.03921238390000001,
+        "max_abs_velocity_rad_s": 0.3054326191,
+        "max_chassis_yaw_delta_rad": 0.001818384646,
+        "max_chassis_yaw_rate_rad_s": 0.04474247175,
+        "max_chassis_state_change_rad": {
+          "chassis_pitch_rad": 0.0003056299099999972,
+          "chassis_roll_rad": 0.0004584715399999998,
+          "lf_joint_rad": 0.0,
+          "lb_joint_rad": 0.0,
+          "rb_joint_rad": 0.0,
+          "rf_joint_rad": 0.0
+        },
+        "completed": true
+      }
+    ],
+    "0p7": [
+      {
+        "label": "run1",
+        "robot_csv": "/tmp/yaw_plant_1791859388679.csv",
+        "local_csv": "/workspaces/RMCS/experiments/yaw/chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run1.csv",
+        "sha256": "39bb80ba02e585d7499f3e66e2b32be8c42d5ffafe659290f9c97fcb15940fdd",
+        "samples": 3841,
+        "duration_s": 3.839861022,
+        "last_phase": 31,
+        "start_angle_rad": 0.1119805975,
+        "max_abs_displacement_rad": 0.0824514674,
+        "max_abs_velocity_rad_s": 0.5986479334,
+        "max_chassis_yaw_delta_rad": 0.003535280412,
+        "max_chassis_yaw_rate_rad_s": 0.04900365953,
+        "max_chassis_state_change_rad": {
+          "chassis_pitch_rad": 0.00249063012,
+          "chassis_roll_rad": 0.00206657486,
+          "lf_joint_rad": 0.0,
+          "lb_joint_rad": 0.0,
+          "rb_joint_rad": 0.0,
+          "rf_joint_rad": 0.0
+        },
+        "completed": true
+      },
+      {
+        "label": "run2",
+        "robot_csv": "/tmp/yaw_plant_1791859398281.csv",
+        "local_csv": "/workspaces/RMCS/experiments/yaw/chassis_stable_yaw_retest_2026-10-13_0p7nm_attempt2/run2.csv",
+        "sha256": "f43e82b7bc7b32f23a024c43810ca9f47182677aeb5fc64a42f42d9fe178df33",
+        "samples": 3841,
+        "duration_s": 3.839895123,
+        "last_phase": 31,
+        "start_angle_rad": 0.1242524438,
+        "max_abs_displacement_rad": 0.06807039749999999,
+        "max_abs_velocity_rad_s": 0.616101226,
+        "max_chassis_yaw_delta_rad": 0.002802898501,
+        "max_chassis_yaw_rate_rad_s": 0.04474247175,
+        "max_chassis_state_change_rad": {
+          "chassis_pitch_rad": 0.0003745665099999969,
+          "chassis_roll_rad": 0.0008621597200000001,
+          "lf_joint_rad": 0.0,
+          "lb_joint_rad": 0.0,
+          "rb_joint_rad": 0.0,
+          "rf_joint_rad": 0.0
+        },
+        "completed": true
+      }
+    ]
+  },
+  "linear_per_amplitude": {
+    "0p5": {
+      "run1_fit_cycles_1_5": {
+        "J_kg_m2": 0.11165369034168546,
+        "B_Nm_s_per_rad": 2.5980686485313185,
+        "disturbance_Nm": -0.0069092226310147956,
+        "velocity_time_constant_s": 0.042975650549034954,
+        "nonzero_pole_per_s": -23.268990398621334
+      },
+      "run2_independent_fit_cycles_1_5": {
+        "J_kg_m2": 0.12086876435311729,
+        "B_Nm_s_per_rad": 2.6684622784952188,
+        "disturbance_Nm": 0.0023968220935802016,
+        "velocity_time_constant_s": 0.04529528685010185,
+        "nonzero_pole_per_s": -22.077352182564915
+      },
+      "run1_training": {
+        "samples": 480,
+        "acceleration_r2": 0.7115447556457968,
+        "acceleration_rmse_rad_s2": 1.549951314215025
+      },
+      "run1_holdout_cycles_6_7": {
+        "samples": 180,
+        "acceleration_r2": 0.6980347360061698,
+        "acceleration_rmse_rad_s2": 1.5834799546937306
+      },
+      "run2_holdout_cycles_4_7": {
+        "samples": 372,
+        "acceleration_r2": 0.6520122440622025,
+        "acceleration_rmse_rad_s2": 1.569438140297738,
+        "disturbance_Nm_calibrated_on_cycles_2_3": 0.006314123281868415
+      },
+      "run2_rollout_cycles_4_7": {
+        "speed_rmse_rad_s": 0.036989018711319974,
+        "angle_rmse_deg": 0.27275848527319524,
+        "max_abs_angle_error_deg": 0.6361013957012979
+      }
+    },
+    "0p7": {
+      "run1_fit_cycles_1_5": {
+        "J_kg_m2": 0.09285235610400416,
+        "B_Nm_s_per_rad": 1.349998652800123,
+        "disturbance_Nm": -0.01442394312889212,
+        "velocity_time_constant_s": 0.06877959167693452,
+        "nonzero_pole_per_s": -14.539196520635256
+      },
+      "run2_independent_fit_cycles_1_5": {
+        "J_kg_m2": 0.09805735390030117,
+        "B_Nm_s_per_rad": 1.402161325745158,
+        "disturbance_Nm": -0.016517683709524757,
+        "velocity_time_constant_s": 0.06993300421275708,
+        "nonzero_pole_per_s": -14.299399993709715
+      },
+      "run1_training": {
+        "samples": 480,
+        "acceleration_r2": 0.9160350511329243,
+        "acceleration_rmse_rad_s2": 1.5433340761497472
+      },
+      "run1_holdout_cycles_6_7": {
+        "samples": 180,
+        "acceleration_r2": 0.9201398023320485,
+        "acceleration_rmse_rad_s2": 1.5236760060370327
+      },
+      "run2_holdout_cycles_4_7": {
+        "samples": 372,
+        "acceleration_r2": 0.9308238751580301,
+        "acceleration_rmse_rad_s2": 1.4123001934107822,
+        "disturbance_Nm_calibrated_on_cycles_2_3": -0.022682811573043447
+      },
+      "run2_rollout_cycles_4_7": {
+        "speed_rmse_rad_s": 0.02720149101707305,
+        "angle_rmse_deg": 0.9499046833927185,
+        "max_abs_angle_error_deg": 1.6472597639060724
+      }
+    }
+  },
+  "linear_cross_amplitude": {
+    "0p5_on_0p7": {
+      "samples": 372,
+      "acceleration_r2": 0.38514648803619056,
+      "acceleration_rmse_rad_s2": 4.210510286796931,
+      "disturbance_Nm_calibrated_on_cycles_2_3": -0.04141820577068399
+    },
+    "0p7_on_0p5": {
+      "samples": 372,
+      "acceleration_r2": -0.0878570109521315,
+      "acceleration_rmse_rad_s2": 2.774905056844376,
+      "disturbance_Nm_calibrated_on_cycles_2_3": 0.009907262154622619
+    }
+  },
+  "joint_linear": {
+    "parameters": {
+      "J_kg_m2": 0.1057783769353121,
+      "B_Nm_s_per_rad": 1.5479960032442153,
+      "F_c_Nm": 0.0,
+      "v0_rad_s": null,
+      "training_disturbance_Nm": {
+        "0p5": -0.003061810652692348,
+        "0p7": -0.01698613230993686
+      }
+    },
+    "scores": {
+      "0p5": {
+        "training_run1_cycles_1_5": {
+          "samples": 480,
+          "acceleration_r2": 0.4557234567914702,
+          "acceleration_rmse_rad_s2": 2.129063653972279
+        },
+        "holdout_run1_cycles_6_7": {
+          "samples": 180,
+          "acceleration_r2": 0.4234211324072613,
+          "acceleration_rmse_rad_s2": 2.1880812098082827
+        },
+        "holdout_run2_cycles_4_7": {
+          "samples": 372,
+          "acceleration_r2": 0.2577130737343478,
+          "acceleration_rmse_rad_s2": 2.2921768741626534
+        },
+        "run2_disturbance_Nm_calibrated_on_cycles_2_3": 0.00980401179788676,
+        "run2_rollout_cycles_4_7": {
+          "speed_rmse_rad_s": 0.09915998136829655,
+          "angle_rmse_deg": 0.5860413364609757,
+          "max_abs_angle_error_deg": 1.3672457510376725
+        }
+      },
+      "0p7": {
+        "training_run1_cycles_1_5": {
+          "samples": 480,
+          "acceleration_r2": 0.8882533418504385,
+          "acceleration_rmse_rad_s2": 1.7804435287577942
+        },
+        "holdout_run1_cycles_6_7": {
+          "samples": 180,
+          "acceleration_r2": 0.8883327971603795,
+          "acceleration_rmse_rad_s2": 1.8017322696373543
+        },
+        "holdout_run2_cycles_4_7": {
+          "samples": 372,
+          "acceleration_r2": 0.8992981540583642,
+          "acceleration_rmse_rad_s2": 1.7039922668943353
+        },
+        "run2_disturbance_Nm_calibrated_on_cycles_2_3": -0.026514706675162376,
+        "run2_rollout_cycles_4_7": {
+          "speed_rmse_rad_s": 0.04849236476934796,
+          "angle_rmse_deg": 0.9324460360084534,
+          "max_abs_angle_error_deg": 1.814046564852945
+        }
+      }
+    }
+  },
+  "joint_smooth_friction_exploratory": {
+    "parameters": {
+      "J_kg_m2": 0.09684183901795558,
+      "B_Nm_s_per_rad": 0.7031740255290645,
+      "F_c_Nm": 0.2566638941685212,
+      "v0_rad_s": 0.04,
+      "training_disturbance_Nm": {
+        "0p5": -0.0021163901425376194,
+        "0p7": -0.009904297202968952
+      }
+    },
+    "scores": {
+      "0p5": {
+        "training_run1_cycles_1_5": {
+          "samples": 480,
+          "acceleration_r2": 0.7191396032681054,
+          "acceleration_rmse_rad_s2": 1.5294105778711549
+        },
+        "holdout_run1_cycles_6_7": {
+          "samples": 180,
+          "acceleration_r2": 0.7166451565904528,
+          "acceleration_rmse_rad_s2": 1.5339082965395392
+        },
+        "holdout_run2_cycles_4_7": {
+          "samples": 372,
+          "acceleration_r2": 0.6619683815436976,
+          "acceleration_rmse_rad_s2": 1.5468239338520573
+        },
+        "run2_disturbance_Nm_calibrated_on_cycles_2_3": 0.011843691784610842,
+        "run2_rollout_cycles_4_7": {
+          "speed_rmse_rad_s": 0.06455497421710975,
+          "angle_rmse_deg": 0.6087264443799948,
+          "max_abs_angle_error_deg": 1.46728768717058
+        }
+      },
+      "0p7": {
+        "training_run1_cycles_1_5": {
+          "samples": 480,
+          "acceleration_r2": 0.908910818653611,
+          "acceleration_rmse_rad_s2": 1.6074753831402269
+        },
+        "holdout_run1_cycles_6_7": {
+          "samples": 180,
+          "acceleration_r2": 0.9164550919671086,
+          "acceleration_rmse_rad_s2": 1.5584304699861018
+        },
+        "holdout_run2_cycles_4_7": {
+          "samples": 372,
+          "acceleration_r2": 0.9218598371841823,
+          "acceleration_rmse_rad_s2": 1.5010185507393965
+        },
+        "run2_disturbance_Nm_calibrated_on_cycles_2_3": -0.016881502231146695,
+        "run2_rollout_cycles_4_7": {
+          "speed_rmse_rad_s": 0.04502403134979232,
+          "angle_rmse_deg": 1.178671924736825,
+          "max_abs_angle_error_deg": 2.0960621305492566
+        }
+      }
+    }
+  },
+  "limitations": [
+    "zero explicit delay is a model convention, not a measured zero physical latency",
+    "chassis pitch, roll, joint angles and integrated yaw were monitored; absolute x/y position was not measured",
+    "v0=0.04 rad/s was selected from earlier exploratory data, not independently identified",
+    "run-specific constant disturbance is calibrated on cycles 2-3 for independent run scores",
+    "acceleration R2 does not by itself validate closed-loop feedforward or angle trajectories"
+  ]
+}

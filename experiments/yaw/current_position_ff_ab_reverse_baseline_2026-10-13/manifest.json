@@ -1,0 +1,13 @@
+[
+  {
+    "label": "01_baseline",
+    "arm": "baseline",
+    "start_angle_rad": 5.5299,
+    "config_sha256": "26d7e55c77b02165634aab11ee20ffe7dda0653639c04b7bd88f2c781d8537e8",
+    "samples": 3000,
+    "max_speed_rad_s": 0.483645,
+    "max_command_torque_Nm": 1.09018,
+    "max_error_deg": 0.2076484993223373,
+    "csv": "/workspaces/RMCS/experiments/yaw/current_position_ff_ab_reverse_baseline_2026-10-13/01_baseline.csv"
+  }
+]

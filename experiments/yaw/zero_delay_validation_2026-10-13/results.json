@@ -1,0 +1,213 @@
+{
+  "model": "J*q_ddot + B*q_dot + d_run = measured_motor_torque",
+  "input": "current-derived measured torque, not commanded torque",
+  "delay_interpretation": "0 samples is a modeling convention; 3 samples is historical data alignment, not measured physical delay",
+  "smoothing_half_window_samples": 10,
+  "sample_stride": 5,
+  "training": "first original run, cycles 1-5; cycle 0 excluded",
+  "independent_run_scope": "second original run and three runs after controller update; only each run's constant disturbance calibrated on cycle 1",
+  "versions": {
+    "no_explicit_delay": {
+      "alignment_samples": 0,
+      "parameters": {
+        "J_kg_m2": 0.14706661116421735,
+        "B_Nm_s_per_rad": 1.2868771207729393,
+        "disturbance_Nm": 0.0010130606256397894,
+        "velocity_time_constant_s": 0.11428178245634243,
+        "nonzero_pole_per_s": -8.75030104104315
+      },
+      "training_cycle_bootstrap_95pct": {
+        "J_kg_m2": [
+          0.14152024026148707,
+          0.15290210774439023
+        ],
+        "B_Nm_s_per_rad": [
+          1.2392794757638173,
+          1.341665811941149
+        ]
+      },
+      "training": {
+        "samples": 479,
+        "acceleration_r2": 0.9195463549629399,
+        "acceleration_rmse_rad_s2": 1.46946750900323
+      },
+      "original_run_holdout": {
+        "file": "yaw_plant_1790857685500.csv",
+        "sha256": "05fd03755be10f7daef24f7f96d16399426776bd9c9d2102ca5eba385848be20",
+        "calibration_cycle": null,
+        "heldout_cycles": [
+          6,
+          7
+        ],
+        "estimated_disturbance_Nm": 0.0010130606256397894,
+        "samples": 180,
+        "acceleration_r2": 0.9318762704953932,
+        "acceleration_rmse_rad_s2": 1.3486552006789407,
+        "angle_rmse_deg": 0.3091376284829335
+      },
+      "independent_original_run": {
+        "file": "yaw_plant_1790857941873.csv",
+        "sha256": "2f430c0045aab2805a94ede2fe51ce650a3561727dcec989170d57a83de1def8",
+        "calibration_cycle": 1,
+        "heldout_cycles": [
+          2,
+          3,
+          4
+        ],
+        "estimated_disturbance_Nm": -0.09279736066169801,
+        "samples": 288,
+        "acceleration_r2": 0.911411729086574,
+        "acceleration_rmse_rad_s2": 1.5549306070144744,
+        "angle_rmse_deg": 2.2126954331766044
+      },
+      "independent_after_control_update": [
+        {
+          "file": "validation_2026-10-02/plant_after_pid_ff_01.csv",
+          "sha256": "75603ddb992407dcd40940612e385001c7a32c15f141340f4e67fa30b936884c",
+          "calibration_cycle": 1,
+          "heldout_cycles": [
+            2
+          ],
+          "estimated_disturbance_Nm": -0.08950295451767451,
+          "samples": 96,
+          "acceleration_r2": 0.9403236419664613,
+          "acceleration_rmse_rad_s2": 1.211796113111579,
+          "angle_rmse_deg": 0.583336014352671
+        },
+        {
+          "file": "validation_2026-10-02/plant_after_pid_ff_02.csv",
+          "sha256": "d44d46742964a2bdd24cf55bd184e695f8d3eee801a043e0c02f0275864a7f15",
+          "calibration_cycle": 1,
+          "heldout_cycles": [
+            2
+          ],
+          "estimated_disturbance_Nm": -0.07837386287435043,
+          "samples": 96,
+          "acceleration_r2": 0.9064435601466907,
+          "acceleration_rmse_rad_s2": 1.5660256517232947,
+          "angle_rmse_deg": 0.34089917087442845
+        },
+        {
+          "file": "validation_2026-10-02/plant_after_pid_ff_03.csv",
+          "sha256": "b039da85e03bda2d4b33ba41db0af9b0d0b20ec2e4311de7eca52039b49d66d6",
+          "calibration_cycle": 1,
+          "heldout_cycles": [
+            2
+          ],
+          "estimated_disturbance_Nm": -0.05647731542556589,
+          "samples": 96,
+          "acceleration_r2": 0.8887264940274506,
+          "acceleration_rmse_rad_s2": 1.72001773149425,
+          "angle_rmse_deg": 0.3825021065361992
+        }
+      ],
+      "after_control_update_pooled_diagnostic": {
+        "J_kg_m2": 0.14822897348896705,
+        "B_Nm_s_per_rad": 1.3466049477834978,
+        "acceleration_r2": 0.909054341743947,
+        "samples": 576
+      }
+    },
+    "historical_3ms_alignment": {
+      "alignment_samples": 3,
+      "parameters": {
+        "J_kg_m2": 0.14261164568793971,
+        "B_Nm_s_per_rad": 1.3785478461447576,
+        "disturbance_Nm": 0.0009025252953363008,
+        "velocity_time_constant_s": 0.10345063182737327,
+        "nonzero_pole_per_s": -9.666446519811373
+      },
+      "training_cycle_bootstrap_95pct": {
+        "J_kg_m2": [
+          0.13682034513092836,
+          0.14871830275444073
+        ],
+        "B_Nm_s_per_rad": [
+          1.3318272374700244,
+          1.433750367643864
+        ]
+      },
+      "training": {
+        "samples": 479,
+        "acceleration_r2": 0.9235918056435098,
+        "acceleration_rmse_rad_s2": 1.4320464130090922
+      },
+      "original_run_holdout": {
+        "file": "yaw_plant_1790857685500.csv",
+        "sha256": "05fd03755be10f7daef24f7f96d16399426776bd9c9d2102ca5eba385848be20",
+        "calibration_cycle": null,
+        "heldout_cycles": [
+          6,
+          7
+        ],
+        "estimated_disturbance_Nm": 0.0009025252953363008,
+        "samples": 180,
+        "acceleration_r2": 0.937087599170925,
+        "acceleration_rmse_rad_s2": 1.296044319560985,
+        "angle_rmse_deg": 0.3026708780366364
+      },
+      "independent_original_run": {
+        "file": "yaw_plant_1790857941873.csv",
+        "sha256": "2f430c0045aab2805a94ede2fe51ce650a3561727dcec989170d57a83de1def8",
+        "calibration_cycle": 1,
+        "heldout_cycles": [
+          2,
+          3,
+          4
+        ],
+        "estimated_disturbance_Nm": -0.09831417437353954,
+        "samples": 288,
+        "acceleration_r2": 0.9165534842985799,
+        "acceleration_rmse_rad_s2": 1.5091312192894144,
+        "angle_rmse_deg": 2.1542325155682813
+      },
+      "independent_after_control_update": [
+        {
+          "file": "validation_2026-10-02/plant_after_pid_ff_01.csv",
+          "sha256": "75603ddb992407dcd40940612e385001c7a32c15f141340f4e67fa30b936884c",
+          "calibration_cycle": 1,
+          "heldout_cycles": [
+            2
+          ],
+          "estimated_disturbance_Nm": -0.09718328448865568,
+          "samples": 96,
+          "acceleration_r2": 0.943817033859209,
+          "acceleration_rmse_rad_s2": 1.1757926243827916,
+          "angle_rmse_deg": 0.5681924935675888
+        },
+        {
+          "file": "validation_2026-10-02/plant_after_pid_ff_02.csv",
+          "sha256": "d44d46742964a2bdd24cf55bd184e695f8d3eee801a043e0c02f0275864a7f15",
+          "calibration_cycle": 1,
+          "heldout_cycles": [
+            2
+          ],
+          "estimated_disturbance_Nm": -0.08604906438630283,
+          "samples": 96,
+          "acceleration_r2": 0.9071732068630471,
+          "acceleration_rmse_rad_s2": 1.559906981113244,
+          "angle_rmse_deg": 0.3232223382919726
+        },
+        {
+          "file": "validation_2026-10-02/plant_after_pid_ff_03.csv",
+          "sha256": "b039da85e03bda2d4b33ba41db0af9b0d0b20ec2e4311de7eca52039b49d66d6",
+          "calibration_cycle": 1,
+          "heldout_cycles": [
+            2
+          ],
+          "estimated_disturbance_Nm": -0.06234330830813696,
+          "samples": 96,
+          "acceleration_r2": 0.8875638674579528,
+          "acceleration_rmse_rad_s2": 1.7289800712185224,
+          "angle_rmse_deg": 0.35352687151184115
+        }
+      ],
+      "after_control_update_pooled_diagnostic": {
+        "J_kg_m2": 0.14357367146119687,
+        "B_Nm_s_per_rad": 1.4376705697505385,
+        "acceleration_r2": 0.9136739197248824,
+        "samples": 576
+      }
+    }
+  }
+}

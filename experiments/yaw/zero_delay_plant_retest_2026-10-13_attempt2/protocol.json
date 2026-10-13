@@ -1,0 +1,13 @@
+{
+  "reference_angle_rad": 2.586,
+  "angle_tolerance_rad": 0.18,
+  "torque_command_Nm": 0.9,
+  "phase_s": 0.12,
+  "cycles": 8,
+  "baseline_library_sha256": "8545d781b4ffeb4daf32f449cec15845c0bd09f775fbe8e362f24fd9721b80f4",
+  "baseline_yaml_sha256": "4f1974f583edb47c2e453461fabe1fb23fb87948605a445227c9cb946339c72a",
+  "test_yaml_sha256": "ed343ddd0801e03ba5ce8c2b1df33b5ef37fc829bc37d6d5cf2d6c993b9a7222",
+  "test_library_sha256": "566dd082880bf26a6733115ec155fb34d83d156b1d4d3c18b882c322aedefcda",
+  "remote_backup": "/tmp/c_car_before_zero_delay_plant_1791858365.yaml",
+  "remote_library_backup": "/tmp/librmcs_core_before_zero_delay_plant_1791858365.so"
+}

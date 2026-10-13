@@ -1,0 +1,50 @@
+1791891750.2351725 [INFO] [launch]: All log files can be found below /root/.ros/log/2026-10-13-11-42-30-234565-alliance-hero-2232
+1791891750.2352576 [INFO] [launch]: Default logging verbosity is set to INFO
+1791891750.2498415 [INFO] [launch.user]: Starting RMCS on robot 'sweep' -> sweep.yaml
+1791891750.2509813 [INFO] [rmcs_executor-1]: process started with pid [2237]
+1791891750.2967522 [rmcs_executor-1] [librmcs] [warn] USB device firmware version mismatch: found 'RMCS Agent v3.3.0-beta.2', expected 'RMCS Agent v3.3.0-beta.1'. Continuing because dangerously_skip_version_checks is enabled.
+1791891750.3018842 [rmcs_executor-1] [librmcs] [error] Deserializer encountered an error while parsing input
+1791891750.5250187 [rmcs_executor-1] [librmcs] [warn] USB device firmware version mismatch: found 'RMCS Agent v3.3.0-beta.2', expected 'RMCS Agent v3.3.0-beta.1'. Continuing because dangerously_skip_version_checks is enabled.
+1791891750.5253727 [rmcs_executor-1] [librmcs] [error] Deserializer encountered an error while parsing input
+1791891750.7572927 [rmcs_executor-1] [0m[INFO] [1791891750.757006323] [value_collector]: collecting 19 signals to /tmp/yaw_2026-10-13_11-42-30.csv[0m
+1791891750.7574313 [rmcs_executor-1] [0m[INFO] [1791891750.757076068] [rmcs_executor]: Calculating component dependencies[0m
+1791891750.7575014 [rmcs_executor-1] [0m[INFO] [1791891750.757082851] [rmcs_executor]: - predefined_msg_provider[0m
+1791891750.7575479 [rmcs_executor-1] [0m[INFO] [1791891750.757085887] [rmcs_executor]: -     deformable_infantry[0m
+1791891750.7577691 [rmcs_executor-1] [0m[INFO] [1791891750.757088442] [rmcs_executor]: -         referee_status[0m
+1791891750.7578325 [rmcs_executor-1] [0m[INFO] [1791891750.757091518] [rmcs_executor]: -     gimbal_controller[0m
+1791891750.7578762 [rmcs_executor-1] [0m[INFO] [1791891750.757093762] [rmcs_executor]: -         value_collector[0m
+1791891750.7579141 [rmcs_executor-1] [0m[INFO] [1791891750.757095947] [rmcs_executor]: -     chassis_controller[0m
+1791891750.7579510 [rmcs_executor-1] [0m[INFO] [1791891750.757101668] [rmcs_executor]: -         chassis_power_controller[0m
+1791891750.7579873 [rmcs_executor-1] [0m[INFO] [1791891750.757104012] [rmcs_executor]: -         deformable_chassis_controller[0m
+1791891750.7580218 [rmcs_executor-1] [0m[INFO] [1791891750.757106216] [rmcs_executor]: -     deformable_suspension[0m
+1791891750.7580562 [rmcs_executor-1] [0m[INFO] [1791891750.757108481] [rmcs_executor]: -         lf_joint_controller[0m
+1791891750.7580910 [rmcs_executor-1] [0m[INFO] [1791891750.757110705] [rmcs_executor]: -         lb_joint_controller[0m
+1791891750.7581260 [rmcs_executor-1] [0m[INFO] [1791891750.757113020] [rmcs_executor]: -         rb_joint_controller[0m
+1791891750.7581568 [rmcs_executor-1] [0m[INFO] [1791891750.757115074] [rmcs_executor]: -         rf_joint_controller[0m
+1791891750.7581723 [rmcs_executor-1] [0m[INFO] [1791891750.757117137] [rmcs_executor]: -             deformable_infantry_command[0m
+1791891750.7581878 [rmcs_executor-1] [0m[INFO] [1791891750.757136465] [deformable_chassis_controller]: Max control torque of wheel motor: 6[0m
+1791891750.7582388 [rmcs_executor-1] [33m[WARN] [1791891750.757280223] [deformable_infantry]: deformable joint feedback invalid, fallback chassis radius to default 0.374 m[0m
+1791891755.7576284 [rmcs_executor-1] [0m[INFO] [1791891755.757371870] [rmcs_executor]: Update/Skipped: 5001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.085/0.187, update 0.018/0.093/0.185[0m
+1791891755.7577727 [rmcs_executor-1] [0m[INFO] [1791891755.757426746] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/79.5%, value_collector 0.001ms/5.3%, deformable_infantry 0.001ms/4.8%[0m
+1791891760.7575865 [rmcs_executor-1] [0m[INFO] [1791891760.757343317] [rmcs_executor]: Update/Skipped: 10001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.085/0.187, update 0.018/0.092/0.185[0m
+1791891760.7576814 [rmcs_executor-1] [0m[INFO] [1791891760.757398845] [rmcs_executor]: Component 5s: deformable_infantry_command 0.018ms/78.8%, value_collector 0.001ms/5.3%, deformable_infantry 0.001ms/5.0%[0m
+1791891765.7575703 [rmcs_executor-1] [0m[INFO] [1791891765.757416813] [rmcs_executor]: Update/Skipped: 15001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.085/0.187, update 0.018/0.092/0.185[0m
+1791891765.7577140 [rmcs_executor-1] [0m[INFO] [1791891765.757460328] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/79.1%, deformable_infantry 0.001ms/5.4%, value_collector 0.001ms/5.0%[0m
+1791891770.7575703 [rmcs_executor-1] [0m[INFO] [1791891770.757358213] [rmcs_executor]: Update/Skipped: 20001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.084/0.187, update 0.018/0.091/0.185[0m
+1791891770.7576754 [rmcs_executor-1] [0m[INFO] [1791891770.757393100] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/79.3%, deformable_infantry 0.001ms/5.3%, value_collector 0.001ms/5.0%[0m
+1791891775.7575521 [rmcs_executor-1] [0m[INFO] [1791891775.757371178] [rmcs_executor]: Update/Skipped: 25001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.082/0.187, update 0.018/0.092/0.185[0m
+1791891775.7576544 [rmcs_executor-1] [0m[INFO] [1791891775.757401867] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/79.6%, deformable_infantry 0.001ms/5.3%, value_collector 0.001ms/4.9%[0m
+1791891780.7576053 [rmcs_executor-1] [0m[INFO] [1791891780.757364620] [rmcs_executor]: Update/Skipped: 30001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.070/0.187, update 0.018/0.091/0.185[0m
+1791891780.7577574 [rmcs_executor-1] [0m[INFO] [1791891780.757415769] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/80.7%, value_collector 0.001ms/4.8%, deformable_infantry 0.001ms/4.6%[0m
+1791891785.7575877 [rmcs_executor-1] [0m[INFO] [1791891785.757355303] [rmcs_executor]: Update/Skipped: 35001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.063/0.187, update 0.018/0.091/0.185[0m
+1791891785.7577236 [rmcs_executor-1] [0m[INFO] [1791891785.757400560] [rmcs_executor]: Component 5s: deformable_infantry_command 0.018ms/80.4%, value_collector 0.001ms/5.0%, deformable_infantry 0.001ms/4.6%[0m
+1791891790.7576249 [rmcs_executor-1] [0m[INFO] [1791891790.757371307] [rmcs_executor]: Update/Skipped: 40001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.061/0.187, update 0.018/0.091/0.185[0m
+1791891790.7577503 [rmcs_executor-1] [0m[INFO] [1791891790.757406105] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/80.7%, value_collector 0.001ms/4.9%, deformable_infantry 0.001ms/4.6%[0m
+1791891795.7576787 [rmcs_executor-1] [0m[INFO] [1791891795.757360102] [rmcs_executor]: Update/Skipped: 45001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.061/0.187, update 0.018/0.091/0.185[0m
+1791891795.7578378 [rmcs_executor-1] [0m[INFO] [1791891795.757394319] [rmcs_executor]: Component 5s: deformable_infantry_command 0.018ms/80.2%, value_collector 0.001ms/5.0%, deformable_infantry 0.001ms/4.7%[0m
+1791891800.7577863 [rmcs_executor-1] [0m[INFO] [1791891800.757379195] [rmcs_executor]: Update/Skipped: 50001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.061/0.187, update 0.018/0.090/0.185[0m
+1791891800.7579644 [rmcs_executor-1] [0m[INFO] [1791891800.757417439] [rmcs_executor]: Component 5s: deformable_infantry_command 0.018ms/80.0%, value_collector 0.001ms/5.0%, deformable_infantry 0.001ms/4.7%[0m
+1791891805.7575691 [rmcs_executor-1] [0m[INFO] [1791891805.757348379] [rmcs_executor]: Update/Skipped: 55001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.061/0.187, update 0.018/0.090/0.185[0m
+1791891805.7576871 [rmcs_executor-1] [0m[INFO] [1791891805.757383287] [rmcs_executor]: Component 5s: deformable_infantry_command 0.018ms/80.1%, value_collector 0.001ms/4.9%, deformable_infantry 0.001ms/4.8%[0m
+1791891810.7576988 [rmcs_executor-1] [0m[INFO] [1791891810.757331034] [rmcs_executor]: Update/Skipped: 60001/0 (0.0%), Stat ms p50/p99/max: start_late 0.056/0.061/0.187, update 0.018/0.090/0.185[0m
+1791891810.7578931 [rmcs_executor-1] [0m[INFO] [1791891810.757389117] [rmcs_executor]: Component 5s: deformable_infantry_command 0.019ms/81.9%, value_collector 0.001ms/4.7%, deformable_infantry 0.001ms/4.2%[0m

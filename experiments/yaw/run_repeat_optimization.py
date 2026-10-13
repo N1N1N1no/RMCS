@@ -96,11 +96,11 @@ def trigger():
         raise RuntimeError(f"Sweep refused: {response}")
 
 
-def export_completed(path, label):
+def export_completed(path, label, transfer_timeout=30):
     RUN_DIR.mkdir(exist_ok=True)
     raw_path = RUN_DIR / f"{label}.raw.csv"
     csv_path = RUN_DIR / f"{label}.csv"
-    call("scp", "-q", f"remote:{path}", str(raw_path), timeout=30)
+    call("scp", "-q", f"remote:{path}", str(raw_path), timeout=transfer_timeout)
     latest = []
     current = []
     with raw_path.open(newline="") as stream:

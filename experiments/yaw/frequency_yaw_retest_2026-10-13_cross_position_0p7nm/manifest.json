@@ -1,0 +1,31 @@
+[
+  {
+    "label": "f2p083_run1",
+    "robot_csv": "/tmp/yaw_plant_1791861647628.csv",
+    "local_csv": "/workspaces/RMCS/experiments/yaw/frequency_yaw_retest_2026-10-13_cross_position_0p7nm/f2p083_run1.csv",
+    "sha256": "1e94d3b17f44e48d7620b1dcb72e2d2c7a2c42e9f4e5b6a6e57302b42b61c3ef",
+    "frequency_hz": 2.0833333333333335,
+    "phase_s": 0.12,
+    "cycles": 12,
+    "torque_command_Nm": 0.7,
+    "samples": 2061,
+    "duration_s": 2.059856081,
+    "last_phase": 17,
+    "start_angle_rad": 1.923516034,
+    "max_abs_displacement_rad": 0.11993812300000029,
+    "max_abs_encoder_velocity_rad_s": 0.4555309348,
+    "max_abs_chassis_yaw_delta_rad": 0.000897966791,
+    "max_abs_chassis_yaw_rate_rad_s": 0.04261187785,
+    "max_abs_chassis_state_change_rad": {
+      "chassis_pitch_rad": 0.0018083201399999999,
+      "chassis_roll_rad": 0.002238966833000001,
+      "lf_joint_rad": 0.0,
+      "lb_joint_rad": 0.0,
+      "rb_joint_rad": 0.0,
+      "rf_joint_rad": 0.0
+    },
+    "completed": false,
+    "preflight_yaw_rad": 1.9286,
+    "config_sha256": "cdc284c169bab60a2fbdd7e7a43c6c92f8fd2c14c77cf88e0c332814a941f718"
+  }
+]

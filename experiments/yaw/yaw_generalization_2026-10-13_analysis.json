@@ -1,0 +1,1018 @@
+{
+  "measurement": "measured torque / relative IMU yaw speed fundamental phasor",
+  "model": "torque = (B+j*2*pi*f*J)*relative_yaw_speed",
+  "quality_rules": {
+    "complete_runs_only": true,
+    "train_amplitude_Nm": 0.5,
+    "minimum_speed_harmonic_to_residual_std": 3.0,
+    "angle_minimum_harmonic_to_residual_std": 3.0,
+    "angle_to_imu_gain_tolerance": 0.25,
+    "angle_to_imu_phase_tolerance_deg": 15.0
+  },
+  "train": {
+    "yaw_5p3": [
+      {
+        "label": "f1p25_run1",
+        "frequency_hz": 1.25,
+        "start_angle_rad": 5.124933939,
+        "sha256": "81d3c01d591e4d7fadd658d3ab3bb10ac4dd786a92fd20473cea3116ab9942cc"
+      },
+      {
+        "label": "f2p083_run1",
+        "frequency_hz": 2.0833333333333335,
+        "start_angle_rad": 5.387052906,
+        "sha256": "4c1d5cfa4a54c7547e9c5d55ed90afb3b81c1e44d28522f7ca9ec90a361b5883"
+      },
+      {
+        "label": "f3p125_run1",
+        "frequency_hz": 3.125,
+        "start_angle_rad": 5.376219166,
+        "sha256": "ca3d8984334152fce3a30847b73dae83eece71ca992b8df7a7a1ddbadd609ce0"
+      },
+      {
+        "label": "f6p25_run1",
+        "frequency_hz": 6.25,
+        "start_angle_rad": 5.298465515,
+        "sha256": "fac3b3494ee0661b72702a2120cc945145999645fc75bfc521557021a7668c2a"
+      }
+    ],
+    "yaw_2p0": [
+      {
+        "label": "f3p125_run1",
+        "frequency_hz": 3.125,
+        "start_angle_rad": 2.172500291,
+        "sha256": "9e2d81c17bfe8a517f492bbb7f63fcb0aeed661249f2d69e25f7e6bbbe0e6ae3"
+      },
+      {
+        "label": "f6p25_run1",
+        "frequency_hz": 6.25,
+        "start_angle_rad": 2.104909262,
+        "sha256": "1b6960ee60ffc788628509caf26b25ae0cca237a38b1a01c909bb5f1bfd8f25a"
+      }
+    ],
+    "yaw_2p5": [
+      {
+        "label": "f2p083_run1",
+        "frequency_hz": 2.0833333333333335,
+        "start_angle_rad": 2.497033101,
+        "sha256": "24086f15df643c059439f58373e036156b81cbed752bd1f049d9926e43cc2fba"
+      },
+      {
+        "label": "f3p125_run1",
+        "frequency_hz": 3.125,
+        "start_angle_rad": 2.548709079,
+        "sha256": "1d5f9de00f938bfb31d64cecd342376df84f9c6bc0225cc965ac0d5d450b5c69"
+      },
+      {
+        "label": "f6p25_run1",
+        "frequency_hz": 6.25,
+        "start_angle_rad": 2.536820728,
+        "sha256": "af4a997bd0d27aa6b7a3026626f390a46a56b2e748881b550fece2866fcaa5f4"
+      }
+    ]
+  },
+  "fits": {
+    "local": {
+      "yaw_5p3": {
+        "J_kg_m2": 0.08015222750768368,
+        "B_Nm_s_per_rad": 2.6402419943810953
+      },
+      "yaw_2p0": {
+        "J_kg_m2": 0.12152790903904415,
+        "B_Nm_s_per_rad": 4.735766253745939
+      },
+      "yaw_2p5": {
+        "J_kg_m2": 0.11860432747858127,
+        "B_Nm_s_per_rad": 2.193810529163708
+      }
+    },
+    "pooled": {
+      "J_kg_m2": 0.10263204385671666,
+      "B_Nm_s_per_rad": 2.626019186400025
+    },
+    "shared_J_local_B": {
+      "J_kg_m2": 0.10263204385671632,
+      "B_by_group_Nm_s_per_rad": {
+        "yaw_5p3": 2.640241994381095,
+        "yaw_2p0": 4.735766253745936,
+        "yaw_2p5": 2.1938105291637076
+      }
+    }
+  },
+  "primary_holdout_summary": {
+    "local": {
+      "primary_holdout_group_mean_error": 0.18314009772277623,
+      "primary_holdout_worst_group_mean_error": 0.199324594668696,
+      "per_group_mean_error": {
+        "yaw_5p3_repeat": 0.17700426372209532,
+        "yaw_4p8_move": 0.15926923663450682,
+        "yaw_2p0_repeat": 0.199324594668696,
+        "yaw_2p5_repeat": 0.19696229586580682
+      }
+    },
+    "pooled": {
+      "primary_holdout_group_mean_error": 0.2678758783619943,
+      "primary_holdout_worst_group_mean_error": 0.42689495239087644,
+      "per_group_mean_error": {
+        "yaw_5p3_repeat": 0.25482236438282635,
+        "yaw_4p8_move": 0.1278781962366228,
+        "yaw_2p0_repeat": 0.42689495239087644,
+        "yaw_2p5_repeat": 0.26190800043765156
+      }
+    },
+    "shared_J_local_B": {
+      "primary_holdout_group_mean_error": 0.19679165556960532,
+      "primary_holdout_worst_group_mean_error": 0.2543922040568247,
+      "per_group_mean_error": {
+        "yaw_5p3_repeat": 0.2543922040568247,
+        "yaw_4p8_move": 0.1291097048478251,
+        "yaw_2p0_repeat": 0.21017108666298734,
+        "yaw_2p5_repeat": 0.19349362671078407
+      }
+    }
+  },
+  "validation": {
+    "yaw_5p3_repeat": {
+      "assigned_training_group": "yaw_5p3",
+      "models": {
+        "local": {
+          "run_count": 4,
+          "mean_relative_torque_error_from_imu_speed": 0.17700426372209532,
+          "angle_qualified_run_count": 1,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.24372138870727048,
+          "runs": [
+            {
+              "label": "f1p25_run2",
+              "frequency_hz": 1.25,
+              "start_angle_rad": 5.146313796,
+              "speed_quality": 6.618559795789492,
+              "relative_torque_error_from_imu_speed": 0.23411954768067467,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.24372138870727048,
+              "encoder_derivative_to_imu_speed_gain": 0.9992506798380195,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.6251878250673025,
+              "angle_harmonic_to_residual_std": 15.800025792637818,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f2p083_run2",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 5.391942469,
+              "speed_quality": 5.467422880313888,
+              "relative_torque_error_from_imu_speed": 0.07218620645063438,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9759499934718215,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.5943537925612993,
+              "angle_harmonic_to_residual_std": 2.8959201869013396,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f3p125_run2",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 5.355414552,
+              "speed_quality": 6.632408996429738,
+              "relative_torque_error_from_imu_speed": 0.13775714697423144,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9390260100119059,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.3269833210416174,
+              "angle_harmonic_to_residual_std": 2.823339255163523,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run2",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 5.266635414,
+              "speed_quality": 5.1314057708869765,
+              "relative_torque_error_from_imu_speed": 0.26395415378284076,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.8732210742104032,
+              "encoder_derivative_to_imu_speed_phase_deg": 2.337713674525521,
+              "angle_harmonic_to_residual_std": 0.43968007390960195,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "pooled": {
+          "run_count": 4,
+          "mean_relative_torque_error_from_imu_speed": 0.25482236438282635,
+          "angle_qualified_run_count": 1,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.3112363906808069,
+          "runs": [
+            {
+              "label": "f1p25_run2",
+              "frequency_hz": 1.25,
+              "start_angle_rad": 5.146313796,
+              "speed_quality": 6.618559795789492,
+              "relative_torque_error_from_imu_speed": 0.30123931029455703,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.3112363906808069,
+              "encoder_derivative_to_imu_speed_gain": 0.9992506798380195,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.6251878250673025,
+              "angle_harmonic_to_residual_std": 15.800025792637818,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f2p083_run2",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 5.391942469,
+              "speed_quality": 5.467422880313888,
+              "relative_torque_error_from_imu_speed": 0.17532164978090262,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9759499934718215,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.5943537925612993,
+              "angle_harmonic_to_residual_std": 2.8959201869013396,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f3p125_run2",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 5.355414552,
+              "speed_quality": 6.632408996429738,
+              "relative_torque_error_from_imu_speed": 0.254381982350921,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9390260100119059,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.3269833210416174,
+              "angle_harmonic_to_residual_std": 2.823339255163523,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run2",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 5.266635414,
+              "speed_quality": 5.1314057708869765,
+              "relative_torque_error_from_imu_speed": 0.2883465151049246,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.8732210742104032,
+              "encoder_derivative_to_imu_speed_phase_deg": 2.337713674525521,
+              "angle_harmonic_to_residual_std": 0.43968007390960195,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "shared_J_local_B": {
+          "run_count": 4,
+          "mean_relative_torque_error_from_imu_speed": 0.2543922040568247,
+          "angle_qualified_run_count": 1,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.31274671950642285,
+          "runs": [
+            {
+              "label": "f1p25_run2",
+              "frequency_hz": 1.25,
+              "start_angle_rad": 5.146313796,
+              "speed_quality": 6.618559795789492,
+              "relative_torque_error_from_imu_speed": 0.30282362452662076,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.31274671950642285,
+              "encoder_derivative_to_imu_speed_gain": 0.9992506798380195,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.6251878250673025,
+              "angle_harmonic_to_residual_std": 15.800025792637818,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f2p083_run2",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 5.391942469,
+              "speed_quality": 5.467422880313888,
+              "relative_torque_error_from_imu_speed": 0.17625169376020886,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9759499934718215,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.5943537925612993,
+              "angle_harmonic_to_residual_std": 2.8959201869013396,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f3p125_run2",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 5.355414552,
+              "speed_quality": 6.632408996429738,
+              "relative_torque_error_from_imu_speed": 0.25260724405310514,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9390260100119059,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.3269833210416174,
+              "angle_harmonic_to_residual_std": 2.823339255163523,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run2",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 5.266635414,
+              "speed_quality": 5.1314057708869765,
+              "relative_torque_error_from_imu_speed": 0.2858862538873642,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.8732210742104032,
+              "encoder_derivative_to_imu_speed_phase_deg": 2.337713674525521,
+              "angle_harmonic_to_residual_std": 0.43968007390960195,
+              "angle_quality_pass": false
+            }
+          ]
+        }
+      }
+    },
+    "yaw_4p8_move": {
+      "assigned_training_group": "yaw_5p3",
+      "models": {
+        "local": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.15926923663450682,
+          "angle_qualified_run_count": 2,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.25195625764512747,
+          "runs": [
+            {
+              "label": "f2p083_run1",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 4.780938747,
+              "speed_quality": 4.079320466196653,
+              "relative_torque_error_from_imu_speed": 0.12587549118073746,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.11691783070889718,
+              "encoder_derivative_to_imu_speed_gain": 0.9836353761001323,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.5016053221541378,
+              "angle_harmonic_to_residual_std": 4.048847373643913,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 4.817658412,
+              "speed_quality": 5.530132741662329,
+              "relative_torque_error_from_imu_speed": 0.0635232987007988,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9626483409702826,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.564745823257261,
+              "angle_harmonic_to_residual_std": 1.7423096286782278,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 4.802606225,
+              "speed_quality": 5.049798512018456,
+              "relative_torque_error_from_imu_speed": 0.2884089200219842,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.3869946845813578,
+              "encoder_derivative_to_imu_speed_gain": 0.8731467849430571,
+              "encoder_derivative_to_imu_speed_phase_deg": 3.166873507281376,
+              "angle_harmonic_to_residual_std": 3.3968470076320094,
+              "angle_quality_pass": true
+            }
+          ]
+        },
+        "pooled": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.1278781962366228,
+          "angle_qualified_run_count": 2,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.18910861508165308,
+          "runs": [
+            {
+              "label": "f2p083_run1",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 4.780938747,
+              "speed_quality": 4.079320466196653,
+              "relative_torque_error_from_imu_speed": 0.05202446493665831,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.03311329629309947,
+              "encoder_derivative_to_imu_speed_gain": 0.9836353761001323,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.5016053221541378,
+              "angle_harmonic_to_residual_std": 4.048847373643913,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 4.817658412,
+              "speed_quality": 5.530132741662329,
+              "relative_torque_error_from_imu_speed": 0.08684847673528805,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9626483409702826,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.564745823257261,
+              "angle_harmonic_to_residual_std": 1.7423096286782278,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 4.802606225,
+              "speed_quality": 5.049798512018456,
+              "relative_torque_error_from_imu_speed": 0.24476164703792208,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.3451039338702067,
+              "encoder_derivative_to_imu_speed_gain": 0.8731467849430571,
+              "encoder_derivative_to_imu_speed_phase_deg": 3.166873507281376,
+              "angle_harmonic_to_residual_std": 3.3968470076320094,
+              "angle_quality_pass": true
+            }
+          ]
+        },
+        "shared_J_local_B": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.1291097048478251,
+          "angle_qualified_run_count": 2,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.19042339233182332,
+          "runs": [
+            {
+              "label": "f2p083_run1",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 4.780938747,
+              "speed_quality": 4.079320466196653,
+              "relative_torque_error_from_imu_speed": 0.056980305805748706,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.037897350318254745,
+              "encoder_derivative_to_imu_speed_gain": 0.9836353761001323,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.5016053221541378,
+              "angle_harmonic_to_residual_std": 4.048847373643913,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 4.817658412,
+              "speed_quality": 5.530132741662329,
+              "relative_torque_error_from_imu_speed": 0.08808246575723688,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9626483409702826,
+              "encoder_derivative_to_imu_speed_phase_deg": 0.564745823257261,
+              "angle_harmonic_to_residual_std": 1.7423096286782278,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 4.802606225,
+              "speed_quality": 5.049798512018456,
+              "relative_torque_error_from_imu_speed": 0.24226634298048977,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.3429494343453919,
+              "encoder_derivative_to_imu_speed_gain": 0.8731467849430571,
+              "encoder_derivative_to_imu_speed_phase_deg": 3.166873507281376,
+              "angle_harmonic_to_residual_std": 3.3968470076320094,
+              "angle_quality_pass": true
+            }
+          ]
+        }
+      }
+    },
+    "yaw_2p0_repeat": {
+      "assigned_training_group": "yaw_2p0",
+      "models": {
+        "local": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.199324594668696,
+          "angle_qualified_run_count": 0,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "runs": [
+            {
+              "label": "f2p083_run1",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 1.975959002,
+              "speed_quality": 4.572628046870746,
+              "relative_torque_error_from_imu_speed": 0.2240996851419951,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9246127627330123,
+              "encoder_derivative_to_imu_speed_phase_deg": 9.536489291752648,
+              "angle_harmonic_to_residual_std": 2.759662929068006,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 1.966467496,
+              "speed_quality": 3.3980663976458922,
+              "relative_torque_error_from_imu_speed": 0.1453664327980153,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.8996037570854525,
+              "encoder_derivative_to_imu_speed_phase_deg": 23.3980010247189,
+              "angle_harmonic_to_residual_std": 0.6692224917674451,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 1.976725993,
+              "speed_quality": 3.56735613082605,
+              "relative_torque_error_from_imu_speed": 0.22850766606607764,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 1.0401591280200266,
+              "encoder_derivative_to_imu_speed_phase_deg": 57.53483153176738,
+              "angle_harmonic_to_residual_std": 0.31070105958912664,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "pooled": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.42689495239087644,
+          "angle_qualified_run_count": 0,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "runs": [
+            {
+              "label": "f2p083_run1",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 1.975959002,
+              "speed_quality": 4.572628046870746,
+              "relative_torque_error_from_imu_speed": 0.301219592085309,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9246127627330123,
+              "encoder_derivative_to_imu_speed_phase_deg": 9.536489291752648,
+              "angle_harmonic_to_residual_std": 2.759662929068006,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 1.966467496,
+              "speed_quality": 3.3980663976458922,
+              "relative_torque_error_from_imu_speed": 0.48409561113241223,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.8996037570854525,
+              "encoder_derivative_to_imu_speed_phase_deg": 23.3980010247189,
+              "angle_harmonic_to_residual_std": 0.6692224917674451,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 1.976725993,
+              "speed_quality": 3.56735613082605,
+              "relative_torque_error_from_imu_speed": 0.49536965395490795,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 1.0401591280200266,
+              "encoder_derivative_to_imu_speed_phase_deg": 57.53483153176738,
+              "angle_harmonic_to_residual_std": 0.31070105958912664,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "shared_J_local_B": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.21017108666298734,
+          "angle_qualified_run_count": 0,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "runs": [
+            {
+              "label": "f2p083_run1",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 1.975959002,
+              "speed_quality": 4.572628046870746,
+              "relative_torque_error_from_imu_speed": 0.21559175054045568,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.9246127627330123,
+              "encoder_derivative_to_imu_speed_phase_deg": 9.536489291752648,
+              "angle_harmonic_to_residual_std": 2.759662929068006,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 1.966467496,
+              "speed_quality": 3.3980663976458922,
+              "relative_torque_error_from_imu_speed": 0.18320998847955344,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.8996037570854525,
+              "encoder_derivative_to_imu_speed_phase_deg": 23.3980010247189,
+              "angle_harmonic_to_residual_std": 0.6692224917674451,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 1.976725993,
+              "speed_quality": 3.56735613082605,
+              "relative_torque_error_from_imu_speed": 0.23171152096895287,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 1.0401591280200266,
+              "encoder_derivative_to_imu_speed_phase_deg": 57.53483153176738,
+              "angle_harmonic_to_residual_std": 0.31070105958912664,
+              "angle_quality_pass": false
+            }
+          ]
+        }
+      }
+    },
+    "yaw_2p5_repeat": {
+      "assigned_training_group": "yaw_2p5",
+      "models": {
+        "local": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.19696229586580682,
+          "angle_qualified_run_count": 2,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.14635594829869522,
+          "runs": [
+            {
+              "label": "f2p083_run2",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 2.551105924,
+              "speed_quality": 5.298514346198122,
+              "relative_torque_error_from_imu_speed": 0.12498626098354827,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.03978832349012475,
+              "encoder_derivative_to_imu_speed_gain": 0.9212432097962238,
+              "encoder_derivative_to_imu_speed_phase_deg": 4.0430370592705485,
+              "angle_harmonic_to_residual_std": 9.646397198860456,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f3p125_run2",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 2.537587718,
+              "speed_quality": 5.869326920823698,
+              "relative_torque_error_from_imu_speed": 0.17092075534620385,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.2529235731072657,
+              "encoder_derivative_to_imu_speed_gain": 0.8561493895997946,
+              "encoder_derivative_to_imu_speed_phase_deg": 8.229851747716225,
+              "angle_harmonic_to_residual_std": 4.518022503334835,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f6p25_run2",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 2.536820728,
+              "speed_quality": 4.120152750840585,
+              "relative_torque_error_from_imu_speed": 0.2949798712676683,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.6013837587537872,
+              "encoder_derivative_to_imu_speed_phase_deg": 57.30110149508294,
+              "angle_harmonic_to_residual_std": 0.44786523470228523,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "pooled": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.26190800043765156,
+          "angle_qualified_run_count": 2,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.14645149460431342,
+          "runs": [
+            {
+              "label": "f2p083_run2",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 2.551105924,
+              "speed_quality": 5.298514346198122,
+              "relative_torque_error_from_imu_speed": 0.31465438559964637,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.19811359103536114,
+              "encoder_derivative_to_imu_speed_gain": 0.9212432097962238,
+              "encoder_derivative_to_imu_speed_phase_deg": 4.0430370592705485,
+              "angle_harmonic_to_residual_std": 9.646397198860456,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f3p125_run2",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 2.537587718,
+              "speed_quality": 5.869326920823698,
+              "relative_torque_error_from_imu_speed": 0.1702283337113712,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.09478939817326572,
+              "encoder_derivative_to_imu_speed_gain": 0.8561493895997946,
+              "encoder_derivative_to_imu_speed_phase_deg": 8.229851747716225,
+              "angle_harmonic_to_residual_std": 4.518022503334835,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f6p25_run2",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 2.536820728,
+              "speed_quality": 4.120152750840585,
+              "relative_torque_error_from_imu_speed": 0.3008412820019371,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.6013837587537872,
+              "encoder_derivative_to_imu_speed_phase_deg": 57.30110149508294,
+              "angle_harmonic_to_residual_std": 0.44786523470228523,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "shared_J_local_B": {
+          "run_count": 3,
+          "mean_relative_torque_error_from_imu_speed": 0.19349362671078407,
+          "angle_qualified_run_count": 2,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.15917163958938246,
+          "runs": [
+            {
+              "label": "f2p083_run2",
+              "frequency_hz": 2.0833333333333335,
+              "start_angle_rad": 2.551105924,
+              "speed_quality": 5.298514346198122,
+              "relative_torque_error_from_imu_speed": 0.17335337611360507,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.11587312094405146,
+              "encoder_derivative_to_imu_speed_gain": 0.9212432097962238,
+              "encoder_derivative_to_imu_speed_phase_deg": 4.0430370592705485,
+              "angle_harmonic_to_residual_std": 9.646397198860456,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f3p125_run2",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 2.537587718,
+              "speed_quality": 5.869326920823698,
+              "relative_torque_error_from_imu_speed": 0.06111853582019355,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.20247015823471348,
+              "encoder_derivative_to_imu_speed_gain": 0.8561493895997946,
+              "encoder_derivative_to_imu_speed_phase_deg": 8.229851747716225,
+              "angle_harmonic_to_residual_std": 4.518022503334835,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f6p25_run2",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 2.536820728,
+              "speed_quality": 4.120152750840585,
+              "relative_torque_error_from_imu_speed": 0.3460089681985536,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.6013837587537872,
+              "encoder_derivative_to_imu_speed_phase_deg": 57.30110149508294,
+              "angle_harmonic_to_residual_std": 0.44786523470228523,
+              "angle_quality_pass": false
+            }
+          ]
+        }
+      }
+    },
+    "yaw_2p0_at_0p7Nm": {
+      "assigned_training_group": "yaw_2p0",
+      "models": {
+        "local": {
+          "run_count": 2,
+          "mean_relative_torque_error_from_imu_speed": 0.4293867651123828,
+          "angle_qualified_run_count": 1,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.4433420911821585,
+          "runs": [
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 1.984779392,
+              "speed_quality": 4.9305731900163945,
+              "relative_torque_error_from_imu_speed": 0.7101551517467504,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.4433420911821585,
+              "encoder_derivative_to_imu_speed_gain": 0.873657182709298,
+              "encoder_derivative_to_imu_speed_phase_deg": 7.810210516062165,
+              "angle_harmonic_to_residual_std": 3.150708759678603,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 1.975575507,
+              "speed_quality": 5.929151257703172,
+              "relative_torque_error_from_imu_speed": 0.1486183784780152,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.7033132767728718,
+              "encoder_derivative_to_imu_speed_phase_deg": 38.90076191523016,
+              "angle_harmonic_to_residual_std": 4.409788766549267,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "pooled": {
+          "run_count": 2,
+          "mean_relative_torque_error_from_imu_speed": 0.16970514030172337,
+          "angle_qualified_run_count": 1,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.12849283633483236,
+          "runs": [
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 1.984779392,
+              "speed_quality": 4.9305731900163945,
+              "relative_torque_error_from_imu_speed": 0.11052818311965103,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.12849283633483236,
+              "encoder_derivative_to_imu_speed_gain": 0.873657182709298,
+              "encoder_derivative_to_imu_speed_phase_deg": 7.810210516062165,
+              "angle_harmonic_to_residual_std": 3.150708759678603,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 1.975575507,
+              "speed_quality": 5.929151257703172,
+              "relative_torque_error_from_imu_speed": 0.22888209748379573,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.7033132767728718,
+              "encoder_derivative_to_imu_speed_phase_deg": 38.90076191523016,
+              "angle_harmonic_to_residual_std": 4.409788766549267,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "shared_J_local_B": {
+          "run_count": 2,
+          "mean_relative_torque_error_from_imu_speed": 0.45090643166684274,
+          "angle_qualified_run_count": 1,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.4449419671401706,
+          "runs": [
+            {
+              "label": "f3p125_run1",
+              "frequency_hz": 3.125,
+              "start_angle_rad": 1.984779392,
+              "speed_quality": 4.9305731900163945,
+              "relative_torque_error_from_imu_speed": 0.714512942521291,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": 0.4449419671401706,
+              "encoder_derivative_to_imu_speed_gain": 0.873657182709298,
+              "encoder_derivative_to_imu_speed_phase_deg": 7.810210516062165,
+              "angle_harmonic_to_residual_std": 3.150708759678603,
+              "angle_quality_pass": true
+            },
+            {
+              "label": "f6p25_run1",
+              "frequency_hz": 6.25,
+              "start_angle_rad": 1.975575507,
+              "speed_quality": 5.929151257703172,
+              "relative_torque_error_from_imu_speed": 0.18729992081239438,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.7033132767728718,
+              "encoder_derivative_to_imu_speed_phase_deg": 38.90076191523016,
+              "angle_harmonic_to_residual_std": 4.409788766549267,
+              "angle_quality_pass": false
+            }
+          ]
+        }
+      }
+    },
+    "yaw_0p1_at_7p5_8p3Hz": {
+      "assigned_training_group": "yaw_5p3",
+      "models": {
+        "local": {
+          "run_count": 2,
+          "mean_relative_torque_error_from_imu_speed": 0.44599926204549667,
+          "angle_qualified_run_count": 0,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "runs": [
+            {
+              "label": "f7p5_run2",
+              "frequency_hz": 7.5,
+              "start_angle_rad": 0.156178419,
+              "speed_quality": 3.5566358503738127,
+              "relative_torque_error_from_imu_speed": 0.4318646733146854,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.6423646107705947,
+              "encoder_derivative_to_imu_speed_phase_deg": 61.38986752981346,
+              "angle_harmonic_to_residual_std": 0.274730211865307,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f8p333_run2",
+              "frequency_hz": 8.333333333333334,
+              "start_angle_rad": 0.009779127523,
+              "speed_quality": 3.4298521576916197,
+              "relative_torque_error_from_imu_speed": 0.46013385077630786,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.7667515753125241,
+              "encoder_derivative_to_imu_speed_phase_deg": 82.0172351308063,
+              "angle_harmonic_to_residual_std": 0.46501561027984867,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "pooled": {
+          "run_count": 2,
+          "mean_relative_torque_error_from_imu_speed": 0.37163804448095633,
+          "angle_qualified_run_count": 0,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "runs": [
+            {
+              "label": "f7p5_run2",
+              "frequency_hz": 7.5,
+              "start_angle_rad": 0.156178419,
+              "speed_quality": 3.5566358503738127,
+              "relative_torque_error_from_imu_speed": 0.37403203076676883,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.6423646107705947,
+              "encoder_derivative_to_imu_speed_phase_deg": 61.38986752981346,
+              "angle_harmonic_to_residual_std": 0.274730211865307,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f8p333_run2",
+              "frequency_hz": 8.333333333333334,
+              "start_angle_rad": 0.009779127523,
+              "speed_quality": 3.4298521576916197,
+              "relative_torque_error_from_imu_speed": 0.36924405819514383,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.7667515753125241,
+              "encoder_derivative_to_imu_speed_phase_deg": 82.0172351308063,
+              "angle_harmonic_to_residual_std": 0.46501561027984867,
+              "angle_quality_pass": false
+            }
+          ]
+        },
+        "shared_J_local_B": {
+          "run_count": 2,
+          "mean_relative_torque_error_from_imu_speed": 0.370175700534595,
+          "angle_qualified_run_count": 0,
+          "mean_relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "runs": [
+            {
+              "label": "f7p5_run2",
+              "frequency_hz": 7.5,
+              "start_angle_rad": 0.156178419,
+              "speed_quality": 3.5566358503738127,
+              "relative_torque_error_from_imu_speed": 0.3723122292016114,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.6423646107705947,
+              "encoder_derivative_to_imu_speed_phase_deg": 61.38986752981346,
+              "angle_harmonic_to_residual_std": 0.274730211865307,
+              "angle_quality_pass": false
+            },
+            {
+              "label": "f8p333_run2",
+              "frequency_hz": 8.333333333333334,
+              "start_angle_rad": 0.009779127523,
+              "speed_quality": 3.4298521576916197,
+              "relative_torque_error_from_imu_speed": 0.36803917186757856,
+              "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+              "encoder_derivative_to_imu_speed_gain": 0.7667515753125241,
+              "encoder_derivative_to_imu_speed_phase_deg": 82.0172351308063,
+              "angle_harmonic_to_residual_std": 0.46501561027984867,
+              "angle_quality_pass": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "secondary_0p7Nm_6p2rad": {
+    "train_amplitude_Nm": 0.7,
+    "position_note": "6.21-6.24 rad start; not matched with 0.5 N m at 2.50-2.55 rad",
+    "train": [
+      {
+        "label": "f3p125_run1",
+        "frequency_hz": 3.125,
+        "start_angle_rad": 6.234769039,
+        "sha256": "30c4811dc8526734ae287315a589ba27bf93f3b0cb0c855204640d522743f0e8"
+      },
+      {
+        "label": "f6p25_run1",
+        "frequency_hz": 6.25,
+        "start_angle_rad": 6.220004473,
+        "sha256": "a7067f153a78907920efe6c52abdd54c54efc441a6f4ef5a911f8720cb3e5d61"
+      }
+    ],
+    "new_local_fit": {
+      "J_kg_m2": 0.12304739162041455,
+      "B_Nm_s_per_rad": 1.931395397790235
+    },
+    "historical_0p7Nm_0p11rad_fit": {
+      "J_kg_m2": 0.09285235610400416,
+      "B_Nm_s_per_rad": 1.349998652800123
+    },
+    "holdout_new_local": {
+      "run_count": 2,
+      "mean_relative_torque_error_from_imu_speed": 0.12898226280777336,
+      "angle_qualified_run_count": 1,
+      "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.15389010157496022,
+      "runs": [
+        {
+          "label": "f3p125_run2",
+          "frequency_hz": 3.125,
+          "start_angle_rad": 6.232659815,
+          "speed_quality": 5.6873420764049545,
+          "relative_torque_error_from_imu_speed": 0.0950768689196572,
+          "relative_torque_error_from_encoder_angle_if_quality_pass": 0.15389010157496022,
+          "encoder_derivative_to_imu_speed_gain": 0.908193928177952,
+          "encoder_derivative_to_imu_speed_phase_deg": 2.3771377999876817,
+          "angle_harmonic_to_residual_std": 5.714044058499238,
+          "angle_quality_pass": true
+        },
+        {
+          "label": "f6p25_run2",
+          "frequency_hz": 6.25,
+          "start_angle_rad": 6.211663453,
+          "speed_quality": 7.126504662020436,
+          "relative_torque_error_from_imu_speed": 0.1628876566958895,
+          "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "encoder_derivative_to_imu_speed_gain": 0.7125200828380133,
+          "encoder_derivative_to_imu_speed_phase_deg": 9.112784724408826,
+          "angle_harmonic_to_residual_std": 0.9234402696396623,
+          "angle_quality_pass": false
+        }
+      ]
+    },
+    "holdout_historical": {
+      "run_count": 2,
+      "mean_relative_torque_error_from_imu_speed": 0.2768051803194451,
+      "angle_qualified_run_count": 1,
+      "mean_relative_torque_error_from_encoder_angle_if_quality_pass": 0.37769932823285773,
+      "runs": [
+        {
+          "label": "f3p125_run2",
+          "frequency_hz": 3.125,
+          "start_angle_rad": 6.232659815,
+          "speed_quality": 5.6873420764049545,
+          "relative_torque_error_from_imu_speed": 0.3160104792692206,
+          "relative_torque_error_from_encoder_angle_if_quality_pass": 0.37769932823285773,
+          "encoder_derivative_to_imu_speed_gain": 0.908193928177952,
+          "encoder_derivative_to_imu_speed_phase_deg": 2.3771377999876817,
+          "angle_harmonic_to_residual_std": 5.714044058499238,
+          "angle_quality_pass": true
+        },
+        {
+          "label": "f6p25_run2",
+          "frequency_hz": 6.25,
+          "start_angle_rad": 6.211663453,
+          "speed_quality": 7.126504662020436,
+          "relative_torque_error_from_imu_speed": 0.2375998813696696,
+          "relative_torque_error_from_encoder_angle_if_quality_pass": null,
+          "encoder_derivative_to_imu_speed_gain": 0.7125200828380133,
+          "encoder_derivative_to_imu_speed_phase_deg": 9.112784724408826,
+          "angle_harmonic_to_residual_std": 0.9234402696396623,
+          "angle_quality_pass": false
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "The new 2.5 rad position was tested under 0.5 N m only.",
+    "A speed-harmonic fit does not prove closed-loop auto-aim tracking.",
+    "The 6.25 Hz encoder angle at the new position fails angle quality.",
+    "The 0.7 N m and 7.5-8.333 Hz sets are stress tests, not model-selection data."
+  ]
+}
