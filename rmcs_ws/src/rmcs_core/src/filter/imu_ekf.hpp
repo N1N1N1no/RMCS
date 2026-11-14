@@ -22,8 +22,8 @@ public:
 
     struct Config {
         Mat3 process_noise = 1.22e-3 * Mat3::Identity();
-        Mat3 measurement_noise = 50.0 * Mat3::Identity();
-        Mat3 gate_noise = 0.02 * Mat3::Identity();
+        Mat3 measurement_noise = 5.0 * Mat3::Identity();
+        Mat3 gate_noise = 0.05 * Mat3::Identity();
 
         Mat4 initial_covariance = 0.15 * Mat4::Identity();
     };

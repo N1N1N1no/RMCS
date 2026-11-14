@@ -8,6 +8,7 @@
 #include <rmcs_executor/component.hpp>
 #include <rmcs_utility/rclcpp/node_mixin.hpp>
 #include <string>
+#include <type_traits>
 #include <variant>
 #include <vector>
 namespace rmcs_core::controller::chassis {
@@ -21,6 +22,8 @@ public:
         , policy_(policy_parameters(get_parameter("policy").as_string())) {
         if (wheelbipe_policy(policy_))
             adapter_.emplace<Wheelbipe>();
+        if (policy_.name == kSupermimic.name)
+            adapter_.emplace<Supermimic>();
         register_input("/wheel_leg/state/position", q_);
         register_input("/wheel_leg/state/velocity", dq_);
         register_input("/wheel_leg/state/gravity", gravity_);
@@ -49,10 +52,14 @@ public:
             "/wheel_leg/rl/features/previous_action", feature_action_, std::vector<double>(6));
         register_output(
             "/wheel_leg/rl/features/auxiliary", feature_auxiliary_, std::vector<double>(7));
+        if (policy_.name == kSupermimic.name)
+            register_output(
+                "/wheel_leg/rl/input/supermimic_frame", frame_, std::vector<double>(500, 0.));
         register_output("/wheel_leg/rl/input/frame_sequence", sequence_, std::size_t{0});
     }
     void update() override {
         if (*reset_ != last_reset_ || (!*enable_ && was_enabled_)
+            || (policy_.name == kSupermimic.name && !*valid_)
             || (*state_ == 3 && last_state_ != 3)) {
             std::visit([](auto& a) { a.reset(); }, adapter_);
             last_tick_.reset();
@@ -82,29 +89,59 @@ public:
         const auto history =
             *action_applied_
                 ? *applied_
-                : (wheelbipe_policy(policy_) ? JointVector{} : measured_policy_history(*q_));
-        const auto frame = std::visit(
+                : (policy_.name != kProneMotion.name ? JointVector{} : measured_policy_history(*q_));
+        const auto sampled = std::visit(
             [&](auto& a) {
-                return a.sample(
+                const auto frame = a.sample(
                     ++policy_tick_, *q_, *dq_, {gyro_->x(), gyro_->y(), gyro_->z()},
                     {gravity_->x(), gravity_->y(), gravity_->z()},
                     {command_->x(), command_->y(), command_->z()}, *height_, history, *state_ == 3);
+                if (!frame)
+                    return false;
+                if constexpr (std::is_same_v<std::decay_t<decltype(a)>, Supermimic>) {
+                    std::copy(frame->begin(), frame->end(), frame_->begin());
+                } else {
+                    std::copy(frame->command.begin(), frame->command.end(), feature_command_->begin());
+                    *feature_height_ = frame->height;
+                    std::copy(frame->gyro.begin(), frame->gyro.end(), feature_gyro_->begin());
+                    std::copy(frame->gravity.begin(), frame->gravity.end(), feature_gravity_->begin());
+                    std::copy(frame->position.begin(), frame->position.end(), feature_position_->begin());
+                    std::copy(frame->velocity.begin(), frame->velocity.end(), feature_velocity_->begin());
+                    std::copy(
+                        frame->previous_action.begin(), frame->previous_action.end(),
+                        feature_action_->begin());
+                    std::copy(frame->auxiliary.begin(), frame->auxiliary.end(), feature_auxiliary_->begin());
+                }
+                return true;
             },
             adapter_);
-        if (!frame) {
+        if (!sampled) {
             clear_features();
             *sequence_ = 0;
+            if (policy_.name == kSupermimic.name) {
+                const double left = (*q_)[1] - (*q_)[0];
+                const double right = (*q_)[2] - (*q_)[3];
+                const auto& bounds = policy_.winding_bounds;
+                const bool outside = left < bounds[0][0] - 1e-6
+                    || left > bounds[0][1] + 1e-6 || right < bounds[1][0] - 1e-6
+                    || right > bounds[1][1] + 1e-6;
+                if (outside) {
+                    RCLCPP_WARN_THROTTLE(
+                        get_logger(), *get_clock(), 1000,
+                        "SuperMimic observation rejected: relative leg angle outside mechanical "
+                        "bounds; left=%.6f [%.6f, %.6f], right=%.6f [%.6f, %.6f] rad. "
+                        "Check encoder zero/direction and starting pose; no frame submitted.",
+                        left, bounds[0][0], bounds[0][1], right, bounds[1][0], bounds[1][1]);
+                } else {
+                    RCLCPP_WARN_THROTTLE(
+                        get_logger(), *get_clock(), 1000,
+                        "SuperMimic observation rejected: non-finite input or full-state "
+                        "reconstruction failed; relative leg angles left=%.6f, right=%.6f rad. "
+                        "No frame submitted.", left, right);
+                }
+            }
             return;
         }
-        std::copy(frame->command.begin(), frame->command.end(), feature_command_->begin());
-        *feature_height_ = frame->height;
-        std::copy(frame->gyro.begin(), frame->gyro.end(), feature_gyro_->begin());
-        std::copy(frame->gravity.begin(), frame->gravity.end(), feature_gravity_->begin());
-        std::copy(frame->position.begin(), frame->position.end(), feature_position_->begin());
-        std::copy(frame->velocity.begin(), frame->velocity.end(), feature_velocity_->begin());
-        std::copy(
-            frame->previous_action.begin(), frame->previous_action.end(), feature_action_->begin());
-        std::copy(frame->auxiliary.begin(), frame->auxiliary.end(), feature_auxiliary_->begin());
         if (policy_.jump_control) {
             if (!context_.ready() || context_->size() != 7
                 || !std::ranges::all_of(*context_, [](double v) { return std::isfinite(v); })) {
@@ -124,10 +161,12 @@ private:
               &feature_velocity_, &feature_action_, &feature_auxiliary_})
             std::fill((**output).begin(), (**output).end(), 0.0);
         *feature_height_ = 0.0;
+        if (policy_.name == kSupermimic.name)
+            std::fill(frame_->begin(), frame_->end(), 0.0);
     }
 
     const PolicyParameters& policy_;
-    std::variant<ProneMotion, Wheelbipe> adapter_;
+    std::variant<ProneMotion, Wheelbipe, Supermimic> adapter_;
     InputInterface<JointVector> q_, dq_, applied_;
     InputInterface<Eigen::Vector3d> gravity_, gyro_, command_;
     InputInterface<double> height_, rate_, policy_rate_;
@@ -139,6 +178,7 @@ private:
     OutputInterface<std::vector<double>> feature_position_, feature_velocity_, feature_action_,
         feature_auxiliary_;
     OutputInterface<double> feature_height_;
+    OutputInterface<std::vector<double>> frame_;
     OutputInterface<std::size_t> sequence_;
     std::optional<std::size_t> last_tick_;
     std::size_t policy_tick_ = 0, last_reset_ = 0;

@@ -53,6 +53,10 @@ if(BUILD_TESTING)
     ament_auto_add_executable(wheelbipe_jump_components test/wheelbipe_jump_components.cpp)
     add_test(NAME wheelbipe_jump_components COMMAND wheelbipe_jump_components --ros-args
         --params-file ${PROJECT_SOURCE_DIR}/../rmcs_bringup/config/wheel-leg-infantry-wheelbipe-jump-v4.yaml)
+    add_executable(supermimic_startup_smoke tools/supermimic_startup_smoke.cpp)
+    ament_target_dependencies(supermimic_startup_smoke rclcpp rmcs_executor rmcs_utility pluginlib rmcs_description rmcs_msgs)
+    add_executable(supermimic_policy_fixture tools/supermimic_policy_fixture.cpp)
+    target_include_directories(supermimic_policy_fixture PRIVATE ${PROJECT_SOURCE_DIR}/src)
 endif()
 
 ament_auto_package()

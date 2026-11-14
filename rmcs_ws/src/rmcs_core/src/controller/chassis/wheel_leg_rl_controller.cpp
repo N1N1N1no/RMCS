@@ -442,7 +442,8 @@ private:
             fail("invalid actuator effort or limits");
             return false;
         }
-        const auto mechanical =
+        const auto mechanical = policy_.name == kSupermimic.name
+            ? policy_.winding_bounds :
             policy_.jump_control
                 ? LegBounds{{{wheelbipe_jump_v4::kMechanicalMin, wheelbipe_jump_v4::kMechanicalMax}, {wheelbipe_jump_v4::kMechanicalMin, wheelbipe_jump_v4::kMechanicalMax}}}
                 : kMechanicalBounds;
@@ -478,16 +479,22 @@ private:
                 -policy_.yaw_limit, policy_.yaw_limit);
         } else
             heading_.reset();
-        *policy_command_ =
-            Eigen::Vector3d{vx, 0., std::clamp(yaw, -policy_.yaw_limit, policy_.yaw_limit)};
         if (jump_.active()) {
             *policy_command_ = Eigen::Vector3d{jump_velocity_, 0., 0.};
             *policy_height_ = jump_.height(jump_now());
             return;
         }
+        const double target_height = std::clamp(*height_, .23, policy_.height_max);
+        // Constrain both the rising and falling high-height transition to the trained envelope.
+        const bool high = std::max(target_height, *policy_height_) > policy_.high_height_threshold;
+        const double forward_limit = high ? std::min(policy_.forward_limit, policy_.high_height_forward_limit)
+                                          : policy_.forward_limit;
+        const double yaw_limit = high ? std::min(policy_.yaw_limit, policy_.high_height_yaw_limit)
+                                      : policy_.yaw_limit;
+        *policy_command_ = Eigen::Vector3d{
+            std::clamp(vx, -forward_limit, forward_limit), 0., std::clamp(yaw, -yaw_limit, yaw_limit)};
         const double step = height_rate_ / *policy_rate_;
-        *policy_height_ +=
-            std::clamp(std::clamp(*height_, .23, .42) - *policy_height_, -step, step);
+        *policy_height_ += std::clamp(target_height - *policy_height_, -step, step);
     }
     double jump_now() const { return static_cast<double>(*tick_) / *rate_; }
     LegBounds target_bounds() const {

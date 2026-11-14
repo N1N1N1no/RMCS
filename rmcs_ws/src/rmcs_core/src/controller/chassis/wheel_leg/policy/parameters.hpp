@@ -11,6 +11,9 @@ struct PolicyParameters {
     LegBounds winding_bounds;
     std::string_view model_spec_sha256 = kModelSpecSha256;
     bool jump_control = false;
+    double height_max = .42;
+    double high_height_threshold = 1e100;
+    double high_height_forward_limit = 1e100, high_height_yaw_limit = 1e100;
 };
 inline bool wheelbipe_policy(const PolicyParameters& p) {
     return p.name == "wheelbipe" || p.jump_control;

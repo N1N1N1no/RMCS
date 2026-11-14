@@ -1,24 +1,3 @@
-# 轮腿步兵「仅云台 + 自瞄 + 发弹」台架配置。
-#
-# 启动：ros2 launch rmcs_bringup rmcs.launch.py robot:=wheel-leg-infantry-gimbal
-#
-# 与 wheel-leg-infantry-wheelbipe.yaml 的差异：
-#   * 不加载 RL 状态估计 / 观测 / 策略、底盘控制器与 mirror，因此没有任何组件输出
-#     /wheel_leg/enable_request 与四个 /wheel_leg/*_joint/control_torque；
-#   * wheel_leg.leg_drive_enabled: false 是硬件硬门：四个 DM 腿关节只收 disable 与反馈轮询帧，
-#     两个 M3508 驱动轮转矩恒为 0，永远不会被使能；
-#   * 云台（yaw LK4010 + pitch MG4010）与摩擦轮 / 拨弹轮不受该门影响。云台在遥控器在线
-#     且左右拨杆不是双下时使能，之后由遥控器摇杆/鼠标或自瞄驱动。
-#
-# 仍需注意：
-#   * 下板（底盘板）必须在线：yaw LK4010 走它的 CAN3，DR16 与裁判系统串口也都挂在它上面。
-#     本配置只是不使能腿和轮子，不是“只接上板”。
-#   * 发弹热量门来自裁判系统。裁判系统未接时 /referee/shooter/heat_limit 为 0，
-#     HeatController 的 allowance 恒为 0，拨弹轮不会转；这是既有安全逻辑，不是本配置的问题。
-#   * 自瞄姿态基准：WheelLeg 硬件目前不发布 /gimbal/auto_aim/imu_snapshot 与
-#     /gimbal/auto_aim/exposure_signal，所以采集端按自由采集运行、每帧姿态是单位四元数
-#     （等价于假定云台水平且 yaw=0）。台架上打静止目标够用；要打移动目标必须先给
-#     WheelLeg 补这两个输出，否则预测量会偏。
 rmcs_executor:
   ros__parameters:
     update_rate: 1000.0
@@ -95,7 +74,7 @@ pitch_angle_pid_controller:
   ros__parameters:
     measurement: /gimbal/pitch/control_angle_error
     control: /gimbal/pitch/control_velocity
-    kp: 6.0
+    kp: 9.0
     ki: 0.0
     kd: 0.0
 
@@ -113,8 +92,17 @@ pitch_velocity_pid_controller:
 
 pitch_gravity_ff:
   ros__parameters:
-    pitch_gravity_ff_gain: 0.9
-    pitch_gravity_ff_phase: 0.75
+    pitch_gravity_ff_gain: 0.724994338
+    pitch_gravity_ff_phase: 1.145028163
+
+    # 已验证的 90% 方向负载前馈；两个 Pitch Ki/Kd 均保持 0。
+    pitch_load_ff_scale: 0.9
+    pitch_load_ff_torque_limit: 0.8
+    pitch_load_ff_slew_rate: 0.2
+    pitch_load_ff_direction_deadband: 0.008726646
+    pitch_load_ff_angles: [-0.500036831, -0.392699082, -0.331612558, -0.104719755, 0.0, 0.13962634, 0.34906585]
+    pitch_load_ff_up_torques: [-0.767007, -0.488215, -0.329553, -0.189519, -0.228258, -0.198952, -0.131053]
+    pitch_load_ff_down_torques: [0.052937, 0.054665, 0.144418, 0.100891, 0.110217, 0.153526, 0.186056]
 
 friction_wheel_controller:
   ros__parameters:
@@ -122,8 +110,8 @@ friction_wheel_controller:
       - /gimbal/left_friction
       - /gimbal/right_friction
     friction_velocities:
-      - 660.0
-      - 660.0
+      - 620.0
+      - 620.0
     friction_soft_start_stop_time: 1.0
 
 heat_controller:

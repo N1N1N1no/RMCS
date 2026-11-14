@@ -5,6 +5,8 @@ RoboMaster Control System based on ROS2.
 
 轮腿跳跃策略的模型导出、控制合同与离线验证见 [WheelBipe jump-v4 部署](docs/WHEELBIPE_JUMP_DEPLOYMENT.md)。
 
+轮腿 SuperMimic 学生策略：[部署与离线验证指南](docs/zh-cn/supermimic_v202_deployment.md)。
+
 ## Development
 
 ### Pre-requirements:
@@ -20,6 +22,7 @@ RoboMaster Control System based on ROS2.
 ```bash
 docker pull qzhhhi/rmcs-develop:latest
 ```
+
 
 如需交叉编译环境，可下载：
 ```bash
