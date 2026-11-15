@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cmath>
 #include <format>
+#include <limits>
 #include <memory>
 #include <mutex>
 #include <numbers>
@@ -902,6 +903,37 @@ private:
                   }) {
             status.register_output("/gimbal/yaw/velocity_imu", yaw_velocity_, 0.0);
             status.register_output("/gimbal/pitch/velocity_imu", pitch_velocity_, 0.0);
+            // Raw gimbal BMI088 plus the EKF output it feeds, so the estimator can be
+            // compared against its own input on the same timeline.
+            status.register_output(
+                "/gimbal/imu/quaternion", imu_quaternion_, Eigen::Quaterniond::Identity());
+            status.register_output(
+                "/gimbal/imu/angular_velocity", imu_angular_velocity_, Eigen::Vector3d::Zero());
+            status.register_output(
+                "/gimbal/imu/acceleration", imu_acceleration_, Eigen::Vector3d::Zero());
+            status.register_output(
+                "/gimbal/imu/ekf_chi_square", imu_ekf_chi_square_,
+                std::numeric_limits<double>::quiet_NaN());
+            status.register_output(
+                "/gimbal/imu/ekf_correction_rejected", imu_ekf_rejected_, false);
+            // Filter internals needed to fit Q/R against recorded motion: predicted gravity
+            // direction h(x), the innovation actually fused, diag(K) and diag(P), plus the
+            // noise settings themselves so the CSV stands on its own.
+            status.register_output(
+                "/gimbal/imu/ekf_predicted_accel", imu_ekf_predicted_accel_,
+                Eigen::Vector3d::Zero());
+            status.register_output(
+                "/gimbal/imu/ekf_innovation", imu_ekf_innovation_, Eigen::Vector3d::Zero());
+            status.register_output(
+                "/gimbal/imu/ekf_gain_diag", imu_ekf_gain_diag_, Eigen::Vector3d::Zero());
+            status.register_output(
+                "/gimbal/imu/ekf_covariance_diag", imu_ekf_covariance_diag_,
+                std::array<double, 4>{0., 0., 0., 0.});
+            status.register_output(
+                "/gimbal/imu/ekf_process_noise", imu_ekf_process_noise_, bmi088_.process_noise());
+            status.register_output(
+                "/gimbal/imu/ekf_measurement_noise", imu_ekf_measurement_noise_,
+                bmi088_.measurement_noise());
             const auto pitch_zero_point =
                 status.get_parameter_or<std::int64_t>("pitch_motor_zero_point", 0);
             pitch_motor_.configure(
@@ -944,9 +976,22 @@ private:
             if (auto snapshot = bmi088_.snapshot()) {
                 *yaw_velocity_ = snapshot->gyro_body.z();
                 *pitch_velocity_ = snapshot->gyro_body.y();
+                *imu_quaternion_ = snapshot->orientation.normalized();
+                *imu_angular_velocity_ = snapshot->gyro_body;
                 status_.tf_->set_transform<rmcs_description::PitchLink, rmcs_description::OdomImu>(
                     snapshot->orientation.conjugate());
             }
+            if (auto acceleration = bmi088_.acceleration_snapshot())
+                *imu_acceleration_ = acceleration->specific_force_body_mps2;
+            const auto diagnostics = bmi088_.correction_diagnostics();
+            *imu_ekf_chi_square_ = diagnostics.chi_square;
+            *imu_ekf_rejected_ = diagnostics.attempted && !diagnostics.accepted;
+            *imu_ekf_predicted_accel_ = diagnostics.predicted_accel;
+            *imu_ekf_innovation_ = diagnostics.innovation;
+            *imu_ekf_gain_diag_ = diagnostics.gain_diagonal;
+            *imu_ekf_covariance_diag_ = {
+                diagnostics.covariance_diagonal(0), diagnostics.covariance_diagonal(1),
+                diagnostics.covariance_diagonal(2), diagnostics.covariance_diagonal(3)};
             status_.tf_->set_state<rmcs_description::YawLink, rmcs_description::PitchLink>(
                 pitch_angle);
             if (status_.bottom_board_)
@@ -1008,6 +1053,14 @@ private:
 
         WheelLeg& status_;
         OutputInterface<double> yaw_velocity_, pitch_velocity_;
+        OutputInterface<Eigen::Quaterniond> imu_quaternion_;
+        OutputInterface<Eigen::Vector3d> imu_angular_velocity_, imu_acceleration_;
+        OutputInterface<double> imu_ekf_chi_square_;
+        OutputInterface<bool> imu_ekf_rejected_;
+        OutputInterface<Eigen::Vector3d> imu_ekf_predicted_accel_, imu_ekf_innovation_,
+            imu_ekf_gain_diag_;
+        OutputInterface<std::array<double, 4>> imu_ekf_covariance_diag_;
+        OutputInterface<double> imu_ekf_process_noise_, imu_ekf_measurement_noise_;
         device::LkMotor pitch_motor_;
         device::LkMotorDriveScheduler pitch_scheduler_;
         std::atomic<device::LkMotorDriveScheduler::Phase> pitch_phase_{

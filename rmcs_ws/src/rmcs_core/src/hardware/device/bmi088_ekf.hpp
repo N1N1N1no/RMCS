@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <limits>
 #include <mutex>
 #include <numbers>
 #include <optional>
@@ -33,6 +34,20 @@ public:
     struct AccelerationSnapshot {
         Eigen::Vector3d specific_force_body_mps2;
         TimePoint timestamp;
+    };
+
+    // State of the most recent accelerometer correction attempt. `attempted` is false until
+    // the first accelerometer sample is fused, and `chi_square` is NaN when the innovation
+    // could not be formed. The remaining fields are the filter internals that a parameter fit
+    // needs: h(x), the normalised-acceleration innovation, diag(K) and diag(P).
+    struct CorrectionDiagnostics {
+        bool attempted = false;
+        bool accepted = false;
+        double chi_square = std::numeric_limits<double>::quiet_NaN();
+        Eigen::Vector3d innovation = Eigen::Vector3d::Zero();
+        Eigen::Vector3d predicted_accel = Eigen::Vector3d::Zero();
+        Eigen::Vector3d gain_diagonal = Eigen::Vector3d::Zero();
+        Eigen::Matrix<double, 4, 1> covariance_diagonal = Eigen::Matrix<double, 4, 1>::Zero();
     };
 
     explicit Bmi088Ekf(Config config)
@@ -165,7 +180,22 @@ public:
                 latest_acceleration_ = AccelerationSnapshot{*corrected, accel_sample_time};
             }
             const auto correction = ekf_.prepare_correction(accel_g);
-            if (!correction || correction->chi_square() >= 16.0)
+            const bool accepted = correction && correction->chi_square() < 16.0;
+            {
+                const auto& internal = ekf_.diagnostics();
+                const auto guard = std::scoped_lock{mutex_};
+                latest_diagnostics_ = CorrectionDiagnostics{
+                    .attempted = true,
+                    .accepted = accepted,
+                    .chi_square = correction ? correction->chi_square()
+                                             : std::numeric_limits<double>::quiet_NaN(),
+                    .innovation = internal.innovation,
+                    .predicted_accel = internal.predicted_accel,
+                    .gain_diagonal = internal.gain.diagonal(),
+                    .covariance_diagonal = internal.covariance_diagonal,
+                };
+            }
+            if (!accepted)
                 break;
             if (!ekf_.correct(*correction))
                 break;
@@ -219,6 +249,17 @@ public:
         return latest_acceleration_;
     }
 
+    [[nodiscard]] CorrectionDiagnostics correction_diagnostics() const noexcept {
+        const auto guard = std::scoped_lock{mutex_};
+        return latest_diagnostics_;
+    }
+
+    // Filter noise settings, published alongside the data so a recorded CSV is self-describing.
+    [[nodiscard]] double process_noise() const noexcept { return ekf_.config().process_noise(0, 0); }
+    [[nodiscard]] double measurement_noise() const noexcept {
+        return ekf_.config().measurement_noise(0, 0);
+    }
+
 private:
     [[nodiscard]] static Eigen::Vector3d
         convert_accelerometer(std::int16_t x, std::int16_t y, std::int16_t z) noexcept {
@@ -255,6 +296,7 @@ private:
 
     Snapshot latest_snapshot_;
     std::optional<AccelerationSnapshot> latest_acceleration_;
+    CorrectionDiagnostics latest_diagnostics_;
 };
 
 } // namespace rmcs_core::hardware::device

@@ -19,6 +19,32 @@ COLORED_SYNC_FLAG = (
 )
 
 
+def prune_dangling_symlinks(root):
+    if not os.path.isdir(root):
+        raise SystemExit(f"Install directory not found: {root}. Run build-rmcs first.")
+
+    workspace = os.path.realpath(RMCS_PATH)
+    dangling = []
+    for dirpath, dirnames, filenames in os.walk(root, followlinks=False):
+        for name in dirnames + filenames:
+            path = os.path.join(dirpath, name)
+            if not os.path.islink(path) or os.path.exists(path):
+                continue
+            target = os.path.realpath(path)
+            # Never prune links that need a different mount or an external dependency.
+            if os.path.commonpath([workspace, target]) != workspace:
+                raise SystemExit(
+                    f"Cannot resolve installed symlink: {path} -> {target}. "
+                    "Run sync-remote in the build container and check its dependencies."
+                )
+            dangling.append(path)
+
+    for path in dangling:
+        os.unlink(path)
+        print(f"Pruned dangling install symlink: {path}", flush=True)
+    return dangling
+
+
 def create_process():
     command = [
         "unison",
@@ -66,6 +92,8 @@ def finish_connection(conn: socket):
 
 
 def main():
+    prune_dangling_symlinks(SRC_DIR)
+
     selector = selectors.DefaultSelector()
 
     process, pipe_stdout = create_process()

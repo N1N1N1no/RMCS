@@ -28,6 +28,18 @@ public:
         Mat4 initial_covariance = 0.15 * Mat4::Identity();
     };
 
+    // Snapshot of the most recent accelerometer correction attempt, exposed for identification
+    // and telemetry. `gain` is the effective 3x3 attitude block of the Kalman gain, i.e. how
+    // much quaternion update one unit of innovation buys; `covariance_diagonal` is diag(P).
+    // Both are available even when the chi-square gate rejects the measurement.
+    struct Diagnostics {
+        bool valid = false;
+        Vec3 innovation = Vec3::Zero();
+        Vec3 predicted_accel = Vec3::Zero();
+        Mat3 gain = Mat3::Zero();
+        Vec4 covariance_diagonal = Vec4::Zero();
+    };
+
     class AccelCorrection {
     public:
         [[nodiscard]] double chi_square() const noexcept { return chi_square_; }
@@ -156,6 +168,7 @@ public:
     }
 
     [[nodiscard]] std::optional<AccelCorrection> prepare_correction(const Vec3& accel_g) const {
+        diagnostics_ = Diagnostics{};
         if (!accel_g.allFinite())
             return std::nullopt;
 
@@ -197,6 +210,19 @@ public:
         if (update_ldt.info() != Eigen::Success || !update_ldt.isPositive()) {
             return std::nullopt;
         }
+
+        const Mat34 k_transpose = update_ldt.solve(jacobian_h_x * covariance_);
+        if (!k_transpose.allFinite())
+            return std::nullopt;
+        // Rows 1..3 of the gain are the attitude block; row 0 belongs to the quaternion scalar
+        // and is masked out of the applied update.
+        diagnostics_ = Diagnostics{
+            .valid = true,
+            .innovation = update_innovation,
+            .predicted_accel = predicted_accel,
+            .gain = k_transpose.transpose().block<3, 3>(1, 0),
+            .covariance_diagonal = covariance_.diagonal(),
+        };
 
         return AccelCorrection(revision_, update_innovation, jacobian_h_x, update_ldt, chi_square);
     }
@@ -246,6 +272,8 @@ public:
     [[nodiscard]] Eigen::Quaterniond quaternion() const noexcept {
         return {state_[0], state_[1], state_[2], state_[3]};
     }
+
+    [[nodiscard]] const Diagnostics& diagnostics() const noexcept { return diagnostics_; }
 
 private:
     struct PropagationResult {
@@ -420,6 +448,7 @@ private:
     static constexpr double kEpsilon = 1e-12;
 
     Config config_;
+    mutable Diagnostics diagnostics_;
     Vec4 state_ = identity_quaternion();
     Mat4 covariance_ = Mat4::Identity();
     std::uint64_t revision_ = 0;
